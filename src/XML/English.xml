@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<menuBar>
+		<fileMenu>
+			<file>File</file>
+			<openFile>Open</openFile>
+			<exit>Exit</exit>
+		</fileMenu>
+		<editMenu>
+			<edit>Edit</edit>
+			<undoSelection>Undo selection</undoSelection>
+		</editMenu>
+		<optionsMenu>
+			<options>Options</options>
+			<selectionColor>Selection color</selectionColor>
+			<selectionWidth>Selection width</selectionWidth>
+			<language>Language</language>
+			<PolishLanguage>Polish</PolishLanguage>
+			<EnglishLanguage>English</EnglishLanguage>
+		</optionsMenu>
+		<helpMenu>
+			<help>Help</help>
+			<showDocumentation>Show documentation</showDocumentation>
+		</helpMenu>
+	</menuBar>
+	<bottomPanel>
+		<dose>Dose</dose>
+	</bottomPanel>
+	<dialogs>
+		<languageConformationTitle>Change language</languageConformationTitle>
+		<languageConformationContent>To see the changes, you need to restart the program. Do you want to do it now?</languageConformationContent>
+	</dialogs>
+</root>

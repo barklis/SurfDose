@@ -1,0 +1,60 @@
+* {
+	-fx-font-family: Arial;
+}
+
+.menu-item{
+	-fx-min-width: 100px;
+}
+
+ToolBox{
+	-fx-padding: 10px 5px 0px 5px;
+	-fx-spacing: 10px;
+}
+
+ToolBox HBox{
+	-fx-alignment: center;
+}
+
+DrawingPanel{
+	-fx-background-color: green;
+}
+
+ToolBox Button{
+	-fx-pref-width: 50px;
+	-fx-pref-height: 50px;
+	-fx-background-size: 40px 40px;
+	-fx-background-position: center center;
+	-fx-background-repeat: stretch;
+}
+
+ToolBox .hideToolBoxButton{
+	-fx-pref-width: 50px;
+	-fx-pref-height: 30px;
+}
+
+ToolBox .undoButton{
+	-fx-background-image: url("/Resources/undoIcon.png");
+}
+
+ToolBox .selectionColorButton{
+	-fx-background-image: url("/Resources/selectionColorIcon.png");
+}
+
+BottomPanel{
+	-fx-pref-height: 50px;
+	-fx-background-color: lightblue;
+	-fx-padding: 5px 10px 5px 10px;
+}
+
+BottomPanel VBox{
+	-fx-alignment: center;
+}
+
+BottomPanel VBox Label{
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+
+
+
+
