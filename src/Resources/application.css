@@ -16,7 +16,7 @@ ToolBox HBox{
 }
 
 DrawingPanel{
-	-fx-background-color: green;
+	-fx-background-color: blue;
 }
 
 ToolBox Button{
