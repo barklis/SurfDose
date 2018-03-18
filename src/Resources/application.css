@@ -7,16 +7,13 @@
 }
 
 ToolBox{
+	-fx-background-color: linear-gradient(red, blue);
 	-fx-padding: 10px 5px 0px 5px;
 	-fx-spacing: 10px;
 }
 
 ToolBox HBox{
 	-fx-alignment: center;
-}
-
-DrawingPanel{
-	-fx-background-color: green;
 }
 
 ToolBox Button{
@@ -36,8 +33,16 @@ ToolBox .undoButton{
 	-fx-background-image: url("/Resources/undoIcon.png");
 }
 
+ToolBox .redoButton{
+	-fx-background-image: url("/Resources/redoIcon.png");
+}
+
 ToolBox .selectionColorButton{
 	-fx-background-image: url("/Resources/selectionColorIcon.png");
+}
+
+ToolBox .resizeImageButton{
+	-fx-background-image: url("/Resources/resizeImageIcon.png");
 }
 
 BottomPanel{
@@ -55,6 +60,18 @@ BottomPanel VBox Label{
 	-fx-font-weight: bold;
 }
 
+DrawingPanel{
+	-fx-background-color: gray;
+}
 
+ImagePanel{
+	-fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 5;
+}
+
+SelectionPanel{
+	-fx-background-color: rgba(0,0,0,0.5);
+}
 
 

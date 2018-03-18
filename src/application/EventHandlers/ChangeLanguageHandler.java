@@ -28,7 +28,7 @@ public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 		alert.setContentText(Preferences.getLabel("languageConformationContent"));
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-			root.init();
+			root.restart();
 		}
 	}
 

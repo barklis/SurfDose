@@ -18,4 +18,12 @@ public class CenterPanel extends BorderPane {
 		setCenter(drawingPanel);
 		
 	}
+
+	public ToolBox getToolbox() {
+		return toolbox;
+	}
+
+	public DrawingPanel getDrawingPanel() {
+		return drawingPanel;
+	}
 }
