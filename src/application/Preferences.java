@@ -37,11 +37,12 @@ public class Preferences {
 	
 	public static void setSelectionColor(Color selectionColor) {
 		Preferences.selectionColor = selectionColor;
+
+		String valStr = String.format( "#%02X%02X%02X",
+				(int)( selectionColor.getRed() * 255 ),
+				(int)( selectionColor.getGreen() * 255 ),
+				(int)( selectionColor.getBlue() * 255 ) );
 		
-		String valStr = "#";
-		valStr += Integer.toHexString((int) selectionColor.getRed());
-		valStr += Integer.toHexString((int) selectionColor.getGreen());
-		valStr += Integer.toHexString((int) selectionColor.getBlue());
 		XmlHandler.changeSelectorValue("selectionColor", valStr, configDocument, "config.xml");
 	}
 

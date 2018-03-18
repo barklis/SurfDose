@@ -12,13 +12,20 @@ public class GUI{
 	CenterPanel centerPanel;
 	BottomPanel bottomPanel;
 	
-	public GUI(Stage primaryStage) {
-		mainWindow = primaryStage;
+	public GUI(Stage stage) {
+		mainWindow = stage;
 		
 		init();
 	}
 	
+	public void restart() {
+		mainWindow.close();
+		mainWindow = new Stage();
+		init();
+	}
+	
 	public void init() {
+		
 		Preferences.loadConfigFiles();
 		
 		menuBarClass = new MenuBarClass(this);
@@ -33,11 +40,24 @@ public class GUI{
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Resources/application.css").toExternalForm());
 		
-		mainWindow.close();
-		mainWindow = new Stage();
 		mainWindow.setScene(scene);
 		mainWindow.setTitle("Analyzer");
 		mainWindow.show();
 	}
 	
+	public Stage getMainWindow() {
+		return mainWindow;
+	}
+
+	public MenuBarClass getMenuBarClass() {
+		return menuBarClass;
+	}
+
+	public CenterPanel getCenterPanel() {
+		return centerPanel;
+	}
+
+	public BottomPanel getBottomPanel() {
+		return bottomPanel;
+	}
 }

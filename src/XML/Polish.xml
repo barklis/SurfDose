@@ -10,6 +10,7 @@
 		<editMenu>
 			<edit>Edycja</edit>
 			<undoSelection>Cofnij zaznaczenie</undoSelection>
+			<redoSelection>Przywróć zaznaczenie</redoSelection>
 		</editMenu>
 		<optionsMenu>
 			<options>Opcje</options>
