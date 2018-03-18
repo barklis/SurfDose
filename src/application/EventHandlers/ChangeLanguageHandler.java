@@ -17,6 +17,7 @@ public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 	public ChangeLanguageHandler(String language, GUI root) {
 		this.language = language;
 		this.root = root;
+		
 	}
 
 	@Override
