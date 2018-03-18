@@ -10,6 +10,7 @@
 		<editMenu>
 			<edit>Edit</edit>
 			<undoSelection>Undo selection</undoSelection>
+			<redoSelection>Restore selection</redoSelection>
 		</editMenu>
 		<optionsMenu>
 			<options>Options</options>

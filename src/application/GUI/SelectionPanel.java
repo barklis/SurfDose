@@ -13,7 +13,7 @@ public class SelectionPanel extends Canvas {
 	GUI gui;
 	double width, height;
 	GraphicsContext gc;
-	Color selectionColor;
+	
 	
 	double mouseX, mouseY;
 	
@@ -21,7 +21,6 @@ public class SelectionPanel extends Canvas {
 		this.gui = gui;
 		this.width = width;
 		this.height = height;
-		this.selectionColor = Preferences.getSelectionColor();
 		
 		setWidth(width);
 		setHeight(height);
@@ -36,15 +35,14 @@ public class SelectionPanel extends Canvas {
 	
 	public void draw() {
 		gc.clearRect(0, 0, width, height);
-		gc.setStroke(selectionColor);
 		gc.setLineWidth(Preferences.getSelectionWidth());
 		for(Selection selection : Selection.getSelectionList()) {
-			selection.drawOnCanvas(gc);
+			selection.drawOnCanvas(gc, getWidth(), getHeight());
 		}
 	}
 	
 	public void drawCurrentSelection() {
-		Selection.getCurrentSelection().drawCurrentOnCanvas(gc);
+		Selection.getCurrentSelection().drawCurrentOnCanvas(gc, getWidth(), getHeight());
 	}
 	
 	public void resize(double width, double height) {

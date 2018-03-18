@@ -16,7 +16,7 @@ public class DrawSelectionListener implements EventHandler<MouseEvent> {
 	@Override
 	public void handle(MouseEvent e) {
 		if(e.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			Selection.initSelection(e.getX(), e.getY());
+			Selection.initSelection(e.getX(), e.getY(), gc.getWidth(), gc.getHeight());
 		}
 		else if(e.getEventType() == MouseEvent.MOUSE_DRAGGED) {
 			Selection.getCurrentSelection().setSecondCorner(e.getX(), e.getY());

@@ -7,6 +7,8 @@ import javafx.scene.control.SeparatorMenuItem;
 
 import application.Preferences;
 import application.EventHandlers.ChangeLanguageHandler;
+import application.EventHandlers.DeleteSelectionHandler;
+import application.EventHandlers.RestoreSelectionHandler;
 
 public class MenuBarClass extends MenuBar {
 	GUI gui;
@@ -26,7 +28,10 @@ public class MenuBarClass extends MenuBar {
 		
 		editMenu = new Menu(Preferences.getLabel("edit"));
 			MenuItem selectionUndoItem = new MenuItem(Preferences.getLabel("undoSelection"));
-			editMenu.getItems().addAll(selectionUndoItem);
+				selectionUndoItem.setOnAction(new DeleteSelectionHandler(gui));
+			MenuItem selectionRedoItem = new MenuItem(Preferences.getLabel("redoSelection"));
+				selectionRedoItem.setOnAction(new RestoreSelectionHandler(gui));
+			editMenu.getItems().addAll(selectionUndoItem, selectionRedoItem);
 		
 		optionsMenu = new Menu(Preferences.getLabel("options"));
 			MenuItem selectionColorItem = new MenuItem(Preferences.getLabel("selectionColor"));

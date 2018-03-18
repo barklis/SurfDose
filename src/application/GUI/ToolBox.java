@@ -1,12 +1,10 @@
 package application.GUI;
 
+import application.EventHandlers.ColorSelectionHandler;
 import application.EventHandlers.DeleteSelectionHandler;
 import application.EventHandlers.ResizeImageHandler;
 import application.EventHandlers.RestoreSelectionHandler;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -35,6 +33,7 @@ public class ToolBox extends VBox {
 		
 		selectionColorButton = new Button("");
 		selectionColorButton.getStyleClass().add("selectionColorButton");
+		selectionColorButton.setOnAction(new ColorSelectionHandler());
 		
 		resizeImageButton = new Button("");
 		resizeImageButton.getStyleClass().add("resizeImageButton");
