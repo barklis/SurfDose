@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<root>
+	<menuBar>
+		<fileMenu>
+			<file>Plik</file>
+			<openFile>Otwórz</openFile>
+			<exit>Wyjście</exit>
+		</fileMenu>
+		<editMenu>
+			<edit>Edycja</edit>
+			<undoSelection>Cofnij zaznaczenie</undoSelection>
+			<redoSelection>Przywróć zaznaczenie</redoSelection>
+		</editMenu>
+		<optionsMenu>
+			<options>Opcje</options>
+			<selectionColor>Kolor zaznaczenia</selectionColor>
+			<selectionWidth>Grubość zaznaczenia</selectionWidth>
+			<language>Język</language>
+			<PolishLanguage>Polski</PolishLanguage>
+			<EnglishLanguage>Angielski</EnglishLanguage>
+		</optionsMenu>
+		<helpMenu>
+			<help>Pomoc</help>
+			<showDocumentation>Pokaż dokumentację</showDocumentation>
+		</helpMenu>
+	</menuBar>
+	<bottomPanel>
+		<dose>Dawka</dose>
+	</bottomPanel>
+	<dialogs>
+		<languageConformationTitle>Zmiana języka</languageConformationTitle>
+		<languageConformationContent>By zobaczyć zmiany, musisz zrestartować program. Zrobić to teraz?</languageConformationContent>
+	</dialogs>
+</root>
