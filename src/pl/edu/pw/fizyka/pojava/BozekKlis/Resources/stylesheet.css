@@ -1,0 +1,82 @@
+* {
+	-fx-font-family: Arial;
+}
+
+.menu-item{
+	-fx-min-width: 100px;
+}
+
+ToolBox{
+	-fx-background-color: linear-gradient(red, blue);
+	-fx-padding: 10px 7px 0px 7px;
+	-fx-spacing: 10px;
+}
+
+ToolBox HBox{
+	-fx-alignment: center;
+}
+
+ToolBox Button{
+	-fx-pref-width: 55px;
+	-fx-pref-height: 55px;
+	-fx-background-size: 50px 50px;
+	-fx-background-position: center center;
+	-fx-background-repeat: stretch;
+}
+
+ToolBox Button:hover{
+	-fx-background-size: 45px 45px;
+}
+
+ToolBox .hideToolBoxButton{
+	-fx-pref-width: 55px;
+	-fx-pref-height: 30px;
+}
+
+ToolBox .undoButton{
+	-fx-background-image: url("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/undoIcon.png");
+}
+
+ToolBox .redoButton{
+	-fx-background-image: url("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/redoIcon.png");
+}
+
+ToolBox .selectionColorButton{
+	-fx-background-image: url("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/selectionColorIcon.png");
+}
+
+ToolBox .resizeImageButton{
+	-fx-background-image: url("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/resizeImageIcon.png");
+}
+
+BottomPanel{
+	-fx-pref-height: 50px;
+	-fx-background-color: linear-gradient(to right, blue, red) ;
+	-fx-padding: 5px 12px 5px 12px;
+}
+
+BottomPanel VBox{
+	-fx-alignment: center;
+}
+
+BottomPanel VBox Label{
+	-fx-font-size: 25px;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+}
+
+DrawingPanel{
+	-fx-background-color: gray;
+}
+
+ImagePanel{
+	-fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 5;
+}
+
+SelectionPanel{
+	-fx-background-color: rgba(0,0,0,0.5);
+}
+
+
