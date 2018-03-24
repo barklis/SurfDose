@@ -23,19 +23,20 @@ public class DrawingPanel extends StackPane {
 		getChildren().add(selectionPanel);
 	}
 	
+	
+
+	public void resizeImage() {
+		width = gui.getScene().getWidth()-gui.getCenterPanel().getToolbox().getWidth();
+		height = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
+		imagePanel.resizeImage(width, height);
+		selectionPanel.resize(imagePanel.width, imagePanel.height);
+		selectionPanel.draw();
+	}
+	
 	public ImagePanel getImagePanel() {
 		return imagePanel;
 	}
-
 	public SelectionPanel getSelectionPanel() {
 		return selectionPanel;
-	}
-
-	public void resize() {
-		width = getWidth();
-		height = getHeight();
-		imagePanel.resize(width, height);
-		selectionPanel.resize(imagePanel.width, imagePanel.height);
-		selectionPanel.draw();
 	}
 }

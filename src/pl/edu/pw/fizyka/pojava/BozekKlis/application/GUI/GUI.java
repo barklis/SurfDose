@@ -4,9 +4,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowMaximizeHandler;
 
 public class GUI{
 	Stage mainWindow;
+	Scene scene;
 	
 	MenuBarClass menuBarClass;
 	CenterPanel centerPanel;
@@ -23,7 +25,7 @@ public class GUI{
 		mainWindow = new Stage();
 		init();
 	}
-	
+
 	public void init() {
 		
 		Preferences.loadConfigFiles();
@@ -37,9 +39,10 @@ public class GUI{
 		root.setCenter(centerPanel);
 		root.setBottom(bottomPanel);
 		
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/stylesheet.css").toExternalForm());
+		scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/stylesheet.css").toExternalForm()); 
 		
+		mainWindow.maximizedProperty().addListener(new WindowMaximizeHandler(this));
 		mainWindow.setScene(scene);
 		mainWindow.setTitle("DICOM Analyzer");
 		mainWindow.show();
@@ -59,5 +62,8 @@ public class GUI{
 
 	public BottomPanel getBottomPanel() {
 		return bottomPanel;
+	}
+	public Scene getScene() {
+		return scene;
 	}
 }

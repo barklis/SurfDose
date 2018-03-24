@@ -7,15 +7,15 @@ import javafx.event.EventHandler;
 
 public class RestoreSelectionHandler implements EventHandler<ActionEvent> {
 	
-	GUI root;
+	GUI gui;
 	
-	public RestoreSelectionHandler(GUI root) {
-		this.root = root;
+	public RestoreSelectionHandler(GUI gui) {
+		this.gui = gui;
 	}
 	
 	@Override
 	public void handle(ActionEvent arg0) {
 		Selection.restoreSelection();
-		root.getCenterPanel().getDrawingPanel().getSelectionPanel().draw();
+		gui.getCenterPanel().getDrawingPanel().getSelectionPanel().draw();
 	}
 }

@@ -7,15 +7,15 @@ import javafx.event.EventHandler;
 
 public class DeleteSelectionHandler implements EventHandler<ActionEvent> {
 	
-	GUI root;
+	GUI gui;
 	
-	public DeleteSelectionHandler(GUI root) {
-		this.root = root;
+	public DeleteSelectionHandler(GUI gui) {
+		this.gui = gui;
 	}
 	
 	@Override
 	public void handle(ActionEvent arg0) {
 		Selection.removeLast();
-		root.getCenterPanel().getDrawingPanel().getSelectionPanel().draw();
+		gui.getCenterPanel().getDrawingPanel().getSelectionPanel().draw();
 	}
 }

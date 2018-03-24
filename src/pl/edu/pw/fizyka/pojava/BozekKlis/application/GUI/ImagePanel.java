@@ -23,7 +23,6 @@ public class ImagePanel extends ImageView {
 		this.height = height;
 		
 		loadImage();
-		
 	}
 	
 	void loadImage() {
@@ -33,17 +32,17 @@ public class ImagePanel extends ImageView {
 			e.printStackTrace();
 			return;
 		}
-		resize(width, height);
+		resizeImage(width, height);
 	}
 	
-	public void resize(double width, double height) {
+	public void resizeImage(double width, double height) {
 		Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 		this.setImage(image);
-		setFitWidth(width);
-		setFitHeight(height);
-		setPreserveRatio(true);
-		setSmooth(true);
-		setCache(true);
+		this.setFitWidth(width);
+		this.setFitHeight(height);
+		this.setPreserveRatio(true);
+		this.setSmooth(true);
+		this.setCache(true);
 		
 		double imageRatio = image.getHeight() / image.getWidth();
 		double panelRatio = height / width;
