@@ -1,7 +1,5 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -11,6 +9,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ChangeLanguageHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ColorSelectionHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.DeleteSelectionHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ExitProgramHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.LineWidthChooserHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.RestoreSelectionHandler;
 
@@ -28,12 +27,7 @@ public class MenuBarClass extends MenuBar {
 		fileMenu = new Menu(Preferences.getLabel("file"));
 			MenuItem openFileItem = new MenuItem(Preferences.getLabel("openFile"));
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
-				exitItem.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent arg0) {
-						System.exit(0);
-					}
-				});
+				exitItem.setOnAction(new ExitProgramHandler());
 			fileMenu.getItems().addAll(openFileItem, new SeparatorMenuItem(), exitItem);
 		
 		editMenu = new Menu(Preferences.getLabel("edit"));
