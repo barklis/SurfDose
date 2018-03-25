@@ -12,11 +12,11 @@ import javafx.scene.control.Alert.AlertType;
 
 public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 	String language;
-	GUI root;
+	GUI gui;
 	
-	public ChangeLanguageHandler(String language, GUI root) {
+	public ChangeLanguageHandler(String language, GUI gui) {
 		this.language = language;
-		this.root = root;
+		this.gui = gui;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 		alert.setContentText(Preferences.getLabel("languageConformationContent"));
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-			root.restart();
+			gui.restart();
 		}
 	}
 

@@ -5,14 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class ResizeImageHandler implements EventHandler<ActionEvent> {
-	GUI root;
+	GUI gui;
 	
-	public ResizeImageHandler(GUI root) {
-		this.root = root;
+	public ResizeImageHandler(GUI gui) {
+		this.gui = gui;
 	}
 
 	@Override
 	public void handle(ActionEvent arg0) {
-		root.getCenterPanel().getDrawingPanel().resize();
+		gui.getCenterPanel().getDrawingPanel().resizeImage();
 	}
 }
