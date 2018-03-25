@@ -19,7 +19,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.Selection;
 
 public class LineWidthChooserHandler implements EventHandler<ActionEvent> {
 
-	static Stage optionsWindow = null;
+	public static Stage optionsWindow = null;
 	GUI gui;
 	
 	public LineWidthChooserHandler(GUI gui) {
