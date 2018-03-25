@@ -32,4 +32,12 @@
 		<languageConformationTitle>Change language</languageConformationTitle>
 		<languageConformationContent>To see the changes, you need to restart the program. Do you want to do it now?</languageConformationContent>
 	</dialogs>
+	<lineWidthWindow>
+		<lineWidthWindowTitle>Set selection line width</lineWidthWindowTitle>
+		<lineWidthWindowLabel>Selection line width:</lineWidthWindowLabel>
+		<okButton>OK</okButton>
+		<cancelButton>Cancel</cancelButton>
+		<applyToAllCheckbox>Apply to all</applyToAllCheckbox>
+	</lineWidthWindow>
+	
 </root>

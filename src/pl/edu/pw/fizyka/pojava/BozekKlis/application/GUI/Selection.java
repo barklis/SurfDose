@@ -15,6 +15,7 @@ public class Selection {
 	static double canvasHeight;
 	
 	double x1, x2, y1, y2;
+	double selectionLineWidth;
 	Color selectionColor;
 	
 	boolean exist = false;
@@ -26,6 +27,7 @@ public class Selection {
 		y2 = 0;
 		currentSelection = null;
 		this.selectionColor = Preferences.getSelectionColor();
+		this.selectionLineWidth = Preferences.getSelectionLineWidth();
 	}
 	
 	public static void removeLast() {
@@ -46,6 +48,7 @@ public class Selection {
 		if(!exist)
 			return;
 		gContext.setStroke(selectionColor);
+		gContext.setLineWidth(selectionLineWidth);
 		gContext.strokeRect(x1*currentCanvasWidth, y1*currentCanvasHeight, (x2-x1)*currentCanvasWidth, (y2-y1)*currentCanvasHeight);
 	}
 	
@@ -65,6 +68,7 @@ public class Selection {
 		}
 		
 		gContext.setStroke(selectionColor);
+		gContext.setLineWidth(selectionLineWidth);
 		gContext.strokeRect(newX1*currentCanvasWidth, newY1*currentCanvasHeight, (newX2-newX1)*currentCanvasWidth, (newY2-newY1)*currentCanvasHeight);
 	}
 
@@ -99,12 +103,11 @@ public class Selection {
 				y2 = tmp;
 			}
 			selectionList.add(currentSelection);
-			currentSelection = null;
 		}
-		deletedSelectionList.clear();
 	}
 
 	public static void initSelection(double x, double y, double canvasWidth, double canvasHeight) {
+		deletedSelectionList.clear();
 		currentSelection = new Selection();
 		Selection.canvasHeight = canvasHeight;
 		Selection.canvasWidth = canvasWidth;
@@ -118,5 +121,18 @@ public class Selection {
 
 	public void setExist(boolean exist) {
 		this.exist = exist;
+	}
+
+	public static void setGlobalLineWidth(Double value) {
+		for(Selection x : selectionList)
+			x.selectionLineWidth = value;
+	}
+
+	public static void setCurrentSelectionColor(Color newColor) {
+		currentSelection.selectionColor = newColor;
+	}
+
+	public static void setCurrentSelectionLineWidth(Double value) {
+		currentSelection.selectionLineWidth = value;
 	}
 }

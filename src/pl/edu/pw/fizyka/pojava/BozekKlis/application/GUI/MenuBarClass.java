@@ -11,6 +11,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ChangeLanguageHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ColorSelectionHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.DeleteSelectionHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.LineWidthChooserHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.RestoreSelectionHandler;
 
 public class MenuBarClass extends MenuBar {
@@ -44,8 +45,9 @@ public class MenuBarClass extends MenuBar {
 		
 		optionsMenu = new Menu(Preferences.getLabel("options"));
 			MenuItem selectionColorItem = new MenuItem(Preferences.getLabel("selectionColor"));
-				selectionColorItem.setOnAction(new ColorSelectionHandler());
+				selectionColorItem.setOnAction(new ColorSelectionHandler(gui));
 			MenuItem selectionWidthItem = new MenuItem(Preferences.getLabel("selectionWidth"));
+				selectionWidthItem.setOnAction(new LineWidthChooserHandler(gui));
 			
 			Menu languageMenu = new Menu(Preferences.getLabel("language"));
 				MenuItem polishLanguageItem = new MenuItem(Preferences.getLabel("PolishLanguage"));

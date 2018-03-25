@@ -7,8 +7,18 @@ import javafx.scene.paint.Color;
 import javax.swing.JColorChooser;
 
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.Selection;
 
 public class ColorSelectionHandler implements EventHandler<ActionEvent> {
+
+	GUI gui;
+	
+	public ColorSelectionHandler(GUI gui) {
+		this.gui = gui;
+	}
+
+
 
 	@Override
 	public void handle(ActionEvent arg0) {
@@ -20,6 +30,10 @@ public class ColorSelectionHandler implements EventHandler<ActionEvent> {
 		if(result != null) {
 			Color newColor = Color.rgb(result.getRed(), result.getGreen(), result.getBlue());
 			Preferences.setSelectionColor(newColor);
+			if(Selection.getCurrentSelection() != null) {
+				Selection.setCurrentSelectionColor(newColor);
+				gui.getCenterPanel().getDrawingPanel().getSelectionPanel().draw();
+			}
 		}
 	}
 }

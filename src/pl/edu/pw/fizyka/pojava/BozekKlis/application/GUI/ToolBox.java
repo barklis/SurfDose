@@ -33,7 +33,7 @@ public class ToolBox extends VBox {
 		
 		selectionColorButton = new Button("");
 		selectionColorButton.getStyleClass().add("selectionColorButton");
-		selectionColorButton.setOnAction(new ColorSelectionHandler());
+		selectionColorButton.setOnAction(new ColorSelectionHandler(gui));
 		
 		resizeImageButton = new Button("");
 		resizeImageButton.getStyleClass().add("resizeImageButton");
