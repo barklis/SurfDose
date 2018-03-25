@@ -32,4 +32,11 @@
 		<languageConformationTitle>Zmiana języka</languageConformationTitle>
 		<languageConformationContent>By zobaczyć zmiany, musisz zrestartować program. Zrobić to teraz?</languageConformationContent>
 	</dialogs>
+	<lineWidthWindow>
+		<lineWidthWindowTitle>Wybór grubości zaznaczenia</lineWidthWindowTitle>
+		<lineWidthWindowLabel>Grubość lini zaznaczenia:</lineWidthWindowLabel>
+		<okButton>Zatwierdź</okButton>
+		<cancelButton>Anuluj</cancelButton>
+		<applyToAllCheckbox>Zastosuj do wszystkich</applyToAllCheckbox>
+	</lineWidthWindow>
 </root>

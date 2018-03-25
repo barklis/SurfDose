@@ -1,0 +1,21 @@
+
+HBox{
+	-fx-spacing: 10px;
+	-fx-padding: 6px;
+}
+
+HBox VBox{
+	-fx-alignment: center;
+}
+
+*{
+	-fx-font-size: 13px;
+}
+
+Spinner{
+	-fx-pref-width: 100px;
+}
+
+BorderPane{
+	-fx-padding: 10px;
+}

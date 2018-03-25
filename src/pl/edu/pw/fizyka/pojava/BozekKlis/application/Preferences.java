@@ -9,7 +9,7 @@ public class Preferences {
 	private static Document configDocument;
 	
 	private static String language;
-	private static int selectionLineWidth;
+	private static double selectionLineWidth;
 	private static Color selectionColor;
 	
 	public static void loadConfigFiles(){
@@ -17,16 +17,16 @@ public class Preferences {
 		languageDocument = XmlHandler.loadXMLDocument(XmlHandler.getLabel(configDocument, "language")+".xml");
 		
 		language = XmlHandler.getLabel(configDocument, "language");
-		selectionLineWidth = Integer.parseInt(XmlHandler.getLabel(configDocument, "selectionLineWidth"));
+		selectionLineWidth = Double.parseDouble(XmlHandler.getLabel(configDocument, "selectionLineWidth"));
 		selectionColor = Color.valueOf(XmlHandler.getLabel(configDocument, "selectionColor"));
 	}
 	
-	public static int getSelectionLineWidth() {
+	public static double getSelectionLineWidth() {
 		return selectionLineWidth;
 	}
 
 
-	public static void setSelectionLineWidth(int selectionLineWidth) {
+	public static void setSelectionLineWidth(double selectionLineWidth) {
 		Preferences.selectionLineWidth = selectionLineWidth;
 		XmlHandler.changeSelectorValue("selectionLineWidth", String.valueOf(selectionLineWidth), configDocument, "config.xml");
 	}
