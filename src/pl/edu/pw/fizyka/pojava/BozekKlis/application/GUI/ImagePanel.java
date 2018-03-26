@@ -1,10 +1,6 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -22,16 +18,10 @@ public class ImagePanel extends ImageView {
 		this.width = width;
 		this.height = height;
 		
-		loadImage();
 	}
 	
-	void loadImage() {
-		try {
-			bufferedImage = ImageIO.read(new File("src/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/grafika.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
+	public void loadImage(BufferedImage image) {
+		bufferedImage = image;
 		resizeImage(width, height);
 	}
 	

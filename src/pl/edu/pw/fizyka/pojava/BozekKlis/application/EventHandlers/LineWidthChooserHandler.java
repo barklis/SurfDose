@@ -32,6 +32,7 @@ public class LineWidthChooserHandler implements EventHandler<ActionEvent> {
 			optionsWindow.close();
 		optionsWindow = new Stage();
 		optionsWindow.setTitle(Preferences.getLabel("lineWidthWindowTitle"));
+		optionsWindow.setResizable(false);
 		
 		Spinner<Double> lineWidthField = new Spinner<Double>();
 		SpinnerValueFactory<Double> factory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.1, 100.0, Preferences.getSelectionLineWidth(), 0.1);
