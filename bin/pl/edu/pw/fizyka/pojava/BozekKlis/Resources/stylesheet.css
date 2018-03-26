@@ -8,7 +8,7 @@
 }
 
 ToolBox{
-	-fx-background-color: linear-gradient(red, blue);
+	-fx-background-color: darkred;
 	-fx-padding: 10px 7px 0px 7px;
 	-fx-spacing: 10px;
 }
@@ -52,7 +52,7 @@ ToolBox .resizeImageButton{
 
 BottomPanel{
 	-fx-pref-height: 50px;
-	-fx-background-color: linear-gradient(to right, blue, red) ;
+	-fx-background-color: darkred;
 	-fx-padding: 5px 12px 5px 12px;
 }
 
@@ -67,7 +67,7 @@ BottomPanel VBox Label{
 }
 
 DrawingPanel{
-	-fx-background-color: gray;
+	-fx-background-color: black;
 }
 
 ImagePanel{

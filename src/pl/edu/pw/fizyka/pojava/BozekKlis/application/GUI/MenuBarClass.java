@@ -11,6 +11,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ColorSelectio
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.DeleteSelectionHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ExitProgramHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.LineWidthChooserHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.RestoreSelectionHandler;
 
 public class MenuBarClass extends MenuBar {
@@ -26,6 +27,7 @@ public class MenuBarClass extends MenuBar {
 		
 		fileMenu = new Menu(Preferences.getLabel("file"));
 			MenuItem openFileItem = new MenuItem(Preferences.getLabel("openFile"));
+				openFileItem.setOnAction(new OpenFileHandler(gui));
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
 			fileMenu.getItems().addAll(openFileItem, new SeparatorMenuItem(), exitItem);
