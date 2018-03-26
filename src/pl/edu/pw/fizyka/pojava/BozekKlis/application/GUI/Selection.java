@@ -35,6 +35,8 @@ public class Selection {
 			deletedSelectionList.add(selectionList.get(selectionList.size()-1));
 			selectionList.remove(selectionList.size()-1);
 		}
+		if(currentSelection != null)
+			currentSelection = null;
 	}
 	
 	public static void restoreSelection() {
