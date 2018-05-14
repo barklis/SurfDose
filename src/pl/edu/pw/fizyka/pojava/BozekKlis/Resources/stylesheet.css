@@ -8,7 +8,7 @@
 }
 
 ToolBox{
-	-fx-background-color: linear-gradient(red, blue);
+	-fx-background-color: darkred;
 	-fx-padding: 10px 7px 0px 7px;
 	-fx-spacing: 10px;
 }
@@ -52,22 +52,29 @@ ToolBox .resizeImageButton{
 
 BottomPanel{
 	-fx-pref-height: 50px;
-	-fx-background-color: linear-gradient(to right, blue, red) ;
+	-fx-background-color: darkred;
 	-fx-padding: 5px 12px 5px 12px;
+}
+
+BottomPanel Label{
+	-fx-text-fill: white;
 }
 
 BottomPanel VBox{
 	-fx-alignment: center;
 }
 
-BottomPanel VBox Label{
-	-fx-font-size: 25px;
+.LeftHBox{
+	-fx-font-size: 16px;
 	-fx-font-weight: bold;
-	-fx-text-fill: white;
+}
+
+.RightHBox{
+	-fx-font-size: 11px;
 }
 
 DrawingPanel{
-	-fx-background-color: gray;
+	-fx-background-color: black;
 }
 
 ImagePanel{
@@ -76,11 +83,24 @@ ImagePanel{
     -fx-border-width: 5;
 }
 
-SelectionPanel{
-	-fx-background-color: rgba(0,0,0,0.5);
+.axis { 
+    -fx-tick-label-fill: white;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
 }
-
-
+ 
+.axis-label {
+   -fx-text-fill: white; 
+   -fx-font-size: 15px;
+}
+ 
+.axis-tick-mark {
+    -fx-stroke: #637040;
+    -fx-stroke-width: 3; 
+}
+.axis-minor-tick-mark {
+    -fx-stroke: #859656;
+}
 
 
 

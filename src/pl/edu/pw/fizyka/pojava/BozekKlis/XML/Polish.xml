@@ -4,18 +4,20 @@
 	<menuBar>
 		<fileMenu>
 			<file>Plik</file>
-			<openFile>Otwórz</openFile>
+			<openRTstructurFile>Załaduj plik RTSTRUCTUR</openRTstructurFile>
+			<openRTdoseFile>Załaduj plik RTDOSE</openRTdoseFile>
 			<exit>Wyjście</exit>
 		</fileMenu>
 		<editMenu>
-			<edit>Edycja</edit>
-			<undoSelection>Cofnij zaznaczenie</undoSelection>
-			<redoSelection>Przywróć zaznaczenie</redoSelection>
+			<programMenu>Program</programMenu>
+			<showFilesContentItem>Załadowane dane</showFilesContentItem>
+			<showHistogramItem>Histogram obliczonej dawki</showHistogramItem>
+			<calculateDoseMenu>Oblicz dawkę</calculateDoseMenu>
 		</editMenu>
 		<optionsMenu>
 			<options>Opcje</options>
-			<selectionColor>Kolor zaznaczenia</selectionColor>
-			<selectionWidth>Grubość zaznaczenia</selectionWidth>
+			<contourLineColor>Kolor konturu</contourLineColor>
+			<contourLineWidth>Grubość lini konturu</contourLineWidth>
 			<language>Język</language>
 			<PolishLanguage>Polski</PolishLanguage>
 			<EnglishLanguage>Angielski</EnglishLanguage>
@@ -27,16 +29,26 @@
 	</menuBar>
 	<bottomPanel>
 		<dose>Dawka</dose>
+		<calculated>Obliczona</calculated>
+		<notCalculated>Nieobliczona</notCalculated>
+		<calculating>Obliczanie...</calculating>
+		<doseFile>Plik RTDOSE</doseFile>
+		<structurFile>Plik RTSTRUCTUR</structurFile>
 	</bottomPanel>
 	<dialogs>
 		<languageConformationTitle>Zmiana języka</languageConformationTitle>
-		<languageConformationContent>By zobaczyć zmiany, musisz zrestartować program. Zrobić to teraz?</languageConformationContent>
+		<languageConformationContent>By zobaczyć zmiany okno musi się od nowa załadować. Zrobić to teraz?</languageConformationContent>
+		<notCalculatedInformationTitle>Nie można wyświetlić histogramu</notCalculatedInformationTitle>
+		<notCalculatedInformationContent>Dawka nie jest obliczona</notCalculatedInformationContent>
 	</dialogs>
 	<lineWidthWindow>
-		<lineWidthWindowTitle>Wybór grubości zaznaczenia</lineWidthWindowTitle>
-		<lineWidthWindowLabel>Grubość lini zaznaczenia:</lineWidthWindowLabel>
+		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
+		<contourWidthWindowLabel>Grubość lini konturu:</contourWidthWindowLabel>
 		<okButton>Zatwierdź</okButton>
 		<cancelButton>Anuluj</cancelButton>
-		<applyToAllCheckbox>Zastosuj do wszystkich</applyToAllCheckbox>
 	</lineWidthWindow>
+	<chart>
+		<calculatedDose>Obliczona dawka</calculatedDose>
+		<contourLength>Długość konturu</contourLength>
+	</chart>
 </root>

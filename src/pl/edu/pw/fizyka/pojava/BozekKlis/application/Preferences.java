@@ -9,41 +9,40 @@ public class Preferences {
 	private static Document configDocument;
 	
 	private static String language;
-	private static double selectionLineWidth;
-	private static Color selectionColor;
+	private static double contourLineWidth;
+	private static Color contourLineColor;
 	
 	public static void loadConfigFiles(){
 		configDocument = XmlHandler.loadXMLDocument("config.xml");
 		languageDocument = XmlHandler.loadXMLDocument(XmlHandler.getLabel(configDocument, "language")+".xml");
 		
 		language = XmlHandler.getLabel(configDocument, "language");
-		selectionLineWidth = Double.parseDouble(XmlHandler.getLabel(configDocument, "selectionLineWidth"));
-		selectionColor = Color.valueOf(XmlHandler.getLabel(configDocument, "selectionColor"));
+		contourLineWidth = Double.parseDouble(XmlHandler.getLabel(configDocument, "contourLineWidth"));
+		contourLineColor = Color.valueOf(XmlHandler.getLabel(configDocument, "contourLineColor"));
 	}
 	
-	public static double getSelectionLineWidth() {
-		return selectionLineWidth;
+	public static double getContourLineWidth() {
+		return contourLineWidth;
 	}
 
-
-	public static void setSelectionLineWidth(double selectionLineWidth) {
-		Preferences.selectionLineWidth = selectionLineWidth;
-		XmlHandler.changeSelectorValue("selectionLineWidth", String.valueOf(selectionLineWidth), configDocument, "config.xml");
+	public static void setContourLineWidth(double contourLineWidth) {
+		Preferences.contourLineWidth = contourLineWidth;
+		XmlHandler.changeSelectorValue("contourLineWidth", String.valueOf(contourLineWidth), configDocument, "config.xml");
 	}
 
-	public static Color getSelectionColor() {
-		return selectionColor;
+	public static Color getContourLineColor() {
+		return contourLineColor;
 	}
 	
-	public static void setSelectionColor(Color selectionColor) {
-		Preferences.selectionColor = selectionColor;
-
+	public static void setContourLineColor(Color contourColor) {
+		Preferences.contourLineColor = contourColor;
+	
 		String valStr = String.format( "#%02X%02X%02X",
-				(int)( selectionColor.getRed() * 255 ),
-				(int)( selectionColor.getGreen() * 255 ),
-				(int)( selectionColor.getBlue() * 255 ) );
+				(int)( contourColor.getRed() * 255 ),
+				(int)( contourColor.getGreen() * 255 ),
+				(int)( contourColor.getBlue() * 255 ) );
 		
-		XmlHandler.changeSelectorValue("selectionColor", valStr, configDocument, "config.xml");
+		XmlHandler.changeSelectorValue("contourLineColor", valStr, configDocument, "config.xml");
 	}
 
 
@@ -54,6 +53,7 @@ public class Preferences {
 	public static String getLanguage() {
 		return language;
 	}
+	
 	public static void setLanguage(String language) {
 		Preferences.language = language;
 		XmlHandler.changeSelectorValue("language", language, configDocument, "config.xml");

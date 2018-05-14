@@ -4,18 +4,20 @@
 	<menuBar>
 		<fileMenu>
 			<file>File</file>
-			<openFile>Open</openFile>
+			<openRTstructurFile>Load RTSTRUCTUR file</openRTstructurFile>
+			<openRTdoseFile>Load RTDOSE file</openRTdoseFile>
 			<exit>Exit</exit>
 		</fileMenu>
 		<editMenu>
-			<edit>Edit</edit>
-			<undoSelection>Undo selection</undoSelection>
-			<redoSelection>Restore selection</redoSelection>
+			<programMenu>Program</programMenu>
+			<showFilesContentItem>Loaded data</showFilesContentItem>
+			<showHistogramItem>Chart of calculated dose</showHistogramItem>
+			<calculateDoseMenu>Calculate dose</calculateDoseMenu>
 		</editMenu>
 		<optionsMenu>
 			<options>Options</options>
-			<selectionColor>Selection color</selectionColor>
-			<selectionWidth>Selection width</selectionWidth>
+			<contourLineColor>Contour color</contourLineColor>
+			<contourLineWidth>Contour line width</contourLineWidth>
 			<language>Language</language>
 			<PolishLanguage>Polish</PolishLanguage>
 			<EnglishLanguage>English</EnglishLanguage>
@@ -27,17 +29,26 @@
 	</menuBar>
 	<bottomPanel>
 		<dose>Dose</dose>
+		<calculated>Calculated</calculated>
+		<notCalculated>Not calculated</notCalculated>
+		<calculating>Calculating...</calculating>
+		<doseFile>RTDOSE file</doseFile>
+		<structurFile>RTSTRUCTUR file</structurFile>
 	</bottomPanel>
 	<dialogs>
 		<languageConformationTitle>Change language</languageConformationTitle>
-		<languageConformationContent>To see the changes, you need to restart the program. Do you want to do it now?</languageConformationContent>
+		<languageConformationContent>To see the changes, window must be restarted. Do it now?</languageConformationContent>
+		<notCalculatedInformationTitle>Cannot display chart</notCalculatedInformationTitle>
+		<notCalculatedInformationContent>Dose is not calculated</notCalculatedInformationContent>
 	</dialogs>
 	<lineWidthWindow>
-		<lineWidthWindowTitle>Set selection line width</lineWidthWindowTitle>
-		<lineWidthWindowLabel>Selection line width:</lineWidthWindowLabel>
+		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>
+		<contourWidthWindowLabel>Contour line width:</contourWidthWindowLabel>
 		<okButton>OK</okButton>
 		<cancelButton>Cancel</cancelButton>
-		<applyToAllCheckbox>Apply to all</applyToAllCheckbox>
 	</lineWidthWindow>
-	
+	<chart>
+		<calculatedDose>Calculated dose</calculatedDose>
+		<contourLength>Contour length</contourLength>
+	</chart>
 </root>

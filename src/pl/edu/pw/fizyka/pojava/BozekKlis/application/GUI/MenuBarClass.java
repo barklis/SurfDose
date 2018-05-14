@@ -1,17 +1,21 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI;
 
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.CalculateDoseHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ChangeLanguageHandler;
-import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ColorSelectionHandler;
-import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.DeleteSelectionHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineColorHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ExitProgramHandler;
-import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.LineWidthChooserHandler;
-import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.RestoreSelectionHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTdoseFileHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTstucturFileHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowHistogramHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowLoadedDataHandler;
 
 public class MenuBarClass extends MenuBar {
 	GUI gui;
@@ -25,23 +29,31 @@ public class MenuBarClass extends MenuBar {
 		this.gui = gui;
 		
 		fileMenu = new Menu(Preferences.getLabel("file"));
-			MenuItem openFileItem = new MenuItem(Preferences.getLabel("openFile"));
+			MenuItem openRTstructurFileItem = new MenuItem(Preferences.getLabel("openRTstructurFile"));
+				openRTstructurFileItem.setOnAction(new OpenRTstucturFileHandler(gui));
+			MenuItem openRTdoseFileItem = new MenuItem(Preferences.getLabel("openRTdoseFile"));
+				openRTdoseFileItem.setOnAction(new OpenRTdoseFileHandler(gui));
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
-			fileMenu.getItems().addAll(openFileItem, new SeparatorMenuItem(), exitItem);
+				
+			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, new SeparatorMenuItem(), exitItem);
 		
-		editMenu = new Menu(Preferences.getLabel("edit"));
-			MenuItem selectionUndoItem = new MenuItem(Preferences.getLabel("undoSelection"));
-				selectionUndoItem.setOnAction(new DeleteSelectionHandler(gui));
-			MenuItem selectionRedoItem = new MenuItem(Preferences.getLabel("redoSelection"));
-				selectionRedoItem.setOnAction(new RestoreSelectionHandler(gui));
-			editMenu.getItems().addAll(selectionUndoItem, selectionRedoItem);
+		editMenu = new Menu(Preferences.getLabel("programMenu"));
+			CheckMenuItem showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
+			CheckMenuItem showHistogramItem = new CheckMenuItem(Preferences.getLabel("showHistogramItem"));
+				showFilesContentItem.setOnAction(new ShowLoadedDataHandler(gui, showFilesContentItem, showHistogramItem));
+				showHistogramItem.setOnAction(new ShowHistogramHandler(gui, showFilesContentItem, showHistogramItem));
+			
+			MenuItem calculateDoseItem = new MenuItem(Preferences.getLabel("calculateDoseMenu"));
+				calculateDoseItem.setOnAction(new CalculateDoseHandler(gui));
+		
+			editMenu.getItems().addAll(showFilesContentItem, showHistogramItem, new SeparatorMenuItem(), calculateDoseItem);
 		
 		optionsMenu = new Menu(Preferences.getLabel("options"));
-			MenuItem selectionColorItem = new MenuItem(Preferences.getLabel("selectionColor"));
-				selectionColorItem.setOnAction(new ColorSelectionHandler(gui));
-			MenuItem selectionWidthItem = new MenuItem(Preferences.getLabel("selectionWidth"));
-				selectionWidthItem.setOnAction(new LineWidthChooserHandler(gui));
+			MenuItem contourColorItem = new MenuItem(Preferences.getLabel("contourLineColor"));
+				contourColorItem.setOnAction(new ContourLineColorHandler(gui));
+			MenuItem contourLineWidthItem = new MenuItem(Preferences.getLabel("contourLineWidth"));
+				contourLineWidthItem.setOnAction(new ContourLineWidthHandler(gui));
 			
 			Menu languageMenu = new Menu(Preferences.getLabel("language"));
 				MenuItem polishLanguageItem = new MenuItem(Preferences.getLabel("PolishLanguage"));
@@ -50,7 +62,7 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-			optionsMenu.getItems().addAll(selectionColorItem, selectionWidthItem, new SeparatorMenuItem(), languageMenu);
+				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));

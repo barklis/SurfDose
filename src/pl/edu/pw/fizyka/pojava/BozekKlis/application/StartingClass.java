@@ -11,9 +11,7 @@ public class StartingClass extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		
 		gui = new GUI(primaryStage);
-		
 	}
 	
 	public static void main(String[] args) {

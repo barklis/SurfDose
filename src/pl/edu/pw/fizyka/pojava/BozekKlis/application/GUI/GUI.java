@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
-import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.LineWidthChooserHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowMaximizeHandler;
 
 public class GUI{
@@ -24,6 +24,8 @@ public class GUI{
 	}
 	
 	public void restart() {
+		getCenterPanel().getDrawingPanel().setChartEmbeded(false);
+		getCenterPanel().getDrawingPanel().setCanvasEmbeded(false);
 		mainWindow.close();
 		mainWindow = new Stage();
 		init();
@@ -49,8 +51,8 @@ public class GUI{
 		mainWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
-				if(LineWidthChooserHandler.optionsWindow != null)
-					LineWidthChooserHandler.optionsWindow.close();
+				if(ContourLineWidthHandler.optionsWindow != null)
+					ContourLineWidthHandler.optionsWindow.close();
 				System.exit(0);
 			}
 		});

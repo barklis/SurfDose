@@ -15,7 +15,7 @@ public class WindowMaximizeHandler implements ChangeListener<Boolean> {
 	@Override
 	public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 		Platform.runLater(()-> {
-			gui.getCenterPanel().getDrawingPanel().resizeImage();
+			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
 		});
 	}
 

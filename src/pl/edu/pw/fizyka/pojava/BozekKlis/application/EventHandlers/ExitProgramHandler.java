@@ -7,8 +7,8 @@ public class ExitProgramHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent arg0) {
-		if(LineWidthChooserHandler.optionsWindow != null)
-			LineWidthChooserHandler.optionsWindow.close();
+		if(ContourLineWidthHandler.optionsWindow != null)
+			ContourLineWidthHandler.optionsWindow.close();
 		System.exit(0);
 	}
 
