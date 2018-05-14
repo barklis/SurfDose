@@ -5,38 +5,82 @@ import javafx.scene.layout.StackPane;
 public class DrawingPanel extends StackPane {
 	GUI gui;
 	
-	ImagePanel imagePanel;
-	SelectionPanel selectionPanel;
+	//ImagePanel imagePanel;
+	CanvasPanel canvasPanel;
+	ChartPanel chartPanel;
+	
+	boolean chartEmbeded;
+	boolean canvasEmbeded;
 	
 	double width, height;
 	
 	public DrawingPanel(GUI gui) {
 		this.gui = gui;
-		width = 700;
-		height = 500;
+		this.width = 800;
+		this.height = 500;
 		setPrefSize(width, height);
 		
-		imagePanel = new ImagePanel(gui, width, height);
-		selectionPanel = new SelectionPanel(gui, imagePanel.width, imagePanel.height);
+		//imagePanel = new ImagePanel(gui, width, height);
+		canvasPanel = new CanvasPanel(gui, width, height);
+		chartPanel = new ChartPanel(gui);
 		
-		getChildren().add(imagePanel);
-		getChildren().add(selectionPanel);
+		this.chartEmbeded = false;
+		this.canvasEmbeded = false;
+		
+		
+		//getChildren().add(imagePanel);
+		
 	}
 	
+	//public ImagePanel getImagePanel() {
+	//	return imagePanel;
+	//}
 	
+	public void placeCanvas() {
+		if(chartEmbeded || canvasEmbeded)
+			getChildren().remove(0);
+		getChildren().add(canvasPanel);
+		canvasEmbeded = true;
+		chartEmbeded = false;
+	}
+	
+	public void placeChart() {
+		if(chartEmbeded || canvasEmbeded)
+			getChildren().remove(0);
+		getChildren().add(chartPanel.getChart());
+		canvasEmbeded = false;
+		chartEmbeded = true;
+	}
+	
+	public void changeChart() {
+		if(chartEmbeded) {
+			getChildren().remove(0);
+			getChildren().add(chartPanel.getChart());
+		}
+	}
+	
+	public CanvasPanel getCanvasPanel() {
+		return canvasPanel;
+	}
 
-	public void resizeImage() {
-		width = gui.getScene().getWidth()-gui.getCenterPanel().getToolbox().getWidth();
-		height = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
-		imagePanel.resizeImage(width, height);
-		selectionPanel.resize(imagePanel.width, imagePanel.height);
-		selectionPanel.draw();
+	public ChartPanel getChartPanel() {
+		return chartPanel;
+	}
+
+	public boolean isChartEmbeded() {
+		return chartEmbeded;
 	}
 	
-	public ImagePanel getImagePanel() {
-		return imagePanel;
+	public boolean isCanvasEmbeded() {
+		return canvasEmbeded;
 	}
-	public SelectionPanel getSelectionPanel() {
-		return selectionPanel;
+
+	public void setChartEmbeded(boolean chartEmbeded) {
+		this.chartEmbeded = chartEmbeded;
 	}
+
+	public void setCanvasEmbeded(boolean canvasEmbeded) {
+		this.canvasEmbeded = canvasEmbeded;
+	}
+	
 }
