@@ -20,7 +20,7 @@ public class DrawingPanel extends StackPane {
 	
 	public DrawingPanel(GUI gui) {
 		this.gui = gui;
-		this.width = 800;
+		this.width = 900;
 		this.height = 500;
 		this.currentFrame = 0;
 		setPrefSize(width, height);
