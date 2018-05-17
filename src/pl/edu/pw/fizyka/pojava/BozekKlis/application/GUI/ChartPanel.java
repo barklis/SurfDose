@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.input.ScrollEvent;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.Point;
@@ -14,12 +13,10 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.Point;
 public class ChartPanel{
 
 	GUI gui;
-	int currentFrame;
 	List<AreaChart<Number,Number>> charts;
 	
 	public ChartPanel(GUI gui) {
 		this.gui = gui;
-		currentFrame = 0;
 		charts = new ArrayList<AreaChart<Number,Number>>();
 	}
 	
@@ -28,20 +25,13 @@ public class ChartPanel{
 	}
 	
 	public synchronized void initChartList() {
-		gui.getScene().setOnScroll((ScrollEvent e) -> {
-			int sc = (e.getDeltaY() > 0) ? 1 : -1;
-			if(currentFrame + sc >= 0 && currentFrame + sc < DcmData.getNumberOfFrames()) {
-				currentFrame += sc;
-				gui.getCenterPanel().getDrawingPanel().changeChart();
-			}
-		});
 		charts.clear();
 		for(int i = 0; i < DcmData.getNumberOfFrames(); ++i)
 			charts.add(createChart(i));
 	}
 	
 	public synchronized AreaChart<Number,Number> getChart(){
-		return charts.get(currentFrame);
+		return charts.get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame());
 	}
 	
 	private AreaChart<Number, Number> createChart(int frameNumber) {

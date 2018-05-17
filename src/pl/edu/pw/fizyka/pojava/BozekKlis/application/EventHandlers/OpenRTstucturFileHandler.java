@@ -10,6 +10,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmManager;
 
+// Load RTSTRUCUR file
 public class OpenRTstucturFileHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
@@ -31,6 +32,7 @@ public class OpenRTstucturFileHandler implements EventHandler<ActionEvent> {
 					DcmData.setContourData(contourFile);
 					Platform.runLater(()->{
 						gui.getBottomPanel().setStructurFileName(contourFile.getName());
+						gui.getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
 					});
 				}
 			});

@@ -4,7 +4,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-
+// Starting class
 public class StartingClass extends Application {
 	
 	GUI gui;

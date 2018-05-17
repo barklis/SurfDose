@@ -2,7 +2,6 @@ package pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.Contour;
@@ -11,33 +10,22 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 public class CanvasPanel extends Canvas {
 	GUI gui;
 	int pixelSize;
-	int currentFrame;
 	
 	double containerWidth;
 	double containerHeight;
 
 	public CanvasPanel(GUI gui, double width, double height) {
 		this.gui = gui;
-		this.currentFrame = 0;
 		setHeight(height);
 		setWidth(width);
-		
-		//drawFrame(currentFrame);
-		
-		setOnScroll((ScrollEvent e) -> {
-			int sc = (e.getDeltaY() > 0) ? 1 : -1;
-			if(currentFrame + sc >= 0 && currentFrame + sc < DcmData.getNumberOfFrames()) {
-				currentFrame += sc;
-				drawFrame();
-			}
-		});
 	}
 	
 public void drawFrame() {
 		
 		if(!DcmData.isDoseLoaded())
 			return;
-	
+		
+		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
 		GraphicsContext gc = getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, DcmData.getNumberOfCols()*pixelSize, DcmData.getNumberOfRows()*pixelSize);
@@ -60,9 +48,9 @@ public void drawFrame() {
 		gc.setLineWidth(Preferences.getContourLineWidth());
 		gc.beginPath();
 		for(Contour contour : DcmData.getDcmFrames().get(currentFrame).getContours()) {
-			gc.moveTo((contour.getData().get(0).getX()-DcmData.getX0())*pixelSize/DcmData.getColsPixelSpacing(), (contour.getData().get(0).getY()-DcmData.getY0())*pixelSize/DcmData.getColsPixelSpacing());
+			gc.moveTo((contour.getData().get(0).getX()-DcmData.getX0())*pixelSize/DcmData.getColsPixelSpacing(), (contour.getData().get(0).getY()-DcmData.getY0())*pixelSize/DcmData.getRowsPixelSpacing());
 			for(int i = 1; i < contour.getNumberOfPoints(); i++) {
-				gc.lineTo((contour.getData().get(i).getX()-DcmData.getX0())*pixelSize/DcmData.getColsPixelSpacing(), (contour.getData().get(i).getY()-DcmData.getY0())*pixelSize/DcmData.getColsPixelSpacing());
+				gc.lineTo((contour.getData().get(i).getX()-DcmData.getX0())*pixelSize/DcmData.getColsPixelSpacing(), (contour.getData().get(i).getY()-DcmData.getY0())*pixelSize/DcmData.getRowsPixelSpacing());
 			}
 			gc.lineTo((contour.getData().get(contour.getNumberOfPoints()-1).getX()-DcmData.getX0())*pixelSize/DcmData.getColsPixelSpacing(), (contour.getData().get(contour.getNumberOfPoints()-1).getY()-DcmData.getY0())*pixelSize/DcmData.getColsPixelSpacing());
 			gc.stroke();

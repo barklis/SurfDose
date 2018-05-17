@@ -17,6 +17,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTstuctur
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowHistogramHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowLoadedDataHandler;
 
+//Menu Bar
 public class MenuBarClass extends MenuBar {
 	GUI gui;
 	

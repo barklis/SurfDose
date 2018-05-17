@@ -9,6 +9,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+//Show chart of calculated dose
 public class ShowHistogramHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;

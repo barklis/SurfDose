@@ -1,5 +1,6 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule;
 
+// Stores information about value in certain position
 public class Point{
 	double x, y;
 	double value;
@@ -43,4 +44,5 @@ public class Point{
 	public void setValue(double value) {
 		this.value = value;
 	}
+	
 }

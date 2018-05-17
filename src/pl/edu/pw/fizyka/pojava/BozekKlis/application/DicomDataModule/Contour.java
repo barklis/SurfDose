@@ -8,6 +8,7 @@ import com.pixelmed.dicom.DicomException;
 import com.pixelmed.dicom.SequenceAttribute;
 import com.pixelmed.dicom.SequenceItem;
 
+// Stores information about single contour
 public class Contour {
 	String uid;
 	int numberOfPoints;

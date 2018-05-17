@@ -10,6 +10,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmManager;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+// Load RTDOSE file
 public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
@@ -31,6 +32,7 @@ public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
 					DcmData.setDoseData(doseFile);
 					Platform.runLater(() -> {
 						gui.getBottomPanel().setDoseFileName(doseFile.getName());
+						gui.getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
 					});
 				}
 			});

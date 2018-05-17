@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+// Allows to choose contour line width
 public class ContourLineWidthHandler implements EventHandler<ActionEvent> {
 
 	public static Stage optionsWindow = null;
@@ -40,8 +41,6 @@ public class ContourLineWidthHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent arg0) {
 				Preferences.setContourLineWidth(lineWidthField.getValue());
-				
-				//Refresh canvas
 				
 				optionsWindow.close();
 				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();

@@ -14,6 +14,7 @@ import com.pixelmed.dicom.AttributeList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+// Contains static methods to work witch DICOM files, like loading and saving
 public class DcmManager {
 	
 	public static File getDcmFile(Stage stage, String fileType) {

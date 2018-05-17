@@ -12,6 +12,7 @@ import com.pixelmed.dicom.AttributeTag;
 import com.pixelmed.dicom.DicomException;
 import com.pixelmed.dicom.SequenceAttribute;
 
+// Contains loaded and calculated data
 public class DcmData {
 	static List<DcmFrame> dcmFrames = new ArrayList<DcmFrame>();
 	static int numberOfCols = 0;

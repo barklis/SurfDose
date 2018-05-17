@@ -9,6 +9,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowMaximizeHandler;
 
+//contains all interface classes
 public class GUI{
 	Stage mainWindow;
 	Scene scene;
@@ -53,7 +54,6 @@ public class GUI{
 			public void handle(WindowEvent arg0) {
 				if(ContourLineWidthHandler.optionsWindow != null)
 					ContourLineWidthHandler.optionsWindow.close();
-				System.exit(0);
 			}
 		});
 		mainWindow.setScene(scene);
