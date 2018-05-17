@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+//handle window maximize event
 public class WindowMaximizeHandler implements ChangeListener<Boolean> {
 	GUI gui;
 	

@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+//Allows to work with XML files
 public class XmlHandler {
 	
 	public static String getLabel(Document doc, String name) {

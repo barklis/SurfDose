@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 
 import javafx.scene.paint.Color;
 
+// Stores user preferences, and allows to load text in chosen language
 public class Preferences {
 	private static Document languageDocument;
 	private static Document configDocument;

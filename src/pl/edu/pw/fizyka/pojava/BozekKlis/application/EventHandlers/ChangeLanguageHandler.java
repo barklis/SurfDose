@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 
+// Allows to change language od the application
 public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 	String language;
 	GUI gui;

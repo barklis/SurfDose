@@ -3,10 +3,13 @@ package pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+// Allow to calculate dose
 public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
@@ -31,6 +34,20 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 				}
 			});
 			calc.start();
+		}
+		else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle(Preferences.getLabel("cannotCalculateTitle"));
+			
+			if(DcmData.isContourLoaded())
+				alert.setContentText(Preferences.getLabel("notLoadedDoseInformationContent"));
+			else if(DcmData.isDoseLoaded())
+				alert.setContentText(Preferences.getLabel("notLoadedStructurInformationContent"));
+			else
+				alert.setContentText(Preferences.getLabel("notLoadedBothInformationContent"));
+			
+			alert.setHeaderText("");
+			alert.showAndWait();
 		}
 	}
 

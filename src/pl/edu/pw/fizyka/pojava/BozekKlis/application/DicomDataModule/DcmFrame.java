@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.scene.paint.Color;
 
+// Stores data of single frame
 public class DcmFrame {
 	List<Contour> contours;
 	Point[][] doseData;

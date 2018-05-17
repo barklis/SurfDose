@@ -8,9 +8,10 @@ import javafx.scene.paint.Color;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+// Allows to choose cotour line color
 public class ContourLineColorHandler implements EventHandler<ActionEvent> {
 
-GUI gui;
+	GUI gui;
 	
 	public ContourLineColorHandler(GUI gui) {
 		this.gui = gui;

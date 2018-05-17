@@ -8,24 +8,38 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+//Bottom panel
 public class BottomPanel extends HBox {
 	GUI gui;
 	
 	Label doseFileName;
 	Label structurFileName;
 	Label doseLabel;
+	Label currentframeNumberLabel;
+	Label maxframeNumberLabel;
 	
 	public BottomPanel(GUI gui) {
 		this.gui = gui;
 		
 		Label doseTextLabel = new Label(Preferences.getLabel("dose")+": ");
 		doseLabel = new Label((DcmData.isDoseCalculated() ? Preferences.getLabel("calculated") : Preferences.getLabel("notCalculated")));
-		HBox left = new HBox(new VBox(doseTextLabel), new VBox(doseLabel));
-		left.getStyleClass().add("LeftHBox");
+		VBox left = new VBox(new HBox(doseTextLabel, doseLabel));
+		left.getStyleClass().add("LeftBox");
 		
 		
 		Region region1 = new Region();
 		HBox.setHgrow(region1, Priority.ALWAYS);
+		
+		
+		currentframeNumberLabel = new Label(String.valueOf(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()));
+		maxframeNumberLabel = new Label(String.valueOf(DcmData.getNumberOfFrames()));
+		
+		VBox center = new VBox(new HBox(currentframeNumberLabel, new Label(" / "), maxframeNumberLabel));
+		center.getStyleClass().add("CenterBox");
+		
+		
+		Region region2 = new Region();
+		HBox.setHgrow(region2, Priority.ALWAYS);
 		
 		
 		Label doseFileTextLabel = new Label(Preferences.getLabel("doseFile") + ": ");
@@ -37,9 +51,9 @@ public class BottomPanel extends HBox {
 		VBox nameColumn = new VBox(new HBox(doseFileName), new HBox(structurFileName));
 		
 		HBox right = new HBox(textColumn, nameColumn);
-		right.getStyleClass().add("RightHBox");
+		right.getStyleClass().add("RightBox");
 		
-		getChildren().addAll(left, region1, right);
+		getChildren().addAll(left, region1, center, region2, right);
 		
 	}
 
@@ -53,6 +67,14 @@ public class BottomPanel extends HBox {
 
 	public void setDoseLabel(String value) {
 		doseLabel.setText(value);
+	}
+
+	public void setCurrentFrameNumberLabel(int currentframeNumberLabel) {
+		this.currentframeNumberLabel.setText(String.valueOf(currentframeNumberLabel));
+	}
+
+	public void setMaxFrameNumberLabel(int maxframeNumberLabel) {
+		this.maxframeNumberLabel.setText(String.valueOf(maxframeNumberLabel));
 	}
 	
 }

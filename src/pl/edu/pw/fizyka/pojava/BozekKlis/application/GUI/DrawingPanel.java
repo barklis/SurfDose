@@ -1,16 +1,20 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI;
 
+import javafx.application.Platform;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 
 public class DrawingPanel extends StackPane {
 	GUI gui;
 	
-	//ImagePanel imagePanel;
 	CanvasPanel canvasPanel;
 	ChartPanel chartPanel;
 	
 	boolean chartEmbeded;
 	boolean canvasEmbeded;
+	
+	Integer currentFrame;
 	
 	double width, height;
 	
@@ -18,23 +22,36 @@ public class DrawingPanel extends StackPane {
 		this.gui = gui;
 		this.width = 800;
 		this.height = 500;
+		this.currentFrame = 0;
 		setPrefSize(width, height);
 		
-		//imagePanel = new ImagePanel(gui, width, height);
 		canvasPanel = new CanvasPanel(gui, width, height);
 		chartPanel = new ChartPanel(gui);
 		
 		this.chartEmbeded = false;
 		this.canvasEmbeded = false;
 		
+		Platform.runLater(() -> {
+			gui.getScene().setOnScroll((ScrollEvent e) -> {
+				int sc = (e.getDeltaY() > 0) ? 1 : -1;
+				if(this.currentFrame + sc >= 0 && this.currentFrame + sc < DcmData.getNumberOfFrames()) {
+					
+					if(canvasEmbeded) {
+						this.currentFrame += sc;
+						gui.getBottomPanel().setCurrentFrameNumberLabel(currentFrame+1);
+						canvasPanel.drawFrame();
+					}
+					else if(chartEmbeded) {
+						this.currentFrame += sc;
+						gui.getBottomPanel().setCurrentFrameNumberLabel(currentFrame+1);
+						gui.getCenterPanel().getDrawingPanel().changeChart();
+					}
+				}
+			});
+		});
 		
-		//getChildren().add(imagePanel);
 		
 	}
-	
-	//public ImagePanel getImagePanel() {
-	//	return imagePanel;
-	//}
 	
 	public void placeCanvas() {
 		if(chartEmbeded || canvasEmbeded)
@@ -81,6 +98,14 @@ public class DrawingPanel extends StackPane {
 
 	public void setCanvasEmbeded(boolean canvasEmbeded) {
 		this.canvasEmbeded = canvasEmbeded;
+	}
+
+	public Integer getCurrentFrame() {
+		return currentFrame;
+	}
+
+	public void setCurrentFrame(Integer currentFrame) {
+		this.currentFrame = currentFrame;
 	}
 	
 }

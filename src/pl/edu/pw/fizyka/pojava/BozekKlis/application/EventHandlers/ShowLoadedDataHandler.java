@@ -2,10 +2,14 @@ package pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Alert.AlertType;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
+//shows data stored in loaded DICOM files
 public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
@@ -28,8 +32,14 @@ public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 			chart.setSelected(false);
 			data.setSelected(true);
 		}
-		else
+		else {
 			data.setSelected(false);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle(Preferences.getLabel("notLoadedDoseInformationTitle"));
+			alert.setContentText(Preferences.getLabel("notLoadedDoseInformationContent"));
+			alert.setHeaderText("");
+			alert.showAndWait();
+		}
 	}
 
 }

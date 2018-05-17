@@ -40,6 +40,11 @@
 		<languageConformationContent>To see the changes, window must be restarted. Do it now?</languageConformationContent>
 		<notCalculatedInformationTitle>Cannot display chart</notCalculatedInformationTitle>
 		<notCalculatedInformationContent>Dose is not calculated</notCalculatedInformationContent>
+		<notLoadedDoseInformationTitle>Cannot display loaded data</notLoadedDoseInformationTitle>
+		<notLoadedDoseInformationContent>RTDOSE file is not loaded</notLoadedDoseInformationContent>
+		<cannotCalculateTitle>Cannot calculate</cannotCalculateTitle>
+		<notLoadedStructurInformationContent>RTSRUCTUR file is not loaded</notLoadedStructurInformationContent>
+		<notLoadedBothInformationContent>RTDOSE and RTSTRUCTUR files are nor loaded</notLoadedBothInformationContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>

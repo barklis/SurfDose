@@ -40,6 +40,11 @@
 		<languageConformationContent>By zobaczyć zmiany okno musi się od nowa załadować. Zrobić to teraz?</languageConformationContent>
 		<notCalculatedInformationTitle>Nie można wyświetlić histogramu</notCalculatedInformationTitle>
 		<notCalculatedInformationContent>Dawka nie jest obliczona</notCalculatedInformationContent>
+		<notLoadedDoseInformationTitle>Nie można wyświetlić załadowanych danych</notLoadedDoseInformationTitle>
+		<notLoadedDoseInformationContent>Plik RTDOSE nie jest załadowany</notLoadedDoseInformationContent>
+		<cannotCalculateTitle>Nie można obliczyć</cannotCalculateTitle>
+		<notLoadedStructurInformationContent>Plik RTSRUCTUR nie jest załadowany</notLoadedStructurInformationContent>
+		<notLoadedBothInformationContent>Pliki RTDOSE i RTSTRUCTUR nie są załadowane</notLoadedBothInformationContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
