@@ -5,7 +5,6 @@ import java.io.File;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.FileChooser;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmManager;
@@ -21,8 +20,6 @@ public class OpenRTstucturFileHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 		File contourFile = DcmManager.getDcmFile(null, "RTSTRUCTUR");
 		if(contourFile != null) {
 			gui.getBottomPanel().setStructurFileName("Processing...");

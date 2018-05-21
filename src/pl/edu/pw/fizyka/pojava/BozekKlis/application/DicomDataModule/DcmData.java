@@ -47,6 +47,7 @@ public class DcmData {
 	public synchronized static boolean setDoseData(File dcmFile) {
 		
 		short[] shortData = null;
+		double scalingFactor = 0;
 		try {
 			AttributeList list = new AttributeList();
 			list.read(dcmFile);
@@ -63,21 +64,22 @@ public class DcmData {
 			rowsPixelSpacing = pixelSpacing[0];
 			colsPixelSpacing = pixelSpacing[1];
 			
+			scalingFactor = list.get(new AttributeTag("0x3004,0x000e")).getSingleDoubleValueOrDefault(0.0)*1000;
+			
 			shortData = data.getShortValues();
 		} catch (DicomException | IOException e) {
 			e.printStackTrace();
 			return false;
 		}
 		
-		long[] integerData = new long[shortData.length/2];
+		double[] integerData = new double[shortData.length/2];
 		for(int i = 0; i < shortData.length/2; i++) {
 			
 			integerData[i] = (getUnsigned(shortData[2*i+1]) << 16) | getUnsigned(shortData[2*i]);
-			
+			integerData[i] = (long) (integerData[i]*scalingFactor);
 			if(integerData[i] > maxDoseValue)
 				maxDoseValue = integerData[i];
 		}
-		
 		
 		shortData = null;
 		
@@ -105,53 +107,68 @@ public class DcmData {
 	
 	public synchronized static boolean setContourData(File dcmFile) {
 		
-		SequenceAttribute itemsOfData = null;
+		SequenceAttribute sequenceOfMainContours = null;
+		List<List<Contour>> listPackage = new ArrayList<List<Contour>>();
+		
 		try {
 			AttributeList list = new AttributeList();
 			list.read(dcmFile);
-			Attribute attr = list.get(new AttributeTag("0x3006,0x0039"));
-			SequenceAttribute r1 = (SequenceAttribute) attr;
-			itemsOfData = (SequenceAttribute) r1.getItem(0).getAttributeList().get(new AttributeTag("0x3006,0x0040"));
+			sequenceOfMainContours = (SequenceAttribute) list.get(new AttributeTag("0x3006,0x0039"));
+			
+			for(int i = 0; i < sequenceOfMainContours.getNumberOfItems(); ++i) {
+				SequenceAttribute itemsOfData = (SequenceAttribute) sequenceOfMainContours.getItem(i).getAttributeList().get(new AttributeTag("0x3006,0x0040"));
+				
+				List<Contour> multiContours = new ArrayList<Contour>();
+				for(int x = 0; x < itemsOfData.getNumberOfItems(); ++x) {
+					Contour tempContour = new Contour(itemsOfData.getItem(x));
+					if(!(x > 0 && tempContour.getZ() == multiContours.get(multiContours.size()-1).getZ()))
+						multiContours.add(tempContour);
+				}
+				
+				listPackage.add(multiContours);
+			}
+			
+		
 		} catch (DicomException | IOException e) {
 			e.printStackTrace();
 			return false;
 		}
 		
-		List<Contour> multiContours = new ArrayList<Contour>();
-		for(int i = 0; i < itemsOfData.getNumberOfItems(); i++) {
-			multiContours.add(new Contour(itemsOfData.getItem(i)));
-		}
+		int[] bounds = new int[listPackage.size()];
+		for(int x : bounds)
+			x = 0;
 		
-		Collections.sort(multiContours, (a, b) -> (a.getZ() > b.getZ()) ? 1 : 0);
-		
-		List<List<Contour>> listPackage = new ArrayList<List<Contour>>();
-		for(int i = 0; i < multiContours.size()-1; i++) {
+		int frameCounter = 0;
+		while(true) {
+			boolean inserted = false;
+			List<Contour> column = new ArrayList<Contour>();
+			for(int i = 0; i < bounds.length; ++i) {
+				if(bounds[i] < listPackage.get(i).size()) {
+					column.add(listPackage.get(i).get(bounds[i]));
+					inserted = true;
+				}
+				else {
+					column.add(new Contour(10000000));
+				}
+			}
+			if(!inserted)
+				break;
+			
+			double minCoord = Collections.min(column, (a, b) ->(a.getZ() > b.getZ()) ? 1 : 0).getZ();
 			List<Contour> subList = new ArrayList<Contour>();
-			subList.add(multiContours.get(i));
-			while(multiContours.get(i).getZ() == multiContours.get(i+1).getZ()) {
-				subList.add(multiContours.get(i+1));
-				++i;
+			for(int x = 0; x < column.size(); ++x) {
+				if(column.get(x).getZ() == minCoord) {
+					subList.add(column.get(x));
+					bounds[x]++;
+				}
 			}
-			listPackage.add(subList);
-			if(i == multiContours.size()-2) {
-				List<Contour> sub = new ArrayList<Contour>();
-				sub.add(multiContours.get(multiContours.size()-1));
-				listPackage.add(sub);
-			}
-		}
-		multiContours = null;
-		
-		numberOfFrames = listPackage.size();
-		if(dcmFrames.size() == 0) {
-			for(int i = 0; i < numberOfFrames; ++i) {
+			if(!isDoseLoaded())
 				dcmFrames.add(new DcmFrame());
-			}
+			dcmFrames.get(frameCounter).setContours(subList);
+			++frameCounter;
 		}
 		
-		for(int i = 0; i < numberOfFrames; ++i) {
-			dcmFrames.get(i).setContours(listPackage.get(i));
-		}
-		
+		numberOfFrames = dcmFrames.size();
 		
 		setContourLoaded(true);
 		structurFileName = dcmFile.getName();

@@ -21,7 +21,7 @@ public class DcmManager {
 		FileChooser chooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
 		chooser.getExtensionFilters().add(extFilter);
-		chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		File selectedFile = chooser.showOpenDialog(null);
 	    if(selectedFile != null)
 	    	return selectedFile;
@@ -30,7 +30,7 @@ public class DcmManager {
 	
 	public static boolean saveDoseDataToFile(Stage stage, Point[][] doseMatrix) {
 		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+		chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 		File outputFile = chooser.showSaveDialog(stage);
 	    if(outputFile != null) {
 	    	PrintWriter writer = null;

@@ -37,7 +37,7 @@ public class DcmFrame {
 		return maxDoseValue;
 	}
 
-	public void setDoseData(long[] doseValues, double x0, double y0, double colsPixelSpacing, double rowsPixelSpacing) {
+	public void setDoseData(double[] doseValues, double x0, double y0, double colsPixelSpacing, double rowsPixelSpacing) {
 		this.doseData = new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()];
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
