@@ -30,6 +30,7 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 					gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
 					Platform.runLater(()->{
 						gui.getBottomPanel().setDoseLabel(Preferences.getLabel("calculated"));
+						System.out.println();
 					});
 				}
 			});
