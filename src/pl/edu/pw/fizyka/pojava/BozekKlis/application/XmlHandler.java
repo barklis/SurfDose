@@ -1,9 +1,12 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -13,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 //Allows to work with XML files
 public class XmlHandler {
@@ -21,16 +25,13 @@ public class XmlHandler {
 		return ((Element) doc.getElementsByTagName(name).item(0)).getTextContent();
 	}
 	
-	public static Document loadXMLDocument(String fileName) {
+	public static Document loadXMLDocument(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		Document doc = null;
-		try {
-			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			doc = dBuilder.parse(new File("src/pl/edu/pw/fizyka/pojava/BozekKlis/XML/" + fileName));
-			doc.getDocumentElement().normalize();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		
+		DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		doc = dBuilder.parse(new File("src/pl/edu/pw/fizyka/pojava/BozekKlis/XML/" + fileName));
+		doc.getDocumentElement().normalize();
+		
 		return doc;
 	}
 	

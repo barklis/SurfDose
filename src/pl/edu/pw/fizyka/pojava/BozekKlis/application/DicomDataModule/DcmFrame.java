@@ -8,17 +8,31 @@ import javafx.scene.paint.Color;
 // Stores data of single frame
 public class DcmFrame {
 	List<Contour> contours;
-	Point[][] doseData;
+	List<Point[][]> doseData;
+	Point[][] sumDoseData;
 	int frameNumber;
 	double maxDoseValue;
+	double maxSumDoseValue;
 	
 	static int frameCounter = 0;
 	
 	public DcmFrame() {
 		contours = new ArrayList<Contour>();
+		doseData = new ArrayList<Point[][]>();
+		sumDoseData = null;
 		frameNumber = frameCounter;
 		frameCounter++;
 		maxDoseValue = 0.0;
+		maxSumDoseValue = 0.0;
+	}
+	
+	public Contour getContourById(int id) {
+		for(int i = 0; i < contours.size(); ++i) {
+			if(id == contours.get(i).getId()) {
+				return contours.get(i);
+			}
+		}
+		return new Contour(DcmData.EMPTY);
 	}
 	
 	public List<Contour> getContours() {
@@ -30,41 +44,75 @@ public class DcmFrame {
 	public int getFrameNumber() {
 		return frameNumber;
 	}
-	public Point[][] getDoseData() {
+	public List<Point[][]> getDoseData() {
 		return doseData;
+	}
+	public Point[][] getSumDoseData(){
+		return sumDoseData;
 	}
 	public double getMaxDoseValue() {
 		return maxDoseValue;
 	}
+	public double getMaxSumDoseValue() {
+		return maxSumDoseValue;
+	}
+	
+	public void sumDose() {
+		sumDoseData = new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()];
+		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
+			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
+				sumDoseData[c][r] = doseData.get(0)[c][r];
+				for(int l = 1; l < doseData.size(); ++l) {
+					sumDoseData[c][r].addValue(doseData.get(l)[c][r].getValue());
+				}
+				if(sumDoseData[c][r].getValue() > maxSumDoseValue) {
+					maxSumDoseValue = sumDoseData[c][r].getValue();
+					if(maxSumDoseValue > DcmData.getMaxSumDoseValue())
+						DcmData.setMaxSumDoseValue(maxSumDoseValue);
+				}
+			}
+		}
+	}
 
 	public void setDoseData(double[] doseValues, double x0, double y0, double colsPixelSpacing, double rowsPixelSpacing) {
-		this.doseData = new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()];
+		if(DcmData.getDoseFilesLoaded() == 0)
+			sumDoseData = new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()];
+		
+		this.doseData.add(new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()]);
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
 				double valuePoint = doseValues[DcmData.getNumberOfRows()*DcmData.getNumberOfCols()*frameNumber+DcmData.getNumberOfCols()*r+c];
 				if(valuePoint > maxDoseValue)
 					maxDoseValue = valuePoint;
-				this.doseData[c][r] = new Point(
+				this.doseData.get(doseData.size()-1)[c][r] = new Point(
 					x0 + c*colsPixelSpacing+colsPixelSpacing/2,
 					y0 + r*rowsPixelSpacing+rowsPixelSpacing/2,
 					valuePoint
 				);
+				if(DcmData.getDoseFilesLoaded() == 0) {
+					sumDoseData[c][r] = new Point(
+						x0 + c*colsPixelSpacing+colsPixelSpacing/2,
+						y0 + r*rowsPixelSpacing+rowsPixelSpacing/2,
+						valuePoint
+					);
+				}
+				else {
+					sumDoseData[c][r].addValue(valuePoint);
+				}
+				if(sumDoseData[c][r].getValue() > maxSumDoseValue) {
+					maxSumDoseValue = sumDoseData[c][r].getValue();
+					if(maxSumDoseValue > DcmData.getMaxSumDoseValue())
+						DcmData.setMaxSumDoseValue(maxSumDoseValue);
+				}
 			}
 		}
 	}
 	
-	public Color getDoseColorScale(double doseValue){
-		if(maxDoseValue == 0 || doseValue == 0)
-			return Color.BLACK;
-		//double colorValue = doseValue/maxDoseValue;
-		////double colorValue = doseValue / DcmData.getMaxDoseValue();
-		//return new Color(colorValue, colorValue, colorValue, 1.0);
-		
-		double hue = Color.BLUE.getHue() + (Color.RED.getHue() - Color.BLUE.getHue()) * doseValue / maxDoseValue ;
-		return Color.hsb(hue, 1.0, 1.0);
-	}
-	
 	public double getInterpolatedDose(double cX, double cY) {
+		if(	cX < DcmData.getX0() || cX > DcmData.getX0()+DcmData.getColsPixelSpacing()*DcmData.getNumberOfCols() || 
+			cY < DcmData.getY0() || cY > DcmData.getY0()+DcmData.getRowsPixelSpacing()*DcmData.getNumberOfRows() )
+			return 0.0;
+		
 		int dX = (int) ((cX-DcmData.getX0()-DcmData.getColsPixelSpacing()/2)/DcmData.getColsPixelSpacing());
 		int dY = (int) ((cY-DcmData.getY0()-DcmData.getRowsPixelSpacing()/2)/DcmData.getRowsPixelSpacing());
 		
@@ -75,20 +123,20 @@ public class DcmFrame {
 			dX = DcmData.getNumberOfCols()-1;
 		}
 		
-		if(cY < doseData[0][0].getY() || cY >= doseData[0][DcmData.getNumberOfRows()-1].getY()) {
+		if(cY < sumDoseData[0][0].getY() || cY >= sumDoseData[0][DcmData.getNumberOfRows()-1].getY()) {
 			
-			if(cX < doseData[0][0].getX() || cX >= doseData[DcmData.getNumberOfCols()-1][0].getX()) {
-				return doseData[dX][dY].getValue();
+			if(cX < sumDoseData[0][0].getX() || cX >= sumDoseData[DcmData.getNumberOfCols()-1][0].getX()) {
+				return sumDoseData[dX][dY].getValue();
 			}
 			else {
-				return interpolateFrom2XPoints(doseData[dX][dY], doseData[dX+1][dY], cX);
+				return interpolateFrom2XPoints(sumDoseData[dX][dY], sumDoseData[dX+1][dY], cX);
 			}
 		}
-		else if(cX < doseData[0][0].getX() || cX >= doseData[DcmData.getNumberOfCols()-1][0].getX()) {
-			return interpolateFrom2YPoints(doseData[dX][dY], doseData[dX][dY+1], cY);
+		else if(cX < sumDoseData[0][0].getX() || cX >= sumDoseData[DcmData.getNumberOfCols()-1][0].getX()) {
+			return interpolateFrom2YPoints(sumDoseData[dX][dY], sumDoseData[dX][dY+1], cY);
 		}
 		else{
-			return interpolateFrom4Points(doseData[dX][dY], doseData[dX+1][dY], doseData[dX][dY+1], doseData[dX+1][dY+1], cX, cY);
+			return interpolateFrom4Points(sumDoseData[dX][dY], sumDoseData[dX+1][dY], sumDoseData[dX][dY+1], sumDoseData[dX+1][dY+1], cX, cY);
 		}
 	}
 	

@@ -4,17 +4,35 @@ package pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule;
 public class Point{
 	double x, y;
 	double value;
+	double angle;
 
 	public Point(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.value = 0;
+		this.value = 0.0;
+		this.angle = 0.0;
 	}
 	
 	public Point(double x, double y, double value) {
 		this.x = x;
 		this.y = y;
 		this.value = value;
+	}
+	
+	public double getAngle() {
+		return angle;
+	}
+
+	public void calculateAngle(double[] uVector, double x0, double y0) {
+		double x2 = x-x0;
+		double y2 = y-y0;
+		angle = Math.atan2(uVector[0]*y2-x2*uVector[1], uVector[0]*x2+uVector[1]*y2);
+		if(angle < 0)
+			angle += 2*Math.PI;
+	}
+
+	public void addValue(double value) {
+		this.value += value;
 	}
 	
 	public static double distance(Point p1, Point p2) {

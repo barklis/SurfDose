@@ -10,9 +10,11 @@ public class DrawingPanel extends StackPane {
 	
 	CanvasPanel canvasPanel;
 	ChartPanel chartPanel;
+	MapPanel mapPanel;
 	
 	boolean chartEmbeded;
 	boolean canvasEmbeded;
+	boolean mapEmbeded;
 	
 	Integer currentFrame;
 	
@@ -20,16 +22,18 @@ public class DrawingPanel extends StackPane {
 	
 	public DrawingPanel(GUI gui) {
 		this.gui = gui;
-		this.width = 900;
+		this.width = 1000;
 		this.height = 500;
 		this.currentFrame = 0;
 		setPrefSize(width, height);
 		
 		canvasPanel = new CanvasPanel(gui, width, height);
 		chartPanel = new ChartPanel(gui);
+		mapPanel = new MapPanel(gui, width, height);
 		
 		this.chartEmbeded = false;
 		this.canvasEmbeded = false;
+		this.mapEmbeded = false;
 		
 		Platform.runLater(() -> {
 			gui.getScene().setOnScroll((ScrollEvent e) -> {
@@ -50,23 +54,33 @@ public class DrawingPanel extends StackPane {
 			});
 		});
 		
-		
 	}
 	
 	public void placeCanvas() {
-		if(chartEmbeded || canvasEmbeded)
+		if(chartEmbeded || canvasEmbeded || mapEmbeded)
 			getChildren().remove(0);
 		getChildren().add(canvasPanel);
-		canvasEmbeded = true;
+		mapEmbeded = false;
 		chartEmbeded = false;
+		canvasEmbeded = true;
 	}
 	
 	public void placeChart() {
-		if(chartEmbeded || canvasEmbeded)
+		if(chartEmbeded || canvasEmbeded || mapEmbeded)
 			getChildren().remove(0);
 		getChildren().add(chartPanel.getChart());
 		canvasEmbeded = false;
+		mapEmbeded = false;
 		chartEmbeded = true;
+	}
+	
+	public void placeMap() {
+		if(chartEmbeded || canvasEmbeded || mapEmbeded)
+			getChildren().remove(0);
+		getChildren().add(mapPanel);
+		canvasEmbeded = false;
+		chartEmbeded = false;
+		mapEmbeded = true;
 	}
 	
 	public void changeChart() {
@@ -76,6 +90,18 @@ public class DrawingPanel extends StackPane {
 		}
 	}
 	
+	public boolean isMapEmbeded() {
+		return mapEmbeded;
+	}
+
+	public void setMapEmbeded(boolean mapEmbeded) {
+		this.mapEmbeded = mapEmbeded;
+	}
+
+	public MapPanel getMapPanel() {
+		return mapPanel;
+	}
+
 	public CanvasPanel getCanvasPanel() {
 		return canvasPanel;
 	}

@@ -17,6 +17,12 @@ public class WindowMaximizeHandler implements ChangeListener<Boolean> {
 	public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 		Platform.runLater(()-> {
 			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
+			gui.getCenterPanel().getDrawingPanel().getMapPanel().setContainerSize();
+			
+			if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
+				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+			else if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
+				gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
 		});
 	}
 

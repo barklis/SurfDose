@@ -13,9 +13,11 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineCo
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ExitProgramHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTdoseFileHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTplanFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTstucturFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowHistogramHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowLoadedDataHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowMapHandler;
 
 //Menu Bar
 public class MenuBarClass extends MenuBar {
@@ -34,21 +36,25 @@ public class MenuBarClass extends MenuBar {
 				openRTstructurFileItem.setOnAction(new OpenRTstucturFileHandler(gui));
 			MenuItem openRTdoseFileItem = new MenuItem(Preferences.getLabel("openRTdoseFile"));
 				openRTdoseFileItem.setOnAction(new OpenRTdoseFileHandler(gui));
+			MenuItem openRTplanFileItem = new MenuItem(Preferences.getLabel("openRTplanFile"));
+				openRTplanFileItem.setOnAction(new OpenRTplanFileHandler(gui));
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
 				
-			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, new SeparatorMenuItem(), exitItem);
+			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exitItem);
 		
 		editMenu = new Menu(Preferences.getLabel("programMenu"));
 			CheckMenuItem showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
 			CheckMenuItem showHistogramItem = new CheckMenuItem(Preferences.getLabel("showHistogramItem"));
-				showFilesContentItem.setOnAction(new ShowLoadedDataHandler(gui, showFilesContentItem, showHistogramItem));
-				showHistogramItem.setOnAction(new ShowHistogramHandler(gui, showFilesContentItem, showHistogramItem));
+			CheckMenuItem showMapItem = new CheckMenuItem(Preferences.getLabel("showMapItem"));
+				showFilesContentItem.setOnAction(new ShowLoadedDataHandler(gui, showFilesContentItem, showHistogramItem, showMapItem));
+				showHistogramItem.setOnAction(new ShowHistogramHandler(gui, showFilesContentItem, showHistogramItem, showMapItem));
+				showMapItem.setOnAction(new ShowMapHandler(gui, showFilesContentItem, showHistogramItem, showMapItem));
 			
 			MenuItem calculateDoseItem = new MenuItem(Preferences.getLabel("calculateDoseMenu"));
 				calculateDoseItem.setOnAction(new CalculateDoseHandler(gui));
 		
-			editMenu.getItems().addAll(showFilesContentItem, showHistogramItem, new SeparatorMenuItem(), calculateDoseItem);
+			editMenu.getItems().addAll(showFilesContentItem, showHistogramItem, showMapItem, new SeparatorMenuItem(), calculateDoseItem);
 		
 		optionsMenu = new Menu(Preferences.getLabel("options"));
 			MenuItem contourColorItem = new MenuItem(Preferences.getLabel("contourLineColor"));

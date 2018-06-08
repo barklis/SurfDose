@@ -5,13 +5,15 @@
 		<fileMenu>
 			<file>File</file>
 			<openRTstructurFile>Load RTSTRUCTUR file</openRTstructurFile>
-			<openRTdoseFile>Load RTDOSE file</openRTdoseFile>
+			<openRTdoseFile>Load RTDOSE files</openRTdoseFile>
+			<openRTplanFile>Load RTPLAN file</openRTplanFile>
 			<exit>Exit</exit>
 		</fileMenu>
 		<editMenu>
 			<programMenu>Program</programMenu>
 			<showFilesContentItem>Loaded data</showFilesContentItem>
 			<showHistogramItem>Chart of calculated dose</showHistogramItem>
+			<showMapItem>Surface</showMapItem>
 			<calculateDoseMenu>Calculate dose</calculateDoseMenu>
 		</editMenu>
 		<optionsMenu>
@@ -28,11 +30,13 @@
 		</helpMenu>
 	</menuBar>
 	<bottomPanel>
-		<dose>Dose</dose>
-		<calculated>Calculated</calculated>
-		<notCalculated>Not calculated</notCalculated>
+		<doseCalculated>Dose calculated</doseCalculated>
+		<yes>Yes</yes>
+		<no>No</no>
+		<doseFilesLoaded>Loaded dose files</doseFilesLoaded>
 		<calculating>Calculating...</calculating>
 		<doseFile>RTDOSE file</doseFile>
+		<planFile>RTPLAN file</planFile>
 		<structurFile>RTSTRUCTUR file</structurFile>
 	</bottomPanel>
 	<dialogs>
@@ -40,11 +44,9 @@
 		<languageConformationContent>To see the changes, window must be restarted. Do it now?</languageConformationContent>
 		<notCalculatedInformationTitle>Cannot display chart</notCalculatedInformationTitle>
 		<notCalculatedInformationContent>Dose is not calculated</notCalculatedInformationContent>
-		<notLoadedDoseInformationTitle>Cannot display loaded data</notLoadedDoseInformationTitle>
-		<notLoadedDoseInformationContent>RTDOSE file is not loaded</notLoadedDoseInformationContent>
+		<cannotDisplayLoadedDataTitle>Cannot display loaded data</cannotDisplayLoadedDataTitle>
 		<cannotCalculateTitle>Cannot calculate</cannotCalculateTitle>
-		<notLoadedStructurInformationContent>RTSRUCTUR file is not loaded</notLoadedStructurInformationContent>
-		<notLoadedBothInformationContent>RTDOSE and RTSTRUCTUR files are nor loaded</notLoadedBothInformationContent>
+		<missingFiles>Missing files</missingFiles>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>
@@ -53,6 +55,7 @@
 		<cancelButton>Cancel</cancelButton>
 	</lineWidthWindow>
 	<chart>
+		<dose>Dose</dose>
 		<calculatedDose>Calculated dose</calculatedDose>
 		<contourLength>Contour length</contourLength>
 	</chart>
