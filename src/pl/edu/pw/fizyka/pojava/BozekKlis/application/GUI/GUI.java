@@ -8,6 +8,7 @@ import javafx.stage.WindowEvent;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowMaximizeHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowResizedHandler;
 
 //contains all interface classes
 public class GUI{
@@ -18,8 +19,11 @@ public class GUI{
 	CenterPanel centerPanel;
 	BottomPanel bottomPanel;
 	
+	boolean resizeEventManaged;
+	
 	public GUI(Stage stage) {
 		mainWindow = stage;
+		resizeEventManaged = true;
 		
 		init();
 	}
@@ -34,7 +38,8 @@ public class GUI{
 
 	public void init() {
 		
-		Preferences.loadConfigFiles();
+		if(!Preferences.loadConfigFiles())
+			return;
 		
 		menuBarClass = new MenuBarClass(this);
 		centerPanel = new CenterPanel(this);
@@ -49,6 +54,11 @@ public class GUI{
 		scene.getStylesheets().add(getClass().getResource("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/stylesheet.css").toExternalForm()); 
 		
 		mainWindow.maximizedProperty().addListener(new WindowMaximizeHandler(this));
+		
+		WindowResizedHandler resizeHandler = new WindowResizedHandler(this);
+		mainWindow.widthProperty().addListener(resizeHandler);
+		mainWindow.heightProperty().addListener(resizeHandler);
+		
 		mainWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
@@ -71,6 +81,14 @@ public class GUI{
 
 	public CenterPanel getCenterPanel() {
 		return centerPanel;
+	}
+
+	public boolean isResizeEventManaged() {
+		return resizeEventManaged;
+	}
+
+	public void setResizeEventManaged(boolean resizeEventManaged) {
+		this.resizeEventManaged = resizeEventManaged;
 	}
 
 	public BottomPanel getBottomPanel() {

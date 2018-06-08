@@ -11,6 +11,7 @@ import java.util.List;
 import com.pixelmed.dicom.Attribute;
 import com.pixelmed.dicom.AttributeList;
 
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -22,10 +23,32 @@ public class DcmManager {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
 		chooser.getExtensionFilters().add(extFilter);
 		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
-		File selectedFile = chooser.showOpenDialog(null);
+		File selectedFile = chooser.showOpenDialog(stage);
 	    if(selectedFile != null)
 	    	return selectedFile;
 	    return null;
+	}
+	
+	public static List<File> getDcmFiles(Stage stage, String fileType) {
+		FileChooser chooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
+		chooser.getExtensionFilters().add(extFilter);
+		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		List<File> selectedFiles = chooser.showOpenMultipleDialog(stage);
+	    if(selectedFiles != null)
+	    	return selectedFiles;
+	    return null;
+	}
+	
+	public static Color getDoseColorScale(double doseValue, double maxValue){
+		if(doseValue == 0)
+			return Color.BLACK;
+		//double colorValue = doseValue/maxDoseValue;
+		////double colorValue = doseValue / DcmData.getMaxDoseValue();
+		//return new Color(colorValue, colorValue, colorValue, 1.0);
+		
+		double hue = Color.BLUE.getHue() + (Color.RED.getHue() - Color.BLUE.getHue()) * doseValue / maxValue ;
+		return Color.hsb(hue, 1.0, 1.0);
 	}
 	
 	public static boolean saveDoseDataToFile(Stage stage, Point[][] doseMatrix) {
@@ -68,7 +91,6 @@ public class DcmManager {
 			
 			List<Double> sumFrame = new ArrayList<Double>();
 			List<Double> sumContour = new ArrayList<Double>();
-			writer.println("Max dose value: " + DcmData.getMaxDoseValue());
 			double maxRecieved = 0;
 			for(DcmFrame f : DcmData.getDcmFrames()) {
 				sumFrame.add(0.0);
@@ -82,7 +104,6 @@ public class DcmManager {
 					}
 				}
 			}
-			writer.println("Max recieved dose value: " + DcmData.getMaxDoseValue());
 			writer.println();
 			
 	    	for(int f = 0; f < list.size(); f++) {

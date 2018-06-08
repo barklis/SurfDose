@@ -1,6 +1,7 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers;
 
 import java.io.File;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,15 +21,16 @@ public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		File doseFile = DcmManager.getDcmFile(null, "RTDOSE");
-		if(doseFile != null) {
-			gui.getBottomPanel().setDoseFileName("Processing...");
+		List<File> doseFiles = DcmManager.getDcmFiles(null, "RTDOSE");
+		if(doseFiles != null) {
+			gui.getBottomPanel().setDoseFilesLoadedLabel(DcmData.getDoseFilesLoaded()+" + ...");
 			Thread loadData = new Thread(new Runnable() {
 				@Override
-				public void run() {	
-					DcmData.setDoseData(doseFile);
+				public void run() {
+					for(File file : doseFiles)
+						DcmData.setDoseData(file);
 					Platform.runLater(() -> {
-						gui.getBottomPanel().setDoseFileName(doseFile.getName());
+						gui.getBottomPanel().setDoseFilesLoadedLabel(String.valueOf(DcmData.getDoseFilesLoaded()));
 						gui.getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
 					});
 				}

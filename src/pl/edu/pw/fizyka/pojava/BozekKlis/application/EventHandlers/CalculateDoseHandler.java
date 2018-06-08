@@ -20,8 +20,8 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(DcmData.isContourLoaded() && DcmData.isDoseLoaded()) {
-			gui.getBottomPanel().setDoseLabel(Preferences.getLabel("calculating"));
+		if(DcmData.isContourLoaded() && DcmData.isDoseLoaded() && DcmData.isPlanLoaded()) {
+			gui.getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("calculating"));
 			Thread calc = new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -29,7 +29,7 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 						DcmData.calculateDose(i);
 					gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
 					Platform.runLater(()->{
-						gui.getBottomPanel().setDoseLabel(Preferences.getLabel("calculated"));
+						gui.getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("yes"));
 						System.out.println();
 					});
 				}
@@ -40,13 +40,15 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle(Preferences.getLabel("cannotCalculateTitle"));
 			
-			if(DcmData.isContourLoaded())
-				alert.setContentText(Preferences.getLabel("notLoadedDoseInformationContent"));
-			else if(DcmData.isDoseLoaded())
-				alert.setContentText(Preferences.getLabel("notLoadedStructurInformationContent"));
-			else
-				alert.setContentText(Preferences.getLabel("notLoadedBothInformationContent"));
+			String message = Preferences.getLabel("missingFiles") + ":\n";	
+			if(!DcmData.isDoseLoaded())
+				message += "\nRTDOSE";
+			if(!DcmData.isContourLoaded())
+				message += "\nRTSTRUCTUR";
+			if(!DcmData.isPlanLoaded())
+				message += "\nRTPLAN";
 			
+			alert.setContentText(message);
 			alert.setHeaderText("");
 			alert.showAndWait();
 		}

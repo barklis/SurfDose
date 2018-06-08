@@ -12,20 +12,23 @@ import javafx.scene.layout.VBox;
 public class BottomPanel extends HBox {
 	GUI gui;
 	
-	Label doseFileName;
+	//Label doseFileName;
+	Label planFileName;
 	Label structurFileName;
-	Label doseLabel;
+	Label doseCalculatedLabel;
+	Label doseFilesLoadedLabel;
 	Label currentframeNumberLabel;
 	Label maxframeNumberLabel;
 	
 	public BottomPanel(GUI gui) {
 		this.gui = gui;
 		
-		Label doseTextLabel = new Label(Preferences.getLabel("dose")+": ");
-		doseLabel = new Label((DcmData.isDoseCalculated() ? Preferences.getLabel("calculated") : Preferences.getLabel("notCalculated")));
-		VBox left = new VBox(new HBox(doseTextLabel, doseLabel));
+		Label doseCalculatedTextLabel = new Label(Preferences.getLabel("doseCalculated")+": ");
+		Label doseFilesLoadedTextLabel = new Label(Preferences.getLabel("doseFilesLoaded")+": ");
+		doseCalculatedLabel = new Label((DcmData.isDoseCalculated() ? Preferences.getLabel("yes") : Preferences.getLabel("no")));
+		doseFilesLoadedLabel = new Label(String.valueOf(DcmData.getDoseFilesLoaded()));
+		VBox left = new VBox(new HBox(doseCalculatedTextLabel, doseCalculatedLabel), new HBox(doseFilesLoadedTextLabel, doseFilesLoadedLabel));
 		left.getStyleClass().add("LeftBox");
-		
 		
 		Region region1 = new Region();
 		HBox.setHgrow(region1, Priority.ALWAYS);
@@ -42,13 +45,14 @@ public class BottomPanel extends HBox {
 		HBox.setHgrow(region2, Priority.ALWAYS);
 		
 		
-		Label doseFileTextLabel = new Label(Preferences.getLabel("doseFile") + ": ");
+		Label doseFileTextLabel = new Label(Preferences.getLabel("planFile") + ": ");
 		Label structurFileTextLabel = new Label(Preferences.getLabel("structurFile") + ": ");
 		VBox textColumn = new VBox(new HBox(doseFileTextLabel), new HBox(structurFileTextLabel));
 		
-		doseFileName = new Label(DcmData.getDoseFileName());
+		//doseFileName = new Label(DcmData.getDoseFileName());
+		planFileName = new Label(DcmData.getPlanFileName());
 		structurFileName = new Label(DcmData.getStructurFileName());
-		VBox nameColumn = new VBox(new HBox(doseFileName), new HBox(structurFileName));
+		VBox nameColumn = new VBox(new HBox(planFileName), new HBox(structurFileName));
 		
 		HBox right = new HBox(textColumn, nameColumn);
 		right.getStyleClass().add("RightBox");
@@ -57,18 +61,26 @@ public class BottomPanel extends HBox {
 		
 	}
 
-	public void setDoseFileName(String fileName) {
-		doseFileName.setText(fileName);
-	}
+	//public void setDoseFileName(String fileName) {
+	//	doseFileName.setText(fileName);
+	//}
 
 	public void setStructurFileName(String fileName) {
 		structurFileName.setText(fileName);
 	}
-
-	public void setDoseLabel(String value) {
-		doseLabel.setText(value);
+	
+	public void setPlanFileName(String fileName) {
+		planFileName.setText(fileName);
 	}
 
+	public void setDoseCalculatedLabel(String value) {
+		doseCalculatedLabel.setText(value);
+	}
+
+	public void setDoseFilesLoadedLabel(String value) {
+		doseFilesLoadedLabel.setText(value);
+	}
+	
 	public void setCurrentFrameNumberLabel(int currentframeNumberLabel) {
 		this.currentframeNumberLabel.setText(String.valueOf(currentframeNumberLabel));
 	}

@@ -9,35 +9,33 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.DicomDataModule.DcmData;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
-//Show chart of calculated dose
-public class ShowHistogramHandler implements EventHandler<ActionEvent> {
-
+public class ShowMapHandler implements EventHandler<ActionEvent> {
+	
 	GUI gui;
 	CheckMenuItem data;
 	CheckMenuItem chart;
 	CheckMenuItem map;
 	
-	public ShowHistogramHandler(GUI gui, CheckMenuItem data, CheckMenuItem chart, CheckMenuItem map) {
+	public ShowMapHandler(GUI gui, CheckMenuItem data, CheckMenuItem chart, CheckMenuItem map) {
 		this.gui = gui;
 		this.data = data;
 		this.chart = chart;
 		this.map = map;
 	}
-
+	
 	@Override
 	public void handle(ActionEvent event) {
 		if(DcmData.isDoseCalculated()) {
-			if(!gui.getCenterPanel().getDrawingPanel().getChartPanel().isListInited())
-				gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
+			gui.getCenterPanel().getDrawingPanel().placeMap();
+			gui.getCenterPanel().getDrawingPanel().getMapPanel().setContainerSize();
+			gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
 			
-			gui.getCenterPanel().getDrawingPanel().placeChart();
-			
+			chart.setSelected(false);
 			data.setSelected(false);
-			map.setSelected(false);
-			chart.setSelected(true);
+			map.setSelected(true);
 		}
 		else {
-			chart.setSelected(false);
+			map.setSelected(false);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle(Preferences.getLabel("notCalculatedInformationTitle"));
 			alert.setContentText(Preferences.getLabel("notCalculatedInformationContent"));

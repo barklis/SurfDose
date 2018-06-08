@@ -5,13 +5,15 @@
 		<fileMenu>
 			<file>Plik</file>
 			<openRTstructurFile>Załaduj plik RTSTRUCTUR</openRTstructurFile>
-			<openRTdoseFile>Załaduj plik RTDOSE</openRTdoseFile>
+			<openRTdoseFile>Załaduj pliki RTDOSE</openRTdoseFile>
+			<openRTplanFile>Załaduj plik RTPLAN</openRTplanFile>
 			<exit>Wyjście</exit>
 		</fileMenu>
 		<editMenu>
 			<programMenu>Program</programMenu>
 			<showFilesContentItem>Załadowane dane</showFilesContentItem>
 			<showHistogramItem>Histogram obliczonej dawki</showHistogramItem>
+			<showMapItem>Powierzchnia</showMapItem>
 			<calculateDoseMenu>Oblicz dawkę</calculateDoseMenu>
 		</editMenu>
 		<optionsMenu>
@@ -28,11 +30,13 @@
 		</helpMenu>
 	</menuBar>
 	<bottomPanel>
-		<dose>Dawka</dose>
-		<calculated>Obliczona</calculated>
-		<notCalculated>Nieobliczona</notCalculated>
+		<doseCalculated>Dawka obliczona</doseCalculated>
+		<yes>Tak</yes>
+		<no>Nie</no>
+		<doseFilesLoaded>Załadowane pliki dawki</doseFilesLoaded>
 		<calculating>Obliczanie...</calculating>
 		<doseFile>Plik RTDOSE</doseFile>
+		<planFile>RTPLAN file</planFile>
 		<structurFile>Plik RTSTRUCTUR</structurFile>
 	</bottomPanel>
 	<dialogs>
@@ -40,11 +44,9 @@
 		<languageConformationContent>By zobaczyć zmiany okno musi się od nowa załadować. Zrobić to teraz?</languageConformationContent>
 		<notCalculatedInformationTitle>Nie można wyświetlić histogramu</notCalculatedInformationTitle>
 		<notCalculatedInformationContent>Dawka nie jest obliczona</notCalculatedInformationContent>
-		<notLoadedDoseInformationTitle>Nie można wyświetlić załadowanych danych</notLoadedDoseInformationTitle>
-		<notLoadedDoseInformationContent>Plik RTDOSE nie jest załadowany</notLoadedDoseInformationContent>
+		<cannotDisplayLoadedDataTitle>Nie można wyświetlić załadowanych danych</cannotDisplayLoadedDataTitle>
 		<cannotCalculateTitle>Nie można obliczyć</cannotCalculateTitle>
-		<notLoadedStructurInformationContent>Plik RTSRUCTUR nie jest załadowany</notLoadedStructurInformationContent>
-		<notLoadedBothInformationContent>Pliki RTDOSE i RTSTRUCTUR nie są załadowane</notLoadedBothInformationContent>
+		<missingFiles>Brakujące pliki</missingFiles>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
@@ -53,6 +55,7 @@
 		<cancelButton>Anuluj</cancelButton>
 	</lineWidthWindow>
 	<chart>
+		<dose>Dawka</dose>
 		<calculatedDose>Obliczona dawka</calculatedDose>
 		<contourLength>Długość konturu</contourLength>
 	</chart>

@@ -18,30 +18,61 @@ public class DcmData {
 	static int numberOfCols = 0;
 	static int numberOfRows = 0;
 	static int numberOfFrames = 0;
-	static double maxDoseValue = 0;
+	static int doseFilesLoaded = 0;
+	static double maxSumDoseValue = 0;
 	static double x0 = 0.0;
 	static double y0 = 0.0;
 	static double colsPixelSpacing = 0.0;
 	static double rowsPixelSpacing = 0.0;
 	static boolean doseLoaded = false;
 	static boolean contourLoaded = false;
+	static boolean planLoaded = false;
 	static boolean doseCalculated = false;
+	static String planFileName = "-";
 	static String doseFileName = "-";
 	static String structurFileName = "-";
+	static int numberOfFractions = 0;
+	static int numberOfBeams = 0;
+	static double targetBeamDose = 0.0;
+	static double[] beamDose = null;
+	static double[] beamWeights = null;
+	static double[] isocenterPosition = null;
+	public static final int EMPTY = 1010101010;
+	public static double uVector[] = {0, -1};
 	
 	public static void calculateDose(int frameIndex) {
 		if(!doseLoaded || !contourLoaded)
 			return;
 		
+		dcmFrames.get(frameIndex).sumDose();
+		
 		for(Contour contour : dcmFrames.get(frameIndex).getContours()) {
+			contour.calculateCenter();
 			for(Point point : contour.getData()) {	
-				point.setValue(
-					dcmFrames.get(frameIndex).getInterpolatedDose( point.getX(), point.getY() )
-				);
+				point.setValue(dcmFrames.get(frameIndex).getInterpolatedDose( point.getX(), point.getY() ));
+				point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
+				if(contour.getMaxValue() < point.getValue())
+					contour.setMaxValue(point.getValue());
 			}
 		}
 		
 		doseCalculated = true;
+	}
+	
+	public static double getMaxValueByContourId(int id) {
+		double maxValue = 0.0;
+		for(DcmFrame frame : dcmFrames) {
+			for(Contour contour : frame.getContours()) {
+				if(id == contour.getId()) {
+					for(Point p : contour.getData()) {
+						if(maxValue < p.getValue())
+							maxValue = p.getValue();
+					}
+					break;
+				}
+			}
+		}
+		return maxValue;
 	}
 	
 	public synchronized static boolean setDoseData(File dcmFile) {
@@ -64,7 +95,7 @@ public class DcmData {
 			rowsPixelSpacing = pixelSpacing[0];
 			colsPixelSpacing = pixelSpacing[1];
 			
-			scalingFactor = list.get(new AttributeTag("0x3004,0x000e")).getSingleDoubleValueOrDefault(0.0)*1000;
+			scalingFactor = list.get(new AttributeTag("0x3004,0x000e")).getSingleDoubleValueOrDefault(0.0);
 			
 			shortData = data.getShortValues();
 		} catch (DicomException | IOException e) {
@@ -76,9 +107,7 @@ public class DcmData {
 		for(int i = 0; i < shortData.length/2; i++) {
 			
 			integerData[i] = (getUnsigned(shortData[2*i+1]) << 16) | getUnsigned(shortData[2*i]);
-			integerData[i] = (long) (integerData[i]*scalingFactor);
-			if(integerData[i] > maxDoseValue)
-				maxDoseValue = integerData[i];
+			integerData[i] = integerData[i]*scalingFactor*100;
 		}
 		
 		shortData = null;
@@ -94,6 +123,7 @@ public class DcmData {
 		}
 		
 		setDoseLoaded(true);
+		++doseFilesLoaded;
 		doseFileName = dcmFile.getName();
 		return true;
 	}
@@ -120,7 +150,7 @@ public class DcmData {
 				
 				List<Contour> multiContours = new ArrayList<Contour>();
 				for(int x = 0; x < itemsOfData.getNumberOfItems(); ++x) {
-					Contour tempContour = new Contour(itemsOfData.getItem(x));
+					Contour tempContour = new Contour(itemsOfData.getItem(x), i);
 					if(!(x > 0 && tempContour.getZ() == multiContours.get(multiContours.size()-1).getZ()))
 						multiContours.add(tempContour);
 				}
@@ -148,7 +178,7 @@ public class DcmData {
 					inserted = true;
 				}
 				else {
-					column.add(new Contour(10000000));
+					column.add(new Contour(EMPTY));
 				}
 			}
 			if(!inserted)
@@ -174,6 +204,57 @@ public class DcmData {
 		structurFileName = dcmFile.getName();
 		return true;
 	}
+	
+	public synchronized static boolean setPlanData(File dcmFile) {
+		try {
+			AttributeList list = new AttributeList();
+			list.read(dcmFile);
+			SequenceAttribute fractionGroupSequence = (SequenceAttribute) list.get(new AttributeTag("0x300a,0x0070"));
+			numberOfFractions = fractionGroupSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x0078")).getSingleIntegerValueOrDefault(0);
+			numberOfBeams = fractionGroupSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x0080")).getSingleIntegerValueOrDefault(0);
+			
+			beamDose = new double[numberOfBeams];
+			beamWeights = new double[numberOfBeams];
+			
+			SequenceAttribute doseReferenceSequence = (SequenceAttribute) list.get(new AttributeTag("0x300a,0x0010"));
+			targetBeamDose = doseReferenceSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x0026")).getSingleDoubleValueOrDefault(0.0);
+			
+			SequenceAttribute referencedBeamSequence = (SequenceAttribute) fractionGroupSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300c,0x0004"));
+			for(int i = 0; i < numberOfBeams; ++i) {
+				beamDose[i] = referencedBeamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x0084")).getSingleDoubleValueOrDefault(0.0);
+			}
+			
+			SequenceAttribute beamSequence = (SequenceAttribute) list.get(new AttributeTag("0x300a,0x00b0"));
+			for(int i = 0; i < beamSequence.getNumberOfItems(); ++i) {
+				beamWeights[i] = beamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x010e")).getSingleDoubleValueOrDefault(0.0);
+				
+				if(i == 0) {
+					SequenceAttribute controlPointSequence = (SequenceAttribute) beamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x0111"));
+					isocenterPosition = controlPointSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x012c")).getDoubleValues();
+				}
+			}
+			
+		} catch (IOException | DicomException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		/*
+		System.out.println(numberOfFractions);
+		System.out.println(numberOfBeams);
+		System.out.println(targetBeamDose);
+		for(double d : beamDose)
+			System.out.println(d);
+		for(double d : beamWeights)
+			System.out.println(d);
+		for(double d : isocenterPosition)
+			System.out.println(d);
+		*/
+		
+		setPlanLoaded(true);
+		planFileName = dcmFile.getName();
+		return true;
+	}
 
 	public static List<DcmFrame> getDcmFrames() {
 		return dcmFrames;
@@ -189,6 +270,42 @@ public class DcmData {
 
 	public static int getNumberOfFrames() {
 		return numberOfFrames;
+	}
+
+	public static int getNumberOfFractions() {
+		return numberOfFractions;
+	}
+
+	public static int getNumberOfBeams() {
+		return numberOfBeams;
+	}
+
+	public static double getTargetBeamDose() {
+		return targetBeamDose;
+	}
+
+	public static double[] getBeamDose() {
+		return beamDose;
+	}
+
+	public static double[] getuVector() {
+		return uVector;
+	}
+
+	public static double[] getBeamWeights() {
+		return beamWeights;
+	}
+
+	public static double[] getIsocenterPosition() {
+		return isocenterPosition;
+	}
+
+	public static boolean isPlanLoaded() {
+		return planLoaded;
+	}
+
+	public static void setPlanLoaded(boolean planLoaded) {
+		DcmData.planLoaded = planLoaded;
 	}
 
 	public static double getX0() {
@@ -207,8 +324,12 @@ public class DcmData {
 		return rowsPixelSpacing;
 	}
 
-	public static double getMaxDoseValue() {
-		return maxDoseValue;
+	public static int getDoseFilesLoaded() {
+		return doseFilesLoaded;
+	}
+
+	public static double getMaxSumDoseValue() {
+		return maxSumDoseValue;
 	}
 
 	public static boolean isDoseLoaded() {
@@ -237,6 +358,14 @@ public class DcmData {
 
 	public static String getDoseFileName() {
 		return doseFileName;
+	}
+
+	public static void setMaxSumDoseValue(double maxSumDoseValue) {
+		DcmData.maxSumDoseValue = maxSumDoseValue;
+	}
+
+	public static String getPlanFileName() {
+		return planFileName;
 	}
 
 	public static String getStructurFileName() {

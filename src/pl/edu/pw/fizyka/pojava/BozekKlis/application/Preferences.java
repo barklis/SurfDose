@@ -13,13 +13,24 @@ public class Preferences {
 	private static double contourLineWidth;
 	private static Color contourLineColor;
 	
-	public static void loadConfigFiles(){
-		configDocument = XmlHandler.loadXMLDocument("config.xml");
-		languageDocument = XmlHandler.loadXMLDocument(XmlHandler.getLabel(configDocument, "language")+".xml");
-		
-		language = XmlHandler.getLabel(configDocument, "language");
-		contourLineWidth = Double.parseDouble(XmlHandler.getLabel(configDocument, "contourLineWidth"));
-		contourLineColor = Color.valueOf(XmlHandler.getLabel(configDocument, "contourLineColor"));
+	public static boolean loadConfigFiles(){
+		try {
+			configDocument = XmlHandler.loadXMLDocument("config.xml");
+		} catch (Exception e) {
+			new ErrorHandler("Cannot find config.xml").showDialog();
+			return false;
+		}
+		try {
+			languageDocument = XmlHandler.loadXMLDocument(XmlHandler.getLabel(configDocument, "language")+".xml");
+			
+			language = XmlHandler.getLabel(configDocument, "language");
+			contourLineWidth = Double.parseDouble(XmlHandler.getLabel(configDocument, "contourLineWidth"));
+			contourLineColor = Color.valueOf(XmlHandler.getLabel(configDocument, "contourLineColor"));
+		} catch (Exception e) {
+			new ErrorHandler("Cannot find "+XmlHandler.getLabel(configDocument, "language")+".xml").showDialog();
+			return false;
+		}
+		return true;
 	}
 	
 	public static double getContourLineWidth() {
