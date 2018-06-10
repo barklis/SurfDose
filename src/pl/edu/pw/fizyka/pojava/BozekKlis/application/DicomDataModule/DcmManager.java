@@ -18,14 +18,21 @@ import javafx.stage.Stage;
 // Contains static methods to work witch DICOM files, like loading and saving
 public class DcmManager {
 	
+	static String lastPath = null;
+	
 	public static File getDcmFile(Stage stage, String fileType) {
 		FileChooser chooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
 		chooser.getExtensionFilters().add(extFilter);
-		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		if(lastPath != null)
+			chooser.setInitialDirectory(new File(lastPath));
+		else
+			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		File selectedFile = chooser.showOpenDialog(stage);
-	    if(selectedFile != null)
+	    if(selectedFile != null) {
+	    	lastPath = selectedFile.getParent();
 	    	return selectedFile;
+	    }
 	    return null;
 	}
 	
@@ -33,10 +40,15 @@ public class DcmManager {
 		FileChooser chooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
 		chooser.getExtensionFilters().add(extFilter);
-		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		if(lastPath != null)
+			chooser.setInitialDirectory(new File(lastPath));
+		else
+			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		List<File> selectedFiles = chooser.showOpenMultipleDialog(stage);
-	    if(selectedFiles != null)
+	    if(selectedFiles != null) {
+	    	lastPath = selectedFiles.get(0).getParent();
 	    	return selectedFiles;
+	    }
 	    return null;
 	}
 	
