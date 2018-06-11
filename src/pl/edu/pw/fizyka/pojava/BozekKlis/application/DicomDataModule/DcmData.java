@@ -37,8 +37,10 @@ public class DcmData {
 	static double[] beamDose = null;
 	static double[] beamWeights = null;
 	static double[] isocenterPosition = null;
-	public static final int EMPTY = 1010101010;
-	public static double uVector[] = {0, -1};
+	static final int EMPTY = 1010101010;
+	static double uVector[] = {0, -1};
+	static int currentContourId = 0;
+	static int maxContourId = 0;
 	
 	public static void calculateDose(int frameIndex) {
 		if(!doseLoaded || !contourLoaded)
@@ -57,6 +59,34 @@ public class DcmData {
 		}
 		
 		doseCalculated = true;
+	}
+	
+	public static void resetData() {
+		DcmFrame.frameCounter = 0;
+		dcmFrames.clear();
+		numberOfCols = 0;
+		numberOfRows = 0;
+		numberOfFrames = 0;
+		doseFilesLoaded = 0;
+		maxSumDoseValue = 0;
+		x0 = 0.0;
+		y0 = 0.0;
+		colsPixelSpacing = 0.0;
+		rowsPixelSpacing = 0.0;
+		doseLoaded = false;
+		contourLoaded = false;
+		planLoaded = false;
+		doseCalculated = false;
+		planFileName = "-";
+		structurFileName = "-";
+		numberOfFractions = 0;
+		numberOfBeams = 0;
+		targetBeamDose = 0.0;
+		beamDose = null;
+		beamWeights = null;
+		isocenterPosition = null;
+		currentContourId = 0;
+		maxContourId = 0;
 	}
 	
 	public static double getMaxValueByContourId(int id) {
@@ -145,6 +175,8 @@ public class DcmData {
 			list.read(dcmFile);
 			sequenceOfMainContours = (SequenceAttribute) list.get(new AttributeTag("0x3006,0x0039"));
 			
+			maxContourId = sequenceOfMainContours.getNumberOfItems()-1;
+					
 			for(int i = 0; i < sequenceOfMainContours.getNumberOfItems(); ++i) {
 				SequenceAttribute itemsOfData = (SequenceAttribute) sequenceOfMainContours.getItem(i).getAttributeList().get(new AttributeTag("0x3006,0x0040"));
 				
@@ -280,6 +312,10 @@ public class DcmData {
 		return numberOfBeams;
 	}
 
+	public static int getMaxContourId() {
+		return maxContourId;
+	}
+
 	public static double getTargetBeamDose() {
 		return targetBeamDose;
 	}
@@ -290,6 +326,14 @@ public class DcmData {
 
 	public static double[] getuVector() {
 		return uVector;
+	}
+
+	public static int getCurrentContourId() {
+		return currentContourId;
+	}
+
+	public static void setCurrentContourId(int currentContourId) {
+		DcmData.currentContourId = currentContourId;
 	}
 
 	public static double[] getBeamWeights() {

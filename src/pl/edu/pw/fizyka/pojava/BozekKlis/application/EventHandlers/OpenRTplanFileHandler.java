@@ -11,7 +11,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.GUI.GUI;
 
 public class OpenRTplanFileHandler implements EventHandler<ActionEvent> {
 	
-GUI gui;
+	GUI gui;
 	
 	public OpenRTplanFileHandler(GUI gui) {
 		this.gui = gui;
@@ -19,7 +19,7 @@ GUI gui;
 	
 	@Override
 	public void handle(ActionEvent event) {
-		File planFile = DcmManager.getDcmFile(null, "RTPLAN");
+		File planFile = DcmManager.getDcmFile(gui.getMainWindow(), "RTPLAN");
 		if(planFile != null) {
 			gui.getBottomPanel().setPlanFileName("Processing...");
 			Thread loadData = new Thread(new Runnable() {	

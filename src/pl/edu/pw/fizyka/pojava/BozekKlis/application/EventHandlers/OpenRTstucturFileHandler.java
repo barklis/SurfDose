@@ -20,7 +20,7 @@ public class OpenRTstucturFileHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		File contourFile = DcmManager.getDcmFile(null, "RTSTRUCTUR");
+		File contourFile = DcmManager.getDcmFile(gui.getMainWindow(), "RTSTRUCTUR");
 		if(contourFile != null) {
 			gui.getBottomPanel().setStructurFileName("Processing...");
 			Thread loadData = new Thread(new Runnable() {	

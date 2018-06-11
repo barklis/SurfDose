@@ -70,10 +70,14 @@ public class ContourLineWidthHandler implements EventHandler<ActionEvent> {
 		root.setBottom(hboxBottom);
 		
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/contourWidthWindowStylesheet.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/optionWindowStylesheet.css").toExternalForm());
 		
 		optionsWindow.setScene(scene);
 		optionsWindow.show();
+	}
+
+	public static Stage getOptionsWindow() {
+		return optionsWindow;
 	}
 
 }

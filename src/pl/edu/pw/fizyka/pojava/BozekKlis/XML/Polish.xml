@@ -20,6 +20,8 @@
 			<options>Opcje</options>
 			<contourLineColor>Kolor konturu</contourLineColor>
 			<contourLineWidth>Grubość lini konturu</contourLineWidth>
+			<currentContour>Wybów konturu</currentContour>
+			<resetData>Zresetuj załadowane dane</resetData>
 			<language>Język</language>
 			<PolishLanguage>Polski</PolishLanguage>
 			<EnglishLanguage>Angielski</EnglishLanguage>
@@ -36,24 +38,32 @@
 		<doseFilesLoaded>Załadowane pliki dawki</doseFilesLoaded>
 		<calculating>Obliczanie...</calculating>
 		<doseFile>Plik RTDOSE</doseFile>
-		<planFile>RTPLAN file</planFile>
+		<planFile>Plik RTPLAN</planFile>
 		<structurFile>Plik RTSTRUCTUR</structurFile>
 	</bottomPanel>
 	<dialogs>
 		<languageConformationTitle>Zmiana języka</languageConformationTitle>
-		<languageConformationContent>By zobaczyć zmiany okno musi się od nowa załadować. Zrobić to teraz?</languageConformationContent>
+		<languageConformationContent>By zobaczyć zmiany interfejs musi się ponownie załadować. Zrobić to teraz?</languageConformationContent>
 		<notCalculatedInformationTitle>Nie można wyświetlić histogramu</notCalculatedInformationTitle>
 		<notCalculatedInformationContent>Dawka nie jest obliczona</notCalculatedInformationContent>
 		<cannotDisplayLoadedDataTitle>Nie można wyświetlić załadowanych danych</cannotDisplayLoadedDataTitle>
 		<cannotCalculateTitle>Nie można obliczyć</cannotCalculateTitle>
 		<missingFiles>Brakujące pliki</missingFiles>
+		<noDocumentationFileContent>Nie można znaleźć pliku z dokumentacją</noDocumentationFileContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
 		<contourWidthWindowLabel>Grubość lini konturu:</contourWidthWindowLabel>
-		<okButton>Zatwierdź</okButton>
+		<applyButton>Zatwierdź</applyButton>
+		<okButton>Ok</okButton>
 		<cancelButton>Anuluj</cancelButton>
 	</lineWidthWindow>
+	<currentContourWindow>
+		<currentContourWindowTitle>Wybór konturu</currentContourWindowTitle>
+		<currentContourWindowLabel>Wpisz ID konturu</currentContourWindowLabel>
+		<invalidCurrentContourId>Niepoprawne wyrażenie (oczekiwano liczby)</invalidCurrentContourId>
+		<currentContourIdOutOfBounds>Wartosć poza przedziałem</currentContourIdOutOfBounds>
+	</currentContourWindow>
 	<chart>
 		<dose>Dawka</dose>
 		<calculatedDose>Obliczona dawka</calculatedDose>

@@ -47,12 +47,14 @@ public class ChartPanel{
 		final XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 		series.setName("Dose");
 		
-		List<Point> data = DcmData.getDcmFrames().get(frameNumber).getContours().get(0).getData();
-		double pos = 0;
-		for(int i = 0; i < data.size(); ++i) {
-			if(i != 0)
-				pos += Point.distance(data.get(i), data.get(i-1));
-			series.getData().add(new XYChart.Data<Number, Number>(pos, data.get(i).getValue()));
+		List<Point> data = DcmData.getDcmFrames().get(frameNumber).getContourById(DcmData.getCurrentContourId()).getData();
+		if(data.size() != 0) {	
+			double pos = 0;
+			for(int i = 0; i < data.size(); ++i) {
+				if(i != 0)
+					pos += Point.distance(data.get(i), data.get(i-1));
+				series.getData().add(new XYChart.Data<Number, Number>(pos, data.get(i).getValue()));
+			}
 		}
 		lineChart.getData().add(series);
 		return lineChart;

@@ -20,6 +20,8 @@
 			<options>Options</options>
 			<contourLineColor>Contour color</contourLineColor>
 			<contourLineWidth>Contour line width</contourLineWidth>
+			<currentContour>Choose contour</currentContour>
+			<resetData>Reset loaded data</resetData>
 			<language>Language</language>
 			<PolishLanguage>Polish</PolishLanguage>
 			<EnglishLanguage>English</EnglishLanguage>
@@ -41,19 +43,27 @@
 	</bottomPanel>
 	<dialogs>
 		<languageConformationTitle>Change language</languageConformationTitle>
-		<languageConformationContent>To see the changes, window must be restarted. Do it now?</languageConformationContent>
+		<languageConformationContent>To see the changes, interface must be reloaded. Do you wanna do it now?</languageConformationContent>
 		<notCalculatedInformationTitle>Cannot display chart</notCalculatedInformationTitle>
 		<notCalculatedInformationContent>Dose is not calculated</notCalculatedInformationContent>
 		<cannotDisplayLoadedDataTitle>Cannot display loaded data</cannotDisplayLoadedDataTitle>
 		<cannotCalculateTitle>Cannot calculate</cannotCalculateTitle>
 		<missingFiles>Missing files</missingFiles>
+		<noDocumentationFileContent>Cannot find documentation file</noDocumentationFileContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>
 		<contourWidthWindowLabel>Contour line width:</contourWidthWindowLabel>
-		<okButton>OK</okButton>
+		<applyButton>Apply</applyButton>
+		<okButton>Ok</okButton>
 		<cancelButton>Cancel</cancelButton>
 	</lineWidthWindow>
+	<currentContourWindow>
+		<currentContourWindowTitle>Current contour</currentContourWindowTitle>
+		<currentContourWindowLabel>Enter contour id</currentContourWindowLabel>
+		<invalidCurrentContourId>Invalid expression (expected number)</invalidCurrentContourId>
+		<currentContourIdOutOfBounds>Value out of bounds</currentContourIdOutOfBounds>
+	</currentContourWindow>
 	<chart>
 		<dose>Dose</dose>
 		<calculatedDose>Calculated dose</calculatedDose>

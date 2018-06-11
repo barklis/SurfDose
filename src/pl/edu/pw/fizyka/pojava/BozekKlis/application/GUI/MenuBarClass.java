@@ -15,6 +15,9 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ExitProgramHa
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTdoseFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTplanFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTstucturFileHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ResetDataHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.SetCurrentContourHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowDocumentationHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowHistogramHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowLoadedDataHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ShowMapHandler;
@@ -27,6 +30,10 @@ public class MenuBarClass extends MenuBar {
 	Menu editMenu;
 	Menu optionsMenu;
 	Menu helpMenu;
+	
+	CheckMenuItem showFilesContentItem;
+	CheckMenuItem showHistogramItem;
+	CheckMenuItem showMapItem;
 	
 	public MenuBarClass(GUI gui) {
 		this.gui = gui;
@@ -44,12 +51,12 @@ public class MenuBarClass extends MenuBar {
 			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exitItem);
 		
 		editMenu = new Menu(Preferences.getLabel("programMenu"));
-			CheckMenuItem showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
-			CheckMenuItem showHistogramItem = new CheckMenuItem(Preferences.getLabel("showHistogramItem"));
-			CheckMenuItem showMapItem = new CheckMenuItem(Preferences.getLabel("showMapItem"));
-				showFilesContentItem.setOnAction(new ShowLoadedDataHandler(gui, showFilesContentItem, showHistogramItem, showMapItem));
-				showHistogramItem.setOnAction(new ShowHistogramHandler(gui, showFilesContentItem, showHistogramItem, showMapItem));
-				showMapItem.setOnAction(new ShowMapHandler(gui, showFilesContentItem, showHistogramItem, showMapItem));
+			showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
+			showHistogramItem = new CheckMenuItem(Preferences.getLabel("showHistogramItem"));
+			showMapItem = new CheckMenuItem(Preferences.getLabel("showMapItem"));
+				showFilesContentItem.setOnAction(new ShowLoadedDataHandler(gui));
+				showHistogramItem.setOnAction(new ShowHistogramHandler(gui));
+				showMapItem.setOnAction(new ShowMapHandler(gui));
 			
 			MenuItem calculateDoseItem = new MenuItem(Preferences.getLabel("calculateDoseMenu"));
 				calculateDoseItem.setOnAction(new CalculateDoseHandler(gui));
@@ -61,7 +68,11 @@ public class MenuBarClass extends MenuBar {
 				contourColorItem.setOnAction(new ContourLineColorHandler(gui));
 			MenuItem contourLineWidthItem = new MenuItem(Preferences.getLabel("contourLineWidth"));
 				contourLineWidthItem.setOnAction(new ContourLineWidthHandler(gui));
-			
+			MenuItem setCurrentContour = new MenuItem(Preferences.getLabel("currentContour"));
+				setCurrentContour.setOnAction(new SetCurrentContourHandler(gui));
+			MenuItem resetDataItem = new MenuItem(Preferences.getLabel("resetData"));
+				resetDataItem.setOnAction(new ResetDataHandler(gui));
+				
 			Menu languageMenu = new Menu(Preferences.getLabel("language"));
 				MenuItem polishLanguageItem = new MenuItem(Preferences.getLabel("PolishLanguage"));
 					polishLanguageItem.setOnAction(new ChangeLanguageHandler("Polish", gui));
@@ -69,12 +80,32 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, new SeparatorMenuItem(), languageMenu);
+				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, setCurrentContour, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
+				documantationItem.setOnAction(new ShowDocumentationHandler());
 			helpMenu.getItems().add(documantationItem);
 		
 		getMenus().addAll(fileMenu, editMenu, optionsMenu, helpMenu);
 	}
+	
+	public void reset() {
+		showFilesContentItem.setSelected(false);
+		showHistogramItem.setSelected(false);
+		showMapItem.setSelected(false);
+	}
+
+	public CheckMenuItem getShowFilesContentItem() {
+		return showFilesContentItem;
+	}
+
+	public CheckMenuItem getShowHistogramItem() {
+		return showHistogramItem;
+	}
+
+	public CheckMenuItem getShowMapItem() {
+		return showMapItem;
+	}
+	
 }
