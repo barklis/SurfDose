@@ -56,6 +56,15 @@ public class DrawingPanel extends StackPane {
 		
 	}
 	
+	public void unEmbed() {
+		if(isCanvasEmbeded() || isMapEmbeded() || isChartEmbeded())
+			getChildren().remove(0);
+		mapEmbeded = false;
+		chartEmbeded = false;
+		canvasEmbeded = false;
+		currentFrame = 0;
+	}
+	
 	public void placeCanvas() {
 		if(chartEmbeded || canvasEmbeded || mapEmbeded)
 			getChildren().remove(0);
@@ -88,6 +97,13 @@ public class DrawingPanel extends StackPane {
 			getChildren().remove(0);
 			getChildren().add(chartPanel.getChart());
 		}
+	}
+	
+	public void redraw() {
+		if(canvasEmbeded)
+			canvasPanel.drawFrame();
+		else if(mapEmbeded)
+			mapPanel.drawMap();
 	}
 	
 	public boolean isMapEmbeded() {
@@ -133,5 +149,4 @@ public class DrawingPanel extends StackPane {
 	public void setCurrentFrame(Integer currentFrame) {
 		this.currentFrame = currentFrame;
 	}
-	
 }

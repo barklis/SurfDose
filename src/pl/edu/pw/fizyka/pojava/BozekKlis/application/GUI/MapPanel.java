@@ -22,11 +22,10 @@ public class MapPanel extends Canvas {
 		this.gui = gui;
 		setHeight(height);
 		setWidth(width);
-		
 	}
 	
 	public void drawMap() {
-		int myId = 2;
+		int currentId = DcmData.getCurrentContourId();
 		
 		if(!DcmData.isDoseCalculated())
 			return;
@@ -34,8 +33,8 @@ public class MapPanel extends Canvas {
 		gc.clearRect(0, 0, containerWidth, containerHeight);
 		gc.setFill(Color.BLACK);
 		
-		int startingFrame = getStartingFrame(myId);
-		int endingFrame = getEndingFrame(myId);
+		int startingFrame = getStartingFrame(currentId);
+		int endingFrame = getEndingFrame(currentId);
 		
 		int pixelSize = (int)(containerHeight/(endingFrame-startingFrame));
 		int iterations = (int) (containerWidth/pixelSize);
@@ -44,7 +43,7 @@ public class MapPanel extends Canvas {
 		int interpolatedFrames = (int) Math.ceil(radius/pixelSize);
 		
 		for(int f = startingFrame; f < endingFrame; ++f) {
-			Contour contour = DcmData.getDcmFrames().get(f).getContourById(myId);
+			Contour contour = DcmData.getDcmFrames().get(f).getContourById(currentId);
 			
 			if(contour.getData().size() == 0)
 				continue;
@@ -54,17 +53,17 @@ public class MapPanel extends Canvas {
 				List<Point> neighbours = new ArrayList<Point>();
 				
 				for(int x = -interpolatedFrames; x < interpolatedFrames; ++x) {
-					if(f+interpolatedFrames < startingFrame || f+interpolatedFrames > endingFrame)
+					if(f+x < startingFrame || f+x > endingFrame)
 						continue;
 					
-					for(Point p : DcmData.getDcmFrames().get(f+x).getContourById(myId).getData()) {
+					for(Point p : DcmData.getDcmFrames().get(f+x).getContourById(currentId).getData()) {
 						Point setPoint = new Point(p.getAngle()*containerWidth/Math.PI*0.5, (f-startingFrame)*pixelSize);
 						if(Point.distance(pixelCoord, setPoint) < radius)
 							neighbours.add(p);
 					}
 				}
 				
-				gc.setFill(getMeanValueColor(neighbours, myId));
+				gc.setFill(getMeanValueColor(neighbours, currentId));
 				gc.fillRect(i*pixelSize, (f-startingFrame)*pixelSize, pixelSize, pixelSize);
 			}
 			
@@ -72,16 +71,16 @@ public class MapPanel extends Canvas {
 			List<Point> neighbours = new ArrayList<Point>();
 			
 			for(int x = -interpolatedFrames; x < interpolatedFrames; ++x) {
-				if(f+interpolatedFrames < startingFrame || f+interpolatedFrames > endingFrame)
+				if(f+x < startingFrame || f+x > endingFrame)
 					continue;
 				
-				for(Point p : DcmData.getDcmFrames().get(f+x).getContourById(myId).getData()) {
+				for(Point p : DcmData.getDcmFrames().get(f+x).getContourById(currentId).getData()) {
 					Point setPoint = new Point(p.getAngle()*containerWidth/Math.PI*0.5, (f-startingFrame)*pixelSize);
 					if(Point.distance(pixelCoord, setPoint) < radius)
 						neighbours.add(p);
 				}
 			}
-			gc.setFill(getMeanValueColor(neighbours, myId));
+			gc.setFill(getMeanValueColor(neighbours, currentId));
 			gc.fillRect(iterations*pixelSize, (f-startingFrame)*pixelSize, containerWidth-iterations*pixelSize, pixelSize);
 			
 			// draw dots

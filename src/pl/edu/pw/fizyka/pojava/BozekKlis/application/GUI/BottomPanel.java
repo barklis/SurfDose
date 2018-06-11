@@ -60,10 +60,15 @@ public class BottomPanel extends HBox {
 		getChildren().addAll(left, region1, center, region2, right);
 		
 	}
-
-	//public void setDoseFileName(String fileName) {
-	//	doseFileName.setText(fileName);
-	//}
+	
+	public void resetData() {
+		structurFileName.setText("-");
+		planFileName.setText("-");
+		doseFilesLoadedLabel.setText("0");
+		doseCalculatedLabel.setText(Preferences.getLabel("no"));
+		currentframeNumberLabel.setText("0");
+		maxframeNumberLabel.setText("0");
+	}
 
 	public void setStructurFileName(String fileName) {
 		structurFileName.setText(fileName);

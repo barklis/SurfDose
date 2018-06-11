@@ -33,11 +33,32 @@ public void drawFrame() {
 			gui.setResizeEventManaged(true);
 		}
 		
-		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
 		GraphicsContext gc = getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, DcmData.getNumberOfCols()*pixelSize, DcmData.getNumberOfRows()*pixelSize);
 		
+		// drawinf dose
+		drawDose(gc);
+		
+		// drawing contours
+		if(DcmData.isContourLoaded()) {
+			drawContours(gc);
+		}
+		
+		// drawing isocentre
+		if(DcmData.isPlanLoaded() && DcmData.isContourLoaded()) {
+			drawIsocentre(gc);
+		}
+		
+		// drawing starting vector
+		if(DcmData.isDoseCalculated()) {
+			drawUnitVector(gc);
+		}
+		
+	}
+
+	private void drawDose(GraphicsContext gc) {
+		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
 				gc.setFill(
@@ -49,14 +70,19 @@ public void drawFrame() {
 				gc.fillRect(c*pixelSize, r*pixelSize, pixelSize, pixelSize);
 			}
 		}
-		
-		// drawing contours
-		if(!DcmData.isContourLoaded())
-			return;
-		
-		gc.setStroke(Preferences.getContourLineColor());
+	}
+	private void drawContours(GraphicsContext gc) {
+		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
 		gc.setLineWidth(Preferences.getContourLineWidth());
+		gc.setStroke(Preferences.getContourLineColor());
+		
+		Contour selectedContour = null;
 		for(Contour contour : DcmData.getDcmFrames().get(currentFrame).getContours()) {
+			if(contour.getId() == DcmData.getCurrentContourId()) {
+				selectedContour = contour;
+				continue;
+			}
+			
 			gc.beginPath();
 			gc.moveTo(getLocalX(contour.getData().get(0).getX()), getLocalY(contour.getData().get(0).getY()));
 			for(int i = 1; i < contour.getNumberOfPoints(); i++) {
@@ -66,8 +92,21 @@ public void drawFrame() {
 			gc.stroke();
 			gc.closePath();
 		}
-		
-		// drawing isocentre
+		if(selectedContour != null) {
+			gc.setStroke(Color.BLUE);
+			gc.beginPath();
+			gc.moveTo(getLocalX(selectedContour.getData().get(0).getX()), getLocalY(selectedContour.getData().get(0).getY()));
+			for(int i = 1; i < selectedContour.getNumberOfPoints(); i++) {
+				gc.lineTo(getLocalX(selectedContour.getData().get(i).getX()), getLocalY(selectedContour.getData().get(i).getY()));
+			}
+			gc.lineTo(getLocalX(selectedContour.getData().get(selectedContour.getNumberOfPoints()-1).getX()), getLocalY(selectedContour.getData().get(selectedContour.getNumberOfPoints()-1).getY()));
+			gc.stroke();
+			gc.closePath();
+		}
+	}
+
+	private void drawIsocentre(GraphicsContext gc) {
+		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
 		Point[] ds = { new Point(-12.4, 15.8), new Point(DcmData.getIsocenterPosition()[0], DcmData.getIsocenterPosition()[1])};
 		double[] z0 = {-5.9, DcmData.getIsocenterPosition()[2]};
 		for(int i = 0; i < ds.length; ++i) {
@@ -83,9 +122,10 @@ public void drawFrame() {
 				gc.setFill(Color.GRAY);
 			gc.fillOval(getLocalX(ds[i].getX()), getLocalY(ds[i].getY()), 2*pixelSize, 2*pixelSize);
 		}
-		
-		// drawing starting vector
-		Contour c = DcmData.getDcmFrames().get(currentFrame).getContourById(2);
+	}
+	
+	private void drawUnitVector(GraphicsContext gc) {
+		Contour c = DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getContourById(DcmData.getCurrentContourId());
 		if(c.getData().size() != 0) {
 			gc.setFill(Color.BLUEVIOLET);
 			gc.fillOval(getLocalX(c.getCenterX())-2, getLocalY(c.getCenterY())-2, 4, 4);
@@ -94,7 +134,6 @@ public void drawFrame() {
 					getLocalX(c.getCenterX()) + DcmData.getuVector()[0]*containerWidth,
 					getLocalY(c.getCenterY()) + DcmData.getuVector()[1]*containerHeight);
 		}
-		
 	}
 
 	public double getLocalX(double x) {
