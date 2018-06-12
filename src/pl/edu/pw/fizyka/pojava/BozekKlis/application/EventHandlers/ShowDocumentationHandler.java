@@ -12,7 +12,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 public class ShowDocumentationHandler implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
-		File htmlFile = new File("src/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/documentation.html");
+		File htmlFile = new File("manual.html");
 		try {
 			Desktop.getDesktop().browse(htmlFile.toURI());
 		} catch (IOException e) {

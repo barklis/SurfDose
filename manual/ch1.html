@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Korzystanie z programu</title>
+        <style type="text/css"><!--
+   body
+   {
+     font-family:  Verdana, Sans-serif, Arial, 'Trebuchet MS', 'Times New Roman';
+     font-size: small;
+   }
+   h2.title
+   {
+     font-family: Verdana, Sans-serif, Arial, 'Trebuchet MS', 'Times New Roman';
+     margin: 5px 0 0;
+     padding: 1px 5px 1px;
+     border: 1px solid #6b89d4;
+     -moz-border-radius: 0.3em;
+     background: #e6edff;
+   }
+   .titlepage
+   {
+     text-align: center;
+   }
+   .refsynopsisdiv, .refsect1, .refsect2, .refsect3
+   {
+     text-align: left;
+   }
+   .warning
+   {
+     padding: 5px;
+     border: 1px solid #ff0011;
+     -moz-border-radius: 0.3em;
+     background: #ffbbbb;
+   }
+   .warning .title { margin: 0px 0px 5px 0px; }
+   .warning p { margin: 1px; }
+   .note
+   {
+     padding: 1px 5px 1px;
+     border: 1px solid #84c43b;
+     -moz-border-radius: 0.3em;
+     background: #d7e9a7;
+   }
+   .note .title { margin: 0px 0px 5px 0px; }
+   .note p { margin: 1px; }
+   .cmdsynopsis
+   {
+     font-family: monospace;
+   }
+   .refsynopsisdiv        > .cmdsynopsis p, .refsect1        > .cmdsynopsis p,
+   .refsynopsisdiv .sect2 > .cmdsynopsis p, .refsect1 .sect2 > .cmdsynopsis p
+   {
+     margin-top: 0px;
+     margin-bottom: 0px;
+   }
+   .cmdsynopsis p
+   {
+     padding-left: 3.4em;
+     text-indent: -2.2em;
+   }
+   p.nextcommand
+   {
+     margin-top:    0px;
+     margin-bottom: 0px;
+   }
+   p.lastcommand
+   {
+     margin-top:    0px;
+   }
+   .refentry * h3
+   {
+     font-size: large;
+   }
+   .refentry * h4
+   {
+     font-size: larger;
+   }
+   .refentry * h5
+   {
+     font-size: larger;
+   }
+
+  --></style>
+    </head>
+    <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+    <div class="chapter" lang="pl">
+        <div class="titlepage"><div><div><h1 class="title"><a name="wstep"></a>Korzystanie z programu</h1></div></div><hr></div>
+    </div>
+    <div>
+    <h2>O programie</h2>
+    <p>Program DICOMAnalyzer to program mający na celu obliczenie rozkładu dawki na zamkniętych powierzchniach w kształcie rury. Wykorzystywany jest do szybkiego odczytu informacji z plików DICOM. Importowane pliki mogą pochodzić z bardziej rozbudowanych programów współpracujących z standardem DICOM. Program na podstawie tablicy dawek prezentuje a także daje możliwość wykonania określonych obliczeń na danych. Program dostarcza informacji o rozkładzie dawki na powierzchni oznaczonego konturu przez specjalistę, przykładowo ściany jelita grubego. </p></br>
+    <p>Program dostępny jest w publicznym repozytorium: <a href="https://github.com/barklis/DICOMAnalyzer.git">https://github.com/barklis/DICOMAnalyzer.git</a></p></br>
+    </div>
+    <div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="uruchamianie"></a>1.1. Uruchamianie programu</h2></div></div></div>
+    <div>
+    <p>Program można uruchomić poprzez uruchomienie pliku wykonywalnego o rozszerzeniu .jar, aby było to możliwe system Windows bądź Linux powinny mieć zainstalowane środowisko java (jre 9 bądź nowsze, koniecznie javaFX). Program po uruchomieniu zwraca puste okno z dostępnymi opcjami które wygląda następująco: </p><p style="text-align:center;"><img src="oknoDICOMAnalyzer.jpg" height="400" width="666" alt="Okno programu" style="vertical-align:middle"></img></p></br>
+    </div>
+    
+    <div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="wczytywanie"></a>1.2. Wczytywanie plików DICOM</h2></div></div></div>
+    <div>
+    <p>Program wymaga wczytania co najmniej trzech plików zawierających kolejno informacje o dawce, konturach, planie leczenia. Aby wczytać niezbędne pliki należy skorzystać z paska menu który znajduje się w górnej części programu. Wybieramy: <b>Plik>>Załaduj Plik RTSTRUCTUR</b> po czym odszukujemy plik z informacją o konturach. Następnie odszukujemy pliki z dawką wybierając analogicznie: <b>Plik>>Załaduj pliki RTDOSE</b> oraz plik z planem: <b>Plik>>Załaduj plik RTPLAN</b> . W dolnej części programu widoczna jest informacja o stanie wczytywanych plików. </p><p style="text-align:center;"><img src="oknoRTDOSE.png" height="400" width="400" alt="Okno programu" style="vertical-align:middle"></img></p></br>
+    </div>
+    
+    <div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="wyswietlanie"></a>1.3. Wyświetlanie informacji z plików</h2></div></div></div>
+    <div>
+    <p>W celu wyświetlenia danych należ skorzystać z zakładki <b>Program</b> w pasku menu. Dostępne są tam następujące opcje:
+    <ul>
+    <li>Załadowane Dane - Wyświetla w głównej części programu rozkład dawki w każdym z przekrojów pacjenta</li>
+    <li>Histogram obliczonej dawki - Wyświetla rozkład dawki wokół poszczególnego konturu. Można używać wyłącznie po uprzednim obliczeniu dawki za pomocą opcji: <b>Oblicz dawkę</b></li>
+    <li>Powierzchnia - Wyświetala rozkład dawki wokół całej powierzchni</li>
+    <li>Oblicz dawkę - Wywołuje algorytm liczący dawki na konturach</li>
+    </ul>
+    Po wczytaniu danych i wybraniu <b>Program>>Załadowane Dane</b> wyświetla przekrój pacjenta który można wybirać posługując się scroll'em.
+</p><p style="text-align:center;"><img src="pacjent.png" height="400" width="666" alt="Okno programu" style="vertical-align:middle"></img></p>
+    <p>Gdy obliczy się dawkę wybierając: <b>Program>>Oblicz dawkę</b> możliwe jest wyświetlenie histogramu postępując: <b>Program>>Histogram obliczonej dawki
+</b></p><p style="text-align:center;"><img src="histogram.png" height="400" width="666" alt="Okno programu" style="vertical-align:middle"></img></p></br>
+    </div>
+    
+    <div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="preferencje"></a>1.4. Preferencje</h2></div></div></div>
+    <div>
+    <p>Prefernecje znajdują się w pasku menu pod nazwą: <b>Opcje</b>. Pozwalają one na wybór koloru lini konturów oraz grubości lini. Dodatkowo w miejcu tym można doknać zmiany języka interfejsu wybierając spośród: angielskiego i polskiego</p></br>
+    </div>
+
+    </body>
+</html>
