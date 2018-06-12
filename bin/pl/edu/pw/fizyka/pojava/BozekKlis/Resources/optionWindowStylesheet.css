@@ -5,7 +5,7 @@ HBox{
 }
 
 HBox VBox{
-	-fx-alignment: center;
+	-fx-alignment: baseline-center;
 }
 
 *{
@@ -16,10 +16,25 @@ Spinner{
 	-fx-pref-width: 100px;
 }
 
-BorderPane{
-	-fx-padding: 10px;
-}
-
 .errorLabel{
 	-fx-text-fill: red;
 }
+
+BorderPane{
+	-fx-padding: 15px;
+}
+
+TextField{
+	-fx-pref-column-count: 6;
+}
+
+.tableVbox{
+	-fx-alignment: baseline-center;
+}
+
+.tableVbox Label{
+	-fx-pref-height: 30px;
+}
+
+
+

@@ -1,7 +1,6 @@
 package pl.edu.pw.fizyka.pojava.BozekKlis.application;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><root>
 	<language>Polish</language>
-	<contourLineColor>#EEEEEE</contourLineColor>
+	<contourLineColor>#CC00CC</contourLineColor>
 	<contourLineWidth>1.5</contourLineWidth>
+	<pixelsInCol>60</pixelsInCol>
+	<interpolationRadius>1.6</interpolationRadius>
 </root>

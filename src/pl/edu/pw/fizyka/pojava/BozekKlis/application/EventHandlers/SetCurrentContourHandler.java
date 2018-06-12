@@ -31,10 +31,11 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		contourWindow = new Stage();
 		contourWindow.setTitle(Preferences.getLabel("currentContourWindowTitle"));
 		
-		TextField contourIdField = new TextField();
+		TextField contourIdField = new TextField(String.valueOf(DcmData.getCurrentContourId()));
 		
 		Button okButton = new Button(Preferences.getLabel("okButton"));
-		Button applyButton = new Button(Preferences.getLabel("applyButton"));
+		Button nextButton = new Button("->");
+		Button prevButton = new Button("<-");
 		
 		Button cancelButton = new Button(Preferences.getLabel("cancelButton"));
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -53,7 +54,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		hboxTop.getChildren().add(contourIdField);
 		
 		HBox hboxBottom = new HBox();
-		hboxBottom.getChildren().addAll(okButton, cancelButton, applyButton);
+		hboxBottom.getChildren().addAll(okButton, cancelButton, prevButton, nextButton);
 		hboxBottom.setAlignment(Pos.CENTER);
 		
 		HBox hboxCenter = new HBox(errorLabel);
@@ -63,27 +64,43 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					setCurrentId(contourIdField);
+					int recievedId = Integer.parseInt(contourIdField.getText());
+					if(recievedId < 0 || recievedId > DcmData.getMaxContourId())
+						throw new IndexOutOfBoundsException();
+					DcmData.setCurrentContourId(recievedId);
+					gui.getCenterPanel().getDrawingPanel().redraw();
 					contourWindow.close();
 					contourWindow = null;
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidCurrentContourId"));
-				} catch(SelectedIdOutOfBounds e) {
-					errorLabel.setText(Preferences.getLabel("currentContourIdOutOfBounds"));
+				} catch(IndexOutOfBoundsException e) {
+					errorLabel.setText(Preferences.getLabel("valueOutOfBounds"));
 				}
 			}
 		});
 		
-		applyButton.setOnAction(new EventHandler<ActionEvent>() {
+		nextButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				try {
-					setCurrentId(contourIdField);
+				int current = DcmData.getCurrentContourId();
+				if(current+1 <= DcmData.getMaxContourId()) {
 					errorLabel.setText("");
-				} catch(NumberFormatException e) {
-					errorLabel.setText(Preferences.getLabel("invalidCurrentContourId"));
-				} catch(SelectedIdOutOfBounds e) {
-					errorLabel.setText(Preferences.getLabel("currentContourIdOutOfBounds"));
+					contourIdField.setText(String.valueOf(current+1));
+					DcmData.setCurrentContourId(current+1);
+					gui.getCenterPanel().getDrawingPanel().redraw();
+				}
+			}
+		});
+		
+		prevButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				int current = DcmData.getCurrentContourId();
+				if(current-1 >= 0) {
+					errorLabel.setText("");
+					contourIdField.setText(String.valueOf(current-1));
+					DcmData.setCurrentContourId(current-1);
+					gui.getCenterPanel().getDrawingPanel().redraw();
 				}
 			}
 		});
@@ -99,20 +116,9 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		contourWindow.setScene(scene);
 		contourWindow.show();
 	}
-	
-	private void setCurrentId(TextField contourIdField) throws SelectedIdOutOfBounds, NumberFormatException {
-		int recievedId = Integer.parseInt(contourIdField.getText());
-		if(recievedId < 0 || recievedId > DcmData.getMaxContourId())
-			throw new SelectedIdOutOfBounds();
-		DcmData.setCurrentContourId(recievedId);
-		gui.getCenterPanel().getDrawingPanel().redraw();
-	}
 
 	public static Stage getContourWindow() {
 		return contourWindow;
 	}
-	
-}
-class SelectedIdOutOfBounds extends Exception {
 	
 }

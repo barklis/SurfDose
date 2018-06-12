@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.Preferences;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.MapSettingsHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.SetCurrentContourHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowMaximizeHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.WindowResizedHandler;
@@ -67,6 +68,8 @@ public class GUI{
 					ContourLineWidthHandler.getOptionsWindow().close();
 				if(SetCurrentContourHandler.getContourWindow() != null)
 					SetCurrentContourHandler.getContourWindow().close();
+				if(MapSettingsHandler.getMapSettingsWindow() != null)
+					MapSettingsHandler.getMapSettingsWindow().close();
 			}
 		});
 		mainWindow.setScene(scene);

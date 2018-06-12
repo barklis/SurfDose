@@ -74,7 +74,7 @@ public void drawFrame() {
 	private void drawContours(GraphicsContext gc) {
 		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
 		gc.setLineWidth(Preferences.getContourLineWidth());
-		gc.setStroke(Preferences.getContourLineColor());
+		gc.setStroke(Color.WHITE);
 		
 		Contour selectedContour = null;
 		for(Contour contour : DcmData.getDcmFrames().get(currentFrame).getContours()) {
@@ -93,7 +93,7 @@ public void drawFrame() {
 			gc.closePath();
 		}
 		if(selectedContour != null) {
-			gc.setStroke(Color.BLUE);
+			gc.setStroke(Preferences.getContourLineColor());
 			gc.beginPath();
 			gc.moveTo(getLocalX(selectedContour.getData().get(0).getX()), getLocalY(selectedContour.getData().get(0).getY()));
 			for(int i = 1; i < selectedContour.getNumberOfPoints(); i++) {
