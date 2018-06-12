@@ -26,7 +26,7 @@ public class ContourLineColorHandler implements EventHandler<ActionEvent> {
 				int g = (int) (255*Preferences.getContourLineColor().getGreen());
 				int b = (int) (255*Preferences.getContourLineColor().getBlue());
 				
-				java.awt.Color result = JColorChooser.showDialog(null, "Choose color", new java.awt.Color(r,g,b));
+				java.awt.Color result = JColorChooser.showDialog(null, Preferences.getLabel("colorChooserTitle"), new java.awt.Color(r,g,b));
 				if(result != null) {
 					Color newColor = Color.rgb(result.getRed(), result.getGreen(), result.getBlue());
 					Preferences.setContourLineColor(newColor);
@@ -40,6 +40,7 @@ public class ContourLineColorHandler implements EventHandler<ActionEvent> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+		if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
+			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
 	}
 }

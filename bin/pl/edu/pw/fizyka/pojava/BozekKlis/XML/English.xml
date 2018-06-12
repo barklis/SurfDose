@@ -28,7 +28,7 @@
 		</optionsMenu>
 		<helpMenu>
 			<help>Help</help>
-			<showDocumentation>Show documentation</showDocumentation>
+			<showDocumentation>Show manual</showDocumentation>
 		</helpMenu>
 	</menuBar>
 	<bottomPanel>
@@ -42,6 +42,7 @@
 		<structurFile>RTSTRUCTUR file</structurFile>
 	</bottomPanel>
 	<dialogs>
+		<colorChooserTitle>Choose line color</colorChooserTitle>
 		<languageConformationTitle>Change language</languageConformationTitle>
 		<languageConformationContent>To see the changes, interface must be reloaded. Do you wanna do it now?</languageConformationContent>
 		<notCalculatedInformationTitle>Cannot display chart</notCalculatedInformationTitle>
