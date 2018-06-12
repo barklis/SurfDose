@@ -40,11 +40,30 @@ public class ContourLineWidthHandler implements EventHandler<ActionEvent> {
 		okButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				if(lineWidthField.getValue() == Preferences.getContourLineWidth()) {
+					optionsWindow.close();
+					optionsWindow = null;
+					return;
+				}
 				Preferences.setContourLineWidth(lineWidthField.getValue());
 				
 				optionsWindow.close();
-				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
 				optionsWindow = null;
+				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
+					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+			}
+		});
+		
+		Button applyButton = new Button(Preferences.getLabel("applyButton"));
+		applyButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(lineWidthField.getValue() == Preferences.getContourLineWidth()) {
+					return;
+				}
+				Preferences.setContourLineWidth(lineWidthField.getValue());
+				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
+					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
 			}
 		});
 		
@@ -62,7 +81,7 @@ public class ContourLineWidthHandler implements EventHandler<ActionEvent> {
 		hboxTop.getChildren().add(lineWidthField);
 		
 		HBox hboxBottom = new HBox();
-		hboxBottom.getChildren().addAll(okButton, cancelButton);
+		hboxBottom.getChildren().addAll(okButton, cancelButton, applyButton);
 		hboxBottom.setAlignment(Pos.CENTER);
 		
 		BorderPane root = new BorderPane();
@@ -73,6 +92,7 @@ public class ContourLineWidthHandler implements EventHandler<ActionEvent> {
 		scene.getStylesheets().add(getClass().getResource("/pl/edu/pw/fizyka/pojava/BozekKlis/Resources/optionWindowStylesheet.css").toExternalForm());
 		
 		optionsWindow.setScene(scene);
+		optionsWindow.setResizable(false);
 		optionsWindow.show();
 	}
 

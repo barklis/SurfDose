@@ -12,6 +12,8 @@ public class Preferences {
 	private static String language;
 	private static double contourLineWidth;
 	private static Color contourLineColor;
+	private static int pixelsInCol;
+	private static double interpolationRadius;
 	
 	public static boolean loadConfigFiles(){
 		try {
@@ -26,6 +28,8 @@ public class Preferences {
 			language = XmlHandler.getLabel(configDocument, "language");
 			contourLineWidth = Double.parseDouble(XmlHandler.getLabel(configDocument, "contourLineWidth"));
 			contourLineColor = Color.valueOf(XmlHandler.getLabel(configDocument, "contourLineColor"));
+			pixelsInCol = Integer.parseInt(XmlHandler.getLabel(configDocument, "pixelsInCol"));
+			interpolationRadius = Double.parseDouble(XmlHandler.getLabel(configDocument, "interpolationRadius"));
 		} catch (Exception e) {
 			new ErrorHandler("Cannot find "+XmlHandler.getLabel(configDocument, "language")+".xml").showDialog();
 			return false;
@@ -46,6 +50,15 @@ public class Preferences {
 		return contourLineColor;
 	}
 	
+	public static double getInterpolationRadius() {
+		return interpolationRadius;
+	}
+
+	public static void setInterpolationRadius(double interpolationRadius) {
+		Preferences.interpolationRadius = interpolationRadius;
+		XmlHandler.changeSelectorValue("interpolationRadius", String.valueOf(interpolationRadius), configDocument, "config.xml");
+	}
+
 	public static void setContourLineColor(Color contourColor) {
 		Preferences.contourLineColor = contourColor;
 	
@@ -57,6 +70,15 @@ public class Preferences {
 		XmlHandler.changeSelectorValue("contourLineColor", valStr, configDocument, "config.xml");
 	}
 
+
+	public static int getPixelsInCol() {
+		return pixelsInCol;
+	}
+
+	public static void setPixelsInCol(int pixelsInCol) {
+		Preferences.pixelsInCol = pixelsInCol;
+		XmlHandler.changeSelectorValue("pixelsInCol", String.valueOf(Preferences.pixelsInCol), configDocument, "config.xml");
+	}
 
 	public static String getLabel(String name) {
 		return XmlHandler.getLabel(languageDocument, name);

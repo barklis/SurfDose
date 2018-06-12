@@ -20,6 +20,7 @@
 			<options>Opcje</options>
 			<contourLineColor>Kolor konturu</contourLineColor>
 			<contourLineWidth>Grubość lini konturu</contourLineWidth>
+			<pixelRowsNumber>Ustawienia powierzchni</pixelRowsNumber>
 			<currentContour>Wybów konturu</currentContour>
 			<resetData>Zresetuj załadowane dane</resetData>
 			<language>Język</language>
@@ -42,7 +43,7 @@
 		<structurFile>Plik RTSTRUCTUR</structurFile>
 	</bottomPanel>
 	<dialogs>
-		<colorChooserTitle>Choose line color</colorChooserTitle>
+		<colorChooserTitle>Wybierz kolor lini</colorChooserTitle>
 		<languageConformationTitle>Zmiana języka</languageConformationTitle>
 		<languageConformationContent>By zobaczyć zmiany interfejs musi się ponownie załadować. Zrobić to teraz?</languageConformationContent>
 		<notCalculatedInformationTitle>Nie można wyświetlić histogramu</notCalculatedInformationTitle>
@@ -62,9 +63,16 @@
 	<currentContourWindow>
 		<currentContourWindowTitle>Wybór konturu</currentContourWindowTitle>
 		<currentContourWindowLabel>Wpisz ID konturu</currentContourWindowLabel>
-		<invalidCurrentContourId>Niepoprawne wyrażenie (oczekiwano liczby)</invalidCurrentContourId>
-		<currentContourIdOutOfBounds>Wartosć poza przedziałem</currentContourIdOutOfBounds>
+		<invalidCurrentContourId>Niepoprawne wyrażenie (oczekiwano całkowitej liczby)</invalidCurrentContourId>
+		<valueOutOfBounds>Wartosć poza przedziałem</valueOutOfBounds>
 	</currentContourWindow>
+	<mapSettingsWindow>
+		<mapSettingsWindowTitle>Ustawienia powierzchni</mapSettingsWindowTitle>
+		<pixelsInColLabel>Liczba pikseli w kolumnie</pixelsInColLabel>
+		<interpolationRadiusLabel>Promień interpolacji (*odległość między skanami)</interpolationRadiusLabel>
+		<invalidExpression>Niepoprawne wyrażenie</invalidExpression>
+		<negativeNumber>Wartość nie może być ujemna</negativeNumber>
+	</mapSettingsWindow>
 	<chart>
 		<dose>Dawka</dose>
 		<calculatedDose>Obliczona dawka</calculatedDose>

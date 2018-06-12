@@ -14,33 +14,34 @@ import com.pixelmed.dicom.SequenceAttribute;
 
 // Contains loaded and calculated data
 public class DcmData {
-	static List<DcmFrame> dcmFrames = new ArrayList<DcmFrame>();
-	static int numberOfCols = 0;
-	static int numberOfRows = 0;
-	static int numberOfFrames = 0;
-	static int doseFilesLoaded = 0;
-	static double maxSumDoseValue = 0;
-	static double x0 = 0.0;
-	static double y0 = 0.0;
-	static double colsPixelSpacing = 0.0;
-	static double rowsPixelSpacing = 0.0;
-	static boolean doseLoaded = false;
-	static boolean contourLoaded = false;
-	static boolean planLoaded = false;
-	static boolean doseCalculated = false;
-	static String planFileName = "-";
-	static String doseFileName = "-";
-	static String structurFileName = "-";
-	static int numberOfFractions = 0;
-	static int numberOfBeams = 0;
-	static double targetBeamDose = 0.0;
-	static double[] beamDose = null;
-	static double[] beamWeights = null;
-	static double[] isocenterPosition = null;
-	static final int EMPTY = 1010101010;
-	static double uVector[] = {0, -1};
-	static int currentContourId = 0;
-	static int maxContourId = 0;
+	private static List<DcmFrame> dcmFrames = new ArrayList<DcmFrame>();
+	private static int numberOfCols = 0;
+	private static int numberOfRows = 0;
+	private static int numberOfFrames = 0;
+	private static int doseFilesLoaded = 0;
+	private static double maxSumDoseValue = 0;
+	private static double x0 = 0.0;
+	private static double y0 = 0.0;
+	private static double colsPixelSpacing = 0.0;
+	private static double rowsPixelSpacing = 0.0;
+	private static boolean doseLoaded = false;
+	private static boolean contourLoaded = false;
+	private static boolean planLoaded = false;
+	private static boolean doseCalculated = false;
+	private static String planFileName = "-";
+	private static String doseFileName = "-";
+	private static String structurFileName = "-";
+	private static int numberOfFractions = 0;
+	private static int numberOfBeams = 0;
+	private static double targetBeamDose = 0.0;
+	private static double[] beamDose = null;
+	private static double[] beamWeights = null;
+	private static double[] isocenterPosition = null;
+	private static double uVector[] = {-1, 0};
+	private static int currentContourId = 0;
+	private static int maxContourId = 0;
+	
+	public static final int EMPTY = 1010101010;
 	
 	public static void calculateDose(int frameIndex) {
 		if(!doseLoaded || !contourLoaded)

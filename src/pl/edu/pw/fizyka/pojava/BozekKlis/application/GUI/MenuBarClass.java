@@ -12,6 +12,7 @@ import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ChangeLanguag
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineColorHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ContourLineWidthHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.ExitProgramHandler;
+import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.MapSettingsHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTdoseFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTplanFileHandler;
 import pl.edu.pw.fizyka.pojava.BozekKlis.application.EventHandlers.OpenRTstucturFileHandler;
@@ -68,6 +69,8 @@ public class MenuBarClass extends MenuBar {
 				contourColorItem.setOnAction(new ContourLineColorHandler(gui));
 			MenuItem contourLineWidthItem = new MenuItem(Preferences.getLabel("contourLineWidth"));
 				contourLineWidthItem.setOnAction(new ContourLineWidthHandler(gui));
+			MenuItem mapSettingsItem = new MenuItem(Preferences.getLabel("pixelRowsNumber"));
+				mapSettingsItem.setOnAction(new MapSettingsHandler(gui));
 			MenuItem setCurrentContour = new MenuItem(Preferences.getLabel("currentContour"));
 				setCurrentContour.setOnAction(new SetCurrentContourHandler(gui));
 			MenuItem resetDataItem = new MenuItem(Preferences.getLabel("resetData"));
@@ -80,7 +83,7 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, setCurrentContour, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
+				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, mapSettingsItem, setCurrentContour, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
