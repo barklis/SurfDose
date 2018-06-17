@@ -22,6 +22,7 @@
 			<contourLineWidth>Contour line width</contourLineWidth>
 			<pixelRowsNumber>Surface settings</pixelRowsNumber>
 			<currentContour>Choose contour</currentContour>
+			<vectorDirection>Vector direction</vectorDirection>
 			<resetData>Reset loaded data</resetData>
 			<language>Language</language>
 			<PolishLanguage>Polish</PolishLanguage>
@@ -73,6 +74,11 @@
 		<invalidExpression>Invalid expression</invalidExpression>
 		<negativeNumber>Value cannot be negative</negativeNumber>
 	</mapSettingsWindow>
+	<vectorDirectionWindow>
+		<vectorAngleWindowTitle>Starting point</vectorAngleWindowTitle>
+		<vectorAngleWindowLabel>Angular position</vectorAngleWindowLabel>
+		<invalidAngle>Invalid expression</invalidAngle>
+	</vectorDirectionWindow>
 	<chart>
 		<dose>Dose</dose>
 		<calculatedDose>Calculated dose</calculatedDose>

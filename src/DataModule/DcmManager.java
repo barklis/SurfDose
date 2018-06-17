@@ -180,5 +180,12 @@ public class DcmManager {
 	    }
 	    return false;
 	}
+
+	public static double getRelativeAngle(double x1, double y1, double x2, double y2) {
+		double angle = Math.atan2(x1*y2-x2*y1, x1*x2+y1*y2);
+		if(angle < 0)
+			 return (angle + 2*Math.PI);
+		return angle;
+	}
 	
 }

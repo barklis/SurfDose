@@ -19,7 +19,7 @@ public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(DcmData.isDoseLoaded() && DcmData.isPlanLoaded()) {
+		if(DcmData.isDoseLoaded()) {
 			gui.getCenterPanel().getDrawingPanel().placeCanvas();
 			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
 			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
@@ -36,8 +36,6 @@ public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 			String message = Preferences.getLabel("missingFiles") + ":\n";	
 			if(!DcmData.isDoseLoaded())
 				message += "\nRTDOSE";
-			if(!DcmData.isPlanLoaded())
-				message += "\nRTPLAN";
 			
 			alert.setContentText(message);
 			alert.setHeaderText("");

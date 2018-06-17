@@ -3,6 +3,7 @@ package GUI;
 import EventHandlers.ContourLineWidthHandler;
 import EventHandlers.MapSettingsHandler;
 import EventHandlers.SetCurrentContourHandler;
+import EventHandlers.VectorDirectionHandler;
 import EventHandlers.WindowMaximizeHandler;
 import EventHandlers.WindowResizedHandler;
 import application.Preferences;
@@ -70,6 +71,8 @@ public class GUI{
 					SetCurrentContourHandler.getContourWindow().close();
 				if(MapSettingsHandler.getMapSettingsWindow() != null)
 					MapSettingsHandler.getMapSettingsWindow().close();
+				if(VectorDirectionHandler.getAngleWindow() != null)
+					VectorDirectionHandler.getAngleWindow().close();
 			}
 		});
 		mainWindow.setScene(scene);
