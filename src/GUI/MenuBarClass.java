@@ -15,6 +15,7 @@ import EventHandlers.ShowDocumentationHandler;
 import EventHandlers.ShowHistogramHandler;
 import EventHandlers.ShowLoadedDataHandler;
 import EventHandlers.ShowMapHandler;
+import EventHandlers.VectorDirectionHandler;
 import application.Preferences;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
@@ -72,6 +73,8 @@ public class MenuBarClass extends MenuBar {
 				mapSettingsItem.setOnAction(new MapSettingsHandler(gui));
 			MenuItem setCurrentContour = new MenuItem(Preferences.getLabel("currentContour"));
 				setCurrentContour.setOnAction(new SetCurrentContourHandler(gui));
+			MenuItem setVectorDirectionItem = new MenuItem(Preferences.getLabel("vectorDirection"));
+				setVectorDirectionItem.setOnAction(new VectorDirectionHandler(gui));
 			MenuItem resetDataItem = new MenuItem(Preferences.getLabel("resetData"));
 				resetDataItem.setOnAction(new ResetDataHandler(gui));
 				
@@ -82,7 +85,8 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, mapSettingsItem, setCurrentContour, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
+				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, mapSettingsItem, setCurrentContour,
+						setVectorDirectionItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));

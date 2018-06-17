@@ -62,6 +62,16 @@ public class DcmData {
 		doseCalculated = true;
 	}
 	
+	public static void recalculateAngle() {
+		for(DcmFrame frame : dcmFrames) {
+			for(Contour contour : frame.getContours()) {
+				for(Point point : contour.getData()) {	
+					point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
+				}
+			}
+		}
+	}
+	
 	public static void resetData() {
 		DcmFrame.frameCounter = 0;
 		dcmFrames.clear();
@@ -415,6 +425,11 @@ public class DcmData {
 
 	public static String getStructurFileName() {
 		return structurFileName;
+	}
+
+	public static void setuVector(double vectorX, double vectorY) {
+		DcmData.uVector[0] = vectorX;
+		DcmData.uVector[1] = vectorY;
 	}
 	
 }

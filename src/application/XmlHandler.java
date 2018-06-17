@@ -13,15 +13,16 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 //Allows to work with XML files
 public class XmlHandler {
 	
 	public static String getLabel(Document doc, String name) {
-		return ((Element) doc.getElementsByTagName(name).item(0)).getTextContent();
+		NodeList list = doc.getElementsByTagName(name);
+		return (list.getLength() != 0) ? list.item(0).getTextContent() : "";
 	}
 	
 	public static Document loadXMLDocument(String fileName) throws ParserConfigurationException, SAXException, IOException {

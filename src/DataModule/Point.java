@@ -26,9 +26,7 @@ public class Point{
 	public void calculateAngle(double[] uVector, double x0, double y0) {
 		double x2 = x-x0;
 		double y2 = y-y0;
-		angle = Math.atan2(uVector[0]*y2-x2*uVector[1], uVector[0]*x2+uVector[1]*y2);
-		if(angle < 0)
-			angle += 2*Math.PI;
+		angle = DcmManager.getRelativeAngle(uVector[0], uVector[1], x2, y2);
 	}
 
 	public void addValue(double value) {

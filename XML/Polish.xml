@@ -22,6 +22,7 @@
 			<contourLineWidth>Grubość lini konturu</contourLineWidth>
 			<pixelRowsNumber>Ustawienia powierzchni</pixelRowsNumber>
 			<currentContour>Wybów konturu</currentContour>
+			<vectorDirection>Kierunek wektora</vectorDirection>
 			<resetData>Zresetuj załadowane dane</resetData>
 			<language>Język</language>
 			<PolishLanguage>Polski</PolishLanguage>
@@ -73,6 +74,11 @@
 		<invalidExpression>Niepoprawne wyrażenie</invalidExpression>
 		<negativeNumber>Wartość nie może być ujemna</negativeNumber>
 	</mapSettingsWindow>
+	<vectorDirectionWindow>
+		<vectorAngleWindowTitle>Punkt początkowy</vectorAngleWindowTitle>
+		<vectorAngleWindowLabel>Położenie kątowe (stopnie)</vectorAngleWindowLabel>
+		<invalidAngle>Niepoprawne wyrażenie</invalidAngle>
+	</vectorDirectionWindow>
 	<chart>
 		<dose>Dawka</dose>
 		<calculatedDose>Obliczona dawka</calculatedDose>
