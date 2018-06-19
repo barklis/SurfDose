@@ -38,6 +38,7 @@ public class DcmData {
 	private static double[] beamWeights = null;
 	private static double[] isocenterPosition = null;
 	private static double uVector[] = {-1, 0};
+	private static double angularWidth = Math.PI*2;
 	private static int currentContourId = 0;
 	private static int maxContourId = 0;
 	
@@ -430,6 +431,14 @@ public class DcmData {
 	public static void setuVector(double vectorX, double vectorY) {
 		DcmData.uVector[0] = vectorX;
 		DcmData.uVector[1] = vectorY;
+	}
+
+	public static double getAngularWidth() {
+		return angularWidth;
+	}
+
+	public static void setAngularWidth(double angularWidth) {
+		DcmData.angularWidth = angularWidth;
 	}
 	
 }

@@ -76,8 +76,10 @@
 	</mapSettingsWindow>
 	<vectorDirectionWindow>
 		<vectorAngleWindowTitle>Starting point</vectorAngleWindowTitle>
-		<vectorAngleWindowLabel>Angular position</vectorAngleWindowLabel>
+		<firstAngleWindowLabel>First vector angular position</firstAngleWindowLabel>
+		<secondAngleWindowLabel>Angular width</secondAngleWindowLabel>
 		<invalidAngle>Invalid expression</invalidAngle>
+		<angularWidthOutOfBounds>Angular width out of bounds</angularWidthOutOfBounds>
 	</vectorDirectionWindow>
 	<chart>
 		<dose>Dose</dose>
