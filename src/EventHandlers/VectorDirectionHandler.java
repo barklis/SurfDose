@@ -31,12 +31,17 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 		angleWindow = new Stage();
 		angleWindow.setTitle(Preferences.getLabel("vectorAngleWindowTitle"));
 		
-		double curentAngle = DcmManager.getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1])*180/Math.PI;
-		TextField angleField = new TextField(String.valueOf(curentAngle));
+		double currentFirstAngle = DcmManager.getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1])*180/Math.PI;
+		double currentSecondAngle = DcmData.getAngularWidth()*180/Math.PI;
+		TextField firstAngleField = new TextField(String.valueOf(currentFirstAngle));
+		TextField secondAngleField = new TextField(String.valueOf(currentSecondAngle));
 		
 		Button okButton = new Button(Preferences.getLabel("okButton"));
 		Button applyButton = new Button(Preferences.getLabel("applyButton"));
 		Button cancelButton = new Button(Preferences.getLabel("cancelButton"));
+		
+		Label errorLabel = new Label("");
+		errorLabel.getStyleClass().add("errorLabel");
 		
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -46,32 +51,25 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 			}
 		});
 		
-		Label errorLabel = new Label("");
-		errorLabel.getStyleClass().add("errorLabel");
-		
-		HBox hboxTop = new HBox();
-		hboxTop.getChildren().add(new VBox(new Label(Preferences.getLabel("vectorAngleWindowLabel")+": ")));
-		hboxTop.getChildren().add(angleField);
-		
-		HBox hboxBottom = new HBox();
-		hboxBottom.getChildren().addAll(okButton, cancelButton, applyButton);
-		hboxBottom.setAlignment(Pos.CENTER);
-		
-		HBox hboxCenter = new HBox(errorLabel);
-		hboxCenter.setAlignment(Pos.CENTER);
-		
 		okButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					double recievedAngle = Double.parseDouble(angleField.getText());
-					recievedAngle *= Math.PI/180;
+					double recievedFirstAngle = Double.parseDouble(firstAngleField.getText());
+					double recievedSecondAngle = Double.parseDouble(secondAngleField.getText());
 					
-					double vectorX = Math.sin(recievedAngle);
-					double vectorY = -Math.cos(recievedAngle);
+					if(recievedSecondAngle > 360 || recievedSecondAngle < 0)
+						throw new IllegalArgumentException(Preferences.getLabel("angularWidthOutOfBounds"));
 					
-					if(vectorX != DcmData.getuVector()[0] || vectorY != DcmData.getuVector()[1]) {
-						DcmData.setuVector(vectorX, vectorY);
+					recievedFirstAngle *= Math.PI/180;
+					recievedSecondAngle *= Math.PI/180;
+					
+					double firstVectorX = Math.sin(recievedFirstAngle);
+					double firstVectorY = -Math.cos(recievedFirstAngle);
+					
+					if(firstVectorX != DcmData.getuVector()[0] || firstVectorY != DcmData.getuVector()[1] || recievedSecondAngle != DcmData.getAngularWidth()) {
+						DcmData.setuVector(firstVectorX, firstVectorY);
+						DcmData.setAngularWidth(recievedSecondAngle);
 						DcmData.recalculateAngle();
 						gui.getCenterPanel().getDrawingPanel().redraw();
 					}
@@ -80,6 +78,8 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 					angleWindow = null;
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidAngle"));
+				} catch(IllegalArgumentException e) {
+					errorLabel.setText(e.getMessage());
 				}
 			}
 		});
@@ -88,18 +88,44 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-				double recievedAngle = Double.parseDouble(angleField.getText());
-				recievedAngle *= Math.PI/180;
+					double recievedFirstAngle = Double.parseDouble(firstAngleField.getText());
+					double recievedSecondAngle = Double.parseDouble(secondAngleField.getText());
+					
+					if(recievedSecondAngle > 360 || recievedSecondAngle < 0)
+						throw new IllegalArgumentException(Preferences.getLabel("angularWidthOutOfBounds"));
+					
+					errorLabel.setText("");
+					
+					recievedFirstAngle *= Math.PI/180;
+					recievedSecondAngle *= Math.PI/180;
 				
-				DcmData.setuVector(Math.sin(recievedAngle), -Math.cos(recievedAngle));
-				DcmData.recalculateAngle();
-				gui.getCenterPanel().getDrawingPanel().redraw();
+					DcmData.setuVector(Math.sin(recievedFirstAngle), -Math.cos(recievedFirstAngle));
+					DcmData.setAngularWidth(recievedSecondAngle);
+					DcmData.recalculateAngle();
+					gui.getCenterPanel().getDrawingPanel().redraw();
 				
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidAngle"));
+				} catch(IllegalArgumentException e) {
+					errorLabel.setText(e.getMessage());
 				}
 			}
 		});
+		
+		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("firstAngleWindowLabel")+":")), new HBox(new Label(Preferences.getLabel("secondAngleWindowLabel")+":")));
+		VBox right = new VBox(new HBox(firstAngleField), new HBox(secondAngleField));
+		
+		left.getStyleClass().add("tableVbox");
+		right.getStyleClass().add("tableVbox");
+		
+		HBox hboxTop = new HBox(left, right);
+		
+		HBox hboxCenter = new HBox(errorLabel);
+		hboxCenter.setAlignment(Pos.CENTER);
+		
+		HBox hboxBottom = new HBox();
+		hboxBottom.getChildren().addAll(okButton, cancelButton, applyButton);
+		hboxBottom.setAlignment(Pos.CENTER);
 		
 		BorderPane root = new BorderPane();
 		root.setTop(hboxTop);

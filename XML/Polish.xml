@@ -76,8 +76,10 @@
 	</mapSettingsWindow>
 	<vectorDirectionWindow>
 		<vectorAngleWindowTitle>Punkt początkowy</vectorAngleWindowTitle>
-		<vectorAngleWindowLabel>Położenie kątowe (stopnie)</vectorAngleWindowLabel>
+		<firstAngleWindowLabel>Położenie kątowe pierwszego wektora</firstAngleWindowLabel>
+		<secondAngleWindowLabel>Szerokość kątowa</secondAngleWindowLabel>
 		<invalidAngle>Niepoprawne wyrażenie</invalidAngle>
+		<angularWidthOutOfBounds>Szerokosć kątowa nie mieści się w zadanych granicach</angularWidthOutOfBounds>
 	</vectorDirectionWindow>
 	<chart>
 		<dose>Dawka</dose>

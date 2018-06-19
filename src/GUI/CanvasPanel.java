@@ -37,8 +37,13 @@ public void drawFrame() {
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, DcmData.getNumberOfCols()*pixelSize, DcmData.getNumberOfRows()*pixelSize);
 		
-		// drawinf dose
+		// drawing dose
 		drawDose(gc);
+		
+		// drawing border
+		gc.setStroke(Color.RED);
+		gc.setLineWidth(1);
+		gc.strokeRect(0, 0, DcmData.getNumberOfCols()*pixelSize, DcmData.getNumberOfRows()*pixelSize);
 		
 		// drawing contours
 		if(DcmData.isContourLoaded()) {
@@ -50,11 +55,10 @@ public void drawFrame() {
 			drawIsocentre(gc);
 		}
 		
-		// drawing starting vector
+		// drawing restraining vectors
 		if(DcmData.isDoseCalculated()) {
-			drawUnitVector(gc);
+			drawVectors(gc);
 		}
-		
 	}
 
 	private void drawDose(GraphicsContext gc) {
@@ -124,12 +128,23 @@ public void drawFrame() {
 		}
 	}
 	
-	private void drawUnitVector(GraphicsContext gc) {
+	private void drawVectors(GraphicsContext gc) {
 		Contour c = DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getContourById(DcmData.getCurrentContourId());
 		if(c.getData().size() != 0) {
+			
+			// center of the contour
 			gc.setFill(Color.BLUEVIOLET);
 			gc.fillOval(getLocalX(c.getCenterX())-2, getLocalY(c.getCenterY())-2, 4, 4);
+			
+			// angle vector
+			double newAngle = DcmData.getAngularWidth() + DcmManager.getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1]);
 			gc.setStroke(Color.BLUEVIOLET);
+			gc.strokeLine(getLocalX(c.getCenterX()), getLocalY(c.getCenterY()),
+					getLocalX(c.getCenterX()) + Math.sin(newAngle)*containerWidth,
+					getLocalY(c.getCenterY()) + -Math.cos(newAngle)*containerHeight);
+			
+			// main vector
+			gc.setStroke(Color.BROWN);
 			gc.strokeLine(getLocalX(c.getCenterX()), getLocalY(c.getCenterY()),
 					getLocalX(c.getCenterX()) + DcmData.getuVector()[0]*containerWidth,
 					getLocalY(c.getCenterY()) + DcmData.getuVector()[1]*containerHeight);
