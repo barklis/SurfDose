@@ -4,7 +4,7 @@ Its goal is to analyze radiation absorbed by surfaces of internal organs.
 
 To launch the program, run launcher.jar
 
-Make sure that the XML folder is in the same directory as launcher.
+Program requires XML and manual folders to be in the same directory as launcher.
 
 Launcher is compiled in Java 9.0.4
 
