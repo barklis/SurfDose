@@ -1,4 +1,11 @@
 # DICOMAnalyzer
-Simple program for Centre of Oncology in Warsaw to DICOM files analisis
+Application made for Centre of Oncology in Warsaw.
+Its goal is to analyze radiation absorbed by surfaces of internal organs.
 
-Version of Java: 9.0.4
+To launch the program, run launcher.jar
+Make sure that the XML folder is in the same directory as launcher.
+
+Launcher is compiled in Java 9.0.4
+
+Library used to read DICOM files:
+[PixelMed™ Java DICOM Toolkit](http://www.pixelmed.com/dicomtoolkit.html)
