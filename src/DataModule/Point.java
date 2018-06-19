@@ -28,6 +28,12 @@ public class Point{
 		double y2 = y-y0;
 		angle = DcmManager.getRelativeAngle(uVector[0], uVector[1], x2, y2);
 	}
+	
+	public Point getCopy() {
+		Point copy = new Point(x, y, value);
+		copy.angle = angle;
+		return copy;
+	}
 
 	public void addValue(double value) {
 		this.value += value;

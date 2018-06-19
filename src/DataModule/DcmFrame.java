@@ -56,10 +56,11 @@ public class DcmFrame {
 	}
 	
 	public void sumDose() {
+		sumDoseData = null;
 		sumDoseData = new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()];
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
-				sumDoseData[c][r] = doseData.get(0)[c][r];
+				sumDoseData[c][r] = doseData.get(0)[c][r].getCopy();
 				for(int l = 1; l < doseData.size(); ++l) {
 					sumDoseData[c][r].addValue(doseData.get(l)[c][r].getValue());
 				}
