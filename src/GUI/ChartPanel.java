@@ -13,11 +13,11 @@ import javafx.scene.chart.XYChart;
 public class ChartPanel{
 
 	GUI gui;
-	List<AreaChart<Number,Number>> charts;
+	List<List<AreaChart<Number,Number>>> charts;
 	
 	public ChartPanel(GUI gui) {
 		this.gui = gui;
-		charts = new ArrayList<AreaChart<Number,Number>>();
+		charts = new ArrayList<List<AreaChart<Number,Number>>>();
 	}
 	
 	public boolean isListInited() {
@@ -26,15 +26,19 @@ public class ChartPanel{
 	
 	public synchronized void initChartList() {
 		charts.clear();
-		for(int i = 0; i < DcmData.getNumberOfFrames(); ++i)
-			charts.add(createChart(i));
+		for(int c = 0; c <= DcmData.getMaxContourId(); c++) {
+			List<AreaChart<Number,Number>> tmpList = new ArrayList<AreaChart<Number,Number>>();
+			for(int i = 0; i < DcmData.getNumberOfFrames(); ++i)
+				tmpList.add(createChart(i, c));
+			charts.add(tmpList);
+		}
 	}
 	
 	public synchronized AreaChart<Number,Number> getChart(){
-		return charts.get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame());
+		return charts.get(DcmData.getCurrentContourId()).get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame());
 	}
 	
-	private AreaChart<Number, Number> createChart(int frameNumber) {
+	private AreaChart<Number, Number> createChart(int frameNumber, int id) {
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
 		xAxis.setLabel(Preferences.getLabel("contourLength") + " [mm]");
@@ -47,13 +51,13 @@ public class ChartPanel{
 		final XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 		series.setName("Dose");
 		
-		List<Point> data = DcmData.getDcmFrames().get(frameNumber).getContourById(DcmData.getCurrentContourId()).getData();
+		List<Point> data = DcmData.getDcmFrames().get(frameNumber).getContourById(id).getData();
 		if(data.size() != 0) {	
 			double pos = 0;
 			for(int i = 0; i < data.size(); ++i) {
 				if(i != 0)
 					pos += Point.distance(data.get(i), data.get(i-1));
-				series.getData().add(new XYChart.Data<Number, Number>(pos, data.get(i).getValue()));
+				series.getData().add(new XYChart.Data<Number, Number>(pos, data.get(i).getValue()/100));
 			}
 		}
 		lineChart.getData().add(series);

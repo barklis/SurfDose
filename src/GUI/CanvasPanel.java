@@ -171,7 +171,7 @@ public void drawFrame() {
 	}
 
 	public void setContainerSize() {
-		containerWidth = gui.getScene().getWidth();
+		containerWidth = gui.getScene().getWidth()-gui.getCenterPanel().getScalePanel().getWidth();
 		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
 		if(DcmData.isDoseLoaded())
 			setPixelSize();

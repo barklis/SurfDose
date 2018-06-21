@@ -32,6 +32,8 @@ public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
 					Platform.runLater(() -> {
 						gui.getBottomPanel().setDoseFilesLoadedLabel(String.valueOf(DcmData.getDoseFilesLoaded()));
 						gui.getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
+						gui.getCenterPanel().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
+						gui.getCenterPanel().getDrawingPanel().redraw();
 					});
 				}
 			});

@@ -19,6 +19,7 @@ public class BottomPanel extends HBox {
 	Label doseFilesLoadedLabel;
 	Label currentframeNumberLabel;
 	Label maxframeNumberLabel;
+	Label separatorLabel;
 	
 	public BottomPanel(GUI gui) {
 		this.gui = gui;
@@ -34,10 +35,11 @@ public class BottomPanel extends HBox {
 		HBox.setHgrow(region1, Priority.ALWAYS);
 		
 		
+		separatorLabel = new Label(" / ");
 		currentframeNumberLabel = new Label(String.valueOf(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()));
 		maxframeNumberLabel = new Label(String.valueOf(DcmData.getNumberOfFrames()));
 		
-		VBox center = new VBox(new HBox(currentframeNumberLabel, new Label(" / "), maxframeNumberLabel));
+		VBox center = new VBox(new HBox(currentframeNumberLabel, separatorLabel, maxframeNumberLabel));
 		center.getStyleClass().add("CenterBox");
 		
 		
@@ -59,6 +61,18 @@ public class BottomPanel extends HBox {
 		
 		getChildren().addAll(left, region1, center, region2, right);
 		
+	}
+	
+	public void showMapMode(int startingFrame, int endingFrame) {
+		currentframeNumberLabel.setText(String.valueOf(startingFrame+1));
+		maxframeNumberLabel.setText(String.valueOf(endingFrame+1));
+		separatorLabel.setText(" - ");
+	}
+	
+	public void showFrameCountMode() {
+		currentframeNumberLabel.setText(String.valueOf(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()));
+		maxframeNumberLabel.setText(String.valueOf(DcmData.getNumberOfFrames()));
+		separatorLabel.setText(" / ");
 	}
 	
 	public void resetData() {
