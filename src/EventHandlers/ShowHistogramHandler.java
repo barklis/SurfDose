@@ -23,6 +23,7 @@ public class ShowHistogramHandler implements EventHandler<ActionEvent> {
 			if(!gui.getCenterPanel().getDrawingPanel().getChartPanel().isListInited())
 				gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
 			
+			gui.getBottomPanel().showFrameCountMode();
 			gui.getCenterPanel().getDrawingPanel().placeChart();
 			
 			gui.getMenuBarClass().getShowMapItem().setSelected(false);

@@ -24,6 +24,9 @@ public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
 			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
 			
+			gui.getBottomPanel().showFrameCountMode();
+			gui.getCenterPanel().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
+			
 			gui.getMenuBarClass().getShowHistogramItem().setSelected(false);
 			gui.getMenuBarClass().getShowMapItem().setSelected(false);
 			gui.getMenuBarClass().getShowFilesContentItem().setSelected(true);

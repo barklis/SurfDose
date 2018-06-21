@@ -18,6 +18,7 @@ public class WindowMaximizeHandler implements ChangeListener<Boolean> {
 		Platform.runLater(()-> {
 			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
 			gui.getCenterPanel().getDrawingPanel().getMapPanel().setContainerSize();
+			gui.getCenterPanel().getScalePanel().drawScale();
 			
 			if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
 				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();

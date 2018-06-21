@@ -7,6 +7,10 @@
 	-fx-padding: 6px;
 }
 
+CenterPanel{
+	-fx-background-color: black;
+}
+
 BottomPanel{
 	-fx-pref-height: 50px;
 	-fx-background-color: darkred;
@@ -36,12 +40,6 @@ BottomPanel .RightBox{
 
 DrawingPanel{
 	-fx-background-color: black;
-}
-
-ImagePanel{
-	-fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-width: 5;
 }
 
 .axis { 

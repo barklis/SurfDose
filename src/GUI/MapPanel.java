@@ -25,6 +25,7 @@ public class MapPanel extends Canvas {
 	}
 	
 	public void drawMap() {
+		gui.getCenterPanel().getScalePanel().setMaxDoseAndReload(DcmData.getMaxValueByContourId(DcmData.getCurrentContourId()));
 		int currentId = DcmData.getCurrentContourId();
 		
 		if(!DcmData.isDoseCalculated())
@@ -35,6 +36,7 @@ public class MapPanel extends Canvas {
 		
 		int startingFrame = getStartingFrame(currentId);
 		int endingFrame = getEndingFrame(currentId);
+		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
 		int pixelsInCol = Preferences.getPixelsInCol();
 		int pixelSize = (int)(containerHeight/pixelsInCol);
@@ -148,7 +150,7 @@ public class MapPanel extends Canvas {
 	}
 
 	public void setContainerSize() {
-		containerWidth = gui.getScene().getWidth();
+		containerWidth = gui.getScene().getWidth()-gui.getCenterPanel().getScalePanel().getWidth();
 		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
 		setWidth(containerWidth);
 		setHeight(containerHeight);
