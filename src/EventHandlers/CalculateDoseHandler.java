@@ -27,10 +27,9 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 				public void run() {
 					for(int i = 0; i < DcmData.getNumberOfFrames(); ++i)
 						DcmData.calculateDose(i);
-					gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
+					
 					Platform.runLater(()->{
 						gui.getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("yes"));
-						System.out.println();
 					});
 				}
 			});
