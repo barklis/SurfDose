@@ -83,7 +83,6 @@
 	</vectorDirectionWindow>
 	<chart>
 		<dose>Dose</dose>
-		<calculatedDose>Calculated dose</calculatedDose>
-		<contourLength>Contour length</contourLength>
+		<contourLength>Angular position</contourLength>
 	</chart>
 </root>

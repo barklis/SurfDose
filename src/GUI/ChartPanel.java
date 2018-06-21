@@ -37,7 +37,7 @@ public class ChartPanel{
 	private AreaChart<Number, Number> createChart(int frameNumber) {
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
-		xAxis.setLabel(Preferences.getLabel("contourLength") + " [mm]");
+		xAxis.setLabel(Preferences.getLabel("contourLength") + " [°]");
 		yAxis.setLabel(Preferences.getLabel("dose") + " [GY]");
 		
 		final AreaChart<Number, Number> lineChart = new AreaChart<Number, Number>(xAxis, yAxis);
@@ -54,10 +54,10 @@ public class ChartPanel{
 			for(int i = startingIndex; i < data.size(); ++i) {
 				//if(i != 0)
 				//	pos += Point.distance(data.get(i), data.get(i-1));
-				series.getData().add(new XYChart.Data<Number, Number>(data.get(i).getAngle(), data.get(i).getValue()/100));
+				series.getData().add(new XYChart.Data<Number, Number>(Math.round(data.get(i).getAngle()*180/Math.PI), data.get(i).getValue()/100));
 			}
 			for(int i = 0; i < startingIndex; ++i)
-				series.getData().add(new XYChart.Data<Number, Number>(data.get(i).getAngle(), data.get(i).getValue()/100));
+				series.getData().add(new XYChart.Data<Number, Number>(Math.round(data.get(i).getAngle()*180/Math.PI), data.get(i).getValue()/100));
 		}
 		lineChart.getData().add(series);
 		return lineChart;
