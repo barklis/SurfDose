@@ -3,5 +3,5 @@
 	<contourLineColor>#CC00CC</contourLineColor>
 	<contourLineWidth>1.5</contourLineWidth>
 	<pixelsInCol>60</pixelsInCol>
-	<interpolationRadius>1.6</interpolationRadius>
+	<interpolationRadius>1.8</interpolationRadius>
 </root>

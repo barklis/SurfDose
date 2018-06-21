@@ -104,6 +104,11 @@ public class DrawingPanel extends StackPane {
 			canvasPanel.drawFrame();
 		else if(mapEmbeded)
 			mapPanel.drawMap();
+		else if(chartEmbeded) {
+			getChildren().remove(0);
+			chartPanel.initChartList();
+			getChildren().add(chartPanel.getChart());
+		}
 	}
 	
 	public boolean isMapEmbeded() {

@@ -24,6 +24,7 @@ public class ShowHistogramHandler implements EventHandler<ActionEvent> {
 				gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
 			
 			gui.getBottomPanel().showFrameCountMode();
+			gui.getCenterPanel().getDrawingPanel().getChartPanel().initChartList();
 			gui.getCenterPanel().getDrawingPanel().placeChart();
 			
 			gui.getMenuBarClass().getShowMapItem().setSelected(false);
