@@ -9,6 +9,9 @@ import EventHandlers.WindowResizedHandler;
 import application.Preferences;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -78,6 +81,14 @@ public class GUI{
 		mainWindow.setScene(scene);
 		mainWindow.setTitle("DICOM Analyzer");
 		mainWindow.show();
+	}
+	
+	public ButtonType showConfirmationDialog(String title, String content) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(title);
+		alert.setContentText(content);
+		alert.setHeaderText("");
+		return alert.showAndWait().get();
 	}
 	
 	public Stage getMainWindow() {

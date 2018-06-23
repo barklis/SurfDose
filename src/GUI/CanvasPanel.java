@@ -50,13 +50,18 @@ public void drawFrame() {
 			drawContours(gc);
 		}
 		
+		// drawing beam lines
+		if(DcmData.isPlanLoaded()) {
+			drawBeamLines(gc);
+		}
+		
 		// drawing isocentre
 		if(DcmData.isPlanLoaded() && DcmData.isContourLoaded()) {
-			drawIsocentre(gc);
+			drawIsocenter(gc);
 		}
 		
 		// drawing restraining vectors
-		if(DcmData.isDoseCalculated()) {
+		if(DcmData.isContourLoaded()) {
 			drawVectors(gc);
 		}
 	}
@@ -109,22 +114,32 @@ public void drawFrame() {
 		}
 	}
 
-	private void drawIsocentre(GraphicsContext gc) {
+	private void drawIsocenter(GraphicsContext gc) {
 		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
-		Point[] ds = { new Point(-12.4, 15.8), new Point(DcmData.getIsocenterPosition()[0], DcmData.getIsocenterPosition()[1])};
-		double[] z0 = {-5.9, DcmData.getIsocenterPosition()[2]};
-		for(int i = 0; i < ds.length; ++i) {
-			DcmFrame frame = DcmData.getDcmFrames().get(0);
-			for(DcmFrame f : DcmData.getDcmFrames()) {
-				if(Math.abs(f.getContours().get(0).getZ() - z0[i]) < Math.abs(frame.getContours().get(0).getZ()-z0[i])) {
-					frame = f;
-				}
+		Point isoPoint = new Point(DcmData.getIsocenterPosition()[0], DcmData.getIsocenterPosition()[1]);
+		double z0 = DcmData.getIsocenterPosition()[2];
+		
+		DcmFrame frame = DcmData.getDcmFrames().get(0);
+		for(DcmFrame f : DcmData.getDcmFrames()) {
+			if(Math.abs(f.getContours().get(0).getZ() - z0) < Math.abs(frame.getContours().get(0).getZ()-z0)) {
+				frame = f;
 			}
-			if(DcmData.getDcmFrames().get(currentFrame).getContours().get(0).getZ() == frame.getContours().get(0).getZ())
-				gc.setFill(Color.DARKVIOLET);
-			else
-				gc.setFill(Color.GRAY);
-			gc.fillOval(getLocalX(ds[i].getX()), getLocalY(ds[i].getY()), 2*pixelSize, 2*pixelSize);
+		}
+		if(DcmData.getDcmFrames().get(currentFrame).getContours().get(0).getZ() == frame.getContours().get(0).getZ())
+			gc.setFill(Color.DARKVIOLET);
+		else
+			gc.setFill(Color.GRAY);
+		gc.fillOval(getLocalX(isoPoint.getX())-pixelSize, getLocalY(isoPoint.getY())-pixelSize, 2*pixelSize, 2*pixelSize);
+	}
+	
+	private void drawBeamLines(GraphicsContext gc) {
+		double isoX = getLocalX(DcmData.getIsocenterPosition()[0]);
+		double isoY = getLocalY(DcmData.getIsocenterPosition()[1]);
+		
+		gc.setStroke(Color.GRAY);
+		gc.setLineWidth(2);
+		for(int i = 0; i < DcmData.getNumberOfBeams(); ++i) {
+			gc.strokeLine(isoX, isoY, isoX + Math.sin(DcmData.getGantryAngles()[i])*containerWidth, isoY - Math.cos(DcmData.getGantryAngles()[i])*containerHeight);
 		}
 	}
 	
@@ -139,6 +154,7 @@ public void drawFrame() {
 			// angle vector
 			double newAngle = DcmData.getAngularWidth() + DcmManager.getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1]);
 			gc.setStroke(Color.BLUEVIOLET);
+			gc.setLineWidth(2);
 			gc.strokeLine(getLocalX(c.getCenterX()), getLocalY(c.getCenterY()),
 					getLocalX(c.getCenterX()) + Math.sin(newAngle)*containerWidth,
 					getLocalY(c.getCenterY()) + -Math.cos(newAngle)*containerHeight);

@@ -53,6 +53,8 @@
 		<cannotCalculateTitle>Cannot calculate</cannotCalculateTitle>
 		<missingFiles>Missing files</missingFiles>
 		<noDocumentationFileContent>Cannot find documentation file</noDocumentationFileContent>
+		<resetDataTitle>Reset loaded data</resetDataTitle>
+		<resetDataContent>Are you sure?</resetDataContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>

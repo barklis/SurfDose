@@ -37,6 +37,7 @@ public class DcmData {
 	private static double[] beamDose = null;
 	private static double[] beamWeights = null;
 	private static double[] isocenterPosition = null;
+	private static double[] gantryAngles = null;
 	private static double uVector[] = {-1, 0};
 	private static double angularWidth = Math.PI*2;
 	private static int currentContourId = 0;
@@ -51,10 +52,10 @@ public class DcmData {
 		dcmFrames.get(frameIndex).sumDose();
 		
 		for(Contour contour : dcmFrames.get(frameIndex).getContours()) {
-			contour.calculateCenter();
+			//contour.calculateCenter();
 			for(Point point : contour.getData()) {	
 				point.setValue(dcmFrames.get(frameIndex).getInterpolatedDose( point.getX(), point.getY() ));
-				point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
+				//point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
 				if(contour.getMaxValue() < point.getValue())
 					contour.setMaxValue(point.getValue());
 			}
@@ -97,6 +98,7 @@ public class DcmData {
 		beamDose = null;
 		beamWeights = null;
 		isocenterPosition = null;
+		gantryAngles = null;
 		currentContourId = 0;
 		maxContourId = 0;
 	}
@@ -244,6 +246,13 @@ public class DcmData {
 		
 		numberOfFrames = dcmFrames.size();
 		
+		for(DcmFrame frame : DcmData.getDcmFrames())
+			for(Contour contour : frame.getContours()) {
+				contour.calculateCenter();
+				for(Point point : contour.getData())
+					point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
+			}
+		
 		setContourLoaded(true);
 		structurFileName = dcmFile.getName();
 		return true;
@@ -259,6 +268,7 @@ public class DcmData {
 			
 			beamDose = new double[numberOfBeams];
 			beamWeights = new double[numberOfBeams];
+			gantryAngles = new double[numberOfBeams];
 			
 			SequenceAttribute doseReferenceSequence = (SequenceAttribute) list.get(new AttributeTag("0x300a,0x0010"));
 			targetBeamDose = doseReferenceSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x0026")).getSingleDoubleValueOrDefault(0.0);
@@ -272,8 +282,11 @@ public class DcmData {
 			for(int i = 0; i < beamSequence.getNumberOfItems(); ++i) {
 				beamWeights[i] = beamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x010e")).getSingleDoubleValueOrDefault(0.0);
 				
+				SequenceAttribute controlPointSequence = (SequenceAttribute) beamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x0111"));
+				gantryAngles[i] = controlPointSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x011e")).getSingleDoubleValueOrDefault(0.0);
+				gantryAngles[i] *= Math.PI/180;
+				
 				if(i == 0) {
-					SequenceAttribute controlPointSequence = (SequenceAttribute) beamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x0111"));
 					isocenterPosition = controlPointSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x012c")).getDoubleValues();
 				}
 			}
@@ -439,6 +452,10 @@ public class DcmData {
 
 	public static void setAngularWidth(double angularWidth) {
 		DcmData.angularWidth = angularWidth;
+	}
+
+	public static double[] getGantryAngles() {
+		return gantryAngles;
 	}
 	
 }

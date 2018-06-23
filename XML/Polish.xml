@@ -53,6 +53,8 @@
 		<cannotCalculateTitle>Nie można obliczyć</cannotCalculateTitle>
 		<missingFiles>Brakujące pliki</missingFiles>
 		<noDocumentationFileContent>Nie można znaleźć pliku z dokumentacją</noDocumentationFileContent>
+		<resetDataTitle>Reset załadowanych danych</resetDataTitle>
+		<resetDataContent>Czy na pewno?</resetDataContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
