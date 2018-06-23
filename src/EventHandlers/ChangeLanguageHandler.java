@@ -1,14 +1,10 @@
 package EventHandlers;
 
-import java.util.Optional;
-
 import GUI.GUI;
 import application.Preferences;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Alert.AlertType;
 
 // Allows to change language od the application
 public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
@@ -24,12 +20,10 @@ public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent arg0) {
 		Preferences.setLanguage(language);
 		
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle(Preferences.getLabel("languageConformationTitle"));
-		alert.setContentText(Preferences.getLabel("languageConformationContent"));
-		alert.setHeaderText("");
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
+		if(gui.showConfirmationDialog(
+				Preferences.getLabel("languageConformationTitle"),
+				Preferences.getLabel("languageConformationContent")
+			) == ButtonType.OK){
 			gui.restart();
 		}
 	}

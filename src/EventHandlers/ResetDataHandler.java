@@ -2,8 +2,10 @@ package EventHandlers;
 
 import DataModule.DcmData;
 import GUI.GUI;
+import application.Preferences;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ButtonType;
 
 public class ResetDataHandler implements EventHandler<ActionEvent> {
 	
@@ -15,10 +17,12 @@ public class ResetDataHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		DcmData.resetData();
-		gui.getCenterPanel().getDrawingPanel().unEmbed();
-		gui.getBottomPanel().resetData();
-		gui.getMenuBarClass().reset();
+		if(gui.showConfirmationDialog(Preferences.getLabel("resetDataTitle"), Preferences.getLabel("resetDataContent")) == ButtonType.OK) {
+			DcmData.resetData();
+			gui.getCenterPanel().getDrawingPanel().unEmbed();
+			gui.getBottomPanel().resetData();
+			gui.getMenuBarClass().reset();
+		}
 	}
 
 }

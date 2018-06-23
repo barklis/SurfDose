@@ -49,15 +49,17 @@ public class ChartPanel{
 		
 		List<Point> data = DcmData.getDcmFrames().get(frameNumber).getContourById(DcmData.getCurrentContourId()).getData();
 		if(data.size() != 0) {	
-			double pos = 0;
 			int startingIndex = getStartingIndex(data);
 			for(int i = startingIndex; i < data.size(); ++i) {
-				//if(i != 0)
-				//	pos += Point.distance(data.get(i), data.get(i-1));
+				if(data.get(i).getAngle() > DcmData.getAngularWidth())
+					break;
 				series.getData().add(new XYChart.Data<Number, Number>(Math.round(data.get(i).getAngle()*180/Math.PI), data.get(i).getValue()/100));
 			}
-			for(int i = 0; i < startingIndex; ++i)
+			for(int i = 0; i < startingIndex; ++i) {
+				if(data.get(i).getAngle() > DcmData.getAngularWidth())
+					break;
 				series.getData().add(new XYChart.Data<Number, Number>(Math.round(data.get(i).getAngle()*180/Math.PI), data.get(i).getValue()/100));
+			}
 		}
 		lineChart.getData().add(series);
 		return lineChart;
