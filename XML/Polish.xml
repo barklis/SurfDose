@@ -23,6 +23,7 @@
 			<pixelRowsNumber>Ustawienia powierzchni</pixelRowsNumber>
 			<currentContour>Wybów konturu</currentContour>
 			<vectorDirection>Kierunek wektora</vectorDirection>
+			<doseScaleResolution>Rozdzielczość skali dawki</doseScaleResolution>
 			<resetData>Zresetuj załadowane dane</resetData>
 			<language>Język</language>
 			<PolishLanguage>Polski</PolishLanguage>
@@ -83,6 +84,11 @@
 		<invalidAngle>Niepoprawne wyrażenie</invalidAngle>
 		<angularWidthOutOfBounds>Szerokosć kątowa nie mieści się w zadanych granicach</angularWidthOutOfBounds>
 	</vectorDirectionWindow>
+	<scaleGridWindow>
+		<scaleGridWindowTitle>Rozdzielczość skali dawki</scaleGridWindowTitle>
+		<scaleGridWindowLabel>Liczba odcieni w skali dawki</scaleGridWindowLabel>
+		<invalidScale>Niepoprawne wyrażenie, oczekiwano dodatniej całkowitej liczby</invalidScale>
+	</scaleGridWindow>
 	<chart>
 		<dose>Dawka</dose>
 		<contourLength>Położenie kątowe</contourLength>

@@ -66,5 +66,14 @@ public class ScalePanel extends Canvas {
 		this.maxDose = maxDose/100.0;
 		drawScale();
 	}
+
+	public int getGrids() {
+		return grids;
+	}
+
+	public void setGridsAndReload(int grids) {
+		this.grids = grids;
+		drawScale();
+	}
 	
 }

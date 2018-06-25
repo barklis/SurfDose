@@ -11,6 +11,7 @@ import EventHandlers.OpenRTplanFileHandler;
 import EventHandlers.OpenRTstucturFileHandler;
 import EventHandlers.ResetDataHandler;
 import EventHandlers.SetCurrentContourHandler;
+import EventHandlers.SetScaleGridsHandler;
 import EventHandlers.ShowDocumentationHandler;
 import EventHandlers.ShowHistogramHandler;
 import EventHandlers.ShowLoadedDataHandler;
@@ -75,6 +76,8 @@ public class MenuBarClass extends MenuBar {
 				setCurrentContour.setOnAction(new SetCurrentContourHandler(gui));
 			MenuItem setVectorDirectionItem = new MenuItem(Preferences.getLabel("vectorDirection"));
 				setVectorDirectionItem.setOnAction(new VectorDirectionHandler(gui));
+			MenuItem setScaleItem = new MenuItem(Preferences.getLabel("doseScaleResolution"));
+				setScaleItem.setOnAction(new SetScaleGridsHandler(gui));
 			MenuItem resetDataItem = new MenuItem(Preferences.getLabel("resetData"));
 				resetDataItem.setOnAction(new ResetDataHandler(gui));
 				
@@ -86,7 +89,7 @@ public class MenuBarClass extends MenuBar {
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
 				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, mapSettingsItem, setCurrentContour,
-						setVectorDirectionItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
+						setVectorDirectionItem, setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
