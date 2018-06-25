@@ -23,6 +23,7 @@
 			<pixelRowsNumber>Surface settings</pixelRowsNumber>
 			<currentContour>Choose contour</currentContour>
 			<vectorDirection>Vector direction</vectorDirection>
+			<doseScaleResolution>Dose scale resolution</doseScaleResolution>
 			<resetData>Reset loaded data</resetData>
 			<language>Language</language>
 			<PolishLanguage>Polish</PolishLanguage>
@@ -83,6 +84,11 @@
 		<invalidAngle>Invalid expression</invalidAngle>
 		<angularWidthOutOfBounds>Angular width out of bounds</angularWidthOutOfBounds>
 	</vectorDirectionWindow>
+	<scaleGridWindow>
+		<scaleGridWindowTitle>Dose scale resolution</scaleGridWindowTitle>
+		<scaleGridWindowLabel>Number of tiles in dose scale</scaleGridWindowLabel>
+		<invalidScale>Invalid expression, expected positive integer number</invalidScale>
+	</scaleGridWindow>
 	<chart>
 		<dose>Dose</dose>
 		<contourLength>Angular position</contourLength>
