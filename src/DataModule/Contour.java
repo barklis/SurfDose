@@ -32,7 +32,7 @@ public class Contour {
 		if(this.numberOfPoints > 0)
 			this.z = rawData[2];
 		else
-			this.z = 0;
+			this.z = DcmData.EMPTY;
 		
 		for(int i = 0; i < this.numberOfPoints; ++i)
 			this.data.add(new Point(rawData[i*3], rawData[i*3+1]));

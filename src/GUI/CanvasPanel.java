@@ -92,6 +92,9 @@ public void drawFrame() {
 				continue;
 			}
 			
+			if(contour.getData().size() == 0)
+				return;
+			
 			gc.beginPath();
 			gc.moveTo(getLocalX(contour.getData().get(0).getX()), getLocalY(contour.getData().get(0).getY()));
 			for(int i = 1; i < contour.getNumberOfPoints(); i++) {

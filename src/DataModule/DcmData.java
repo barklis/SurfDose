@@ -211,8 +211,8 @@ public class DcmData {
 		}
 		
 		int[] bounds = new int[listPackage.size()];
-		for(int x : bounds)
-			x = 0;
+		for(int x = 0; x < bounds.length; ++x)
+			bounds[x] = 0;
 		
 		int frameCounter = 0;
 		while(true) {
@@ -231,6 +231,17 @@ public class DcmData {
 				break;
 			
 			double minCoord = Collections.min(column, (a, b) ->(a.getZ() > b.getZ()) ? 1 : 0).getZ();
+			
+			if(minCoord == DcmData.EMPTY) {
+				if(!isDoseLoaded())
+					dcmFrames.add(new DcmFrame());
+				dcmFrames.get(frameCounter).setContours(new ArrayList<Contour>());
+				++frameCounter;
+				for(int i = 0; i < column.size(); ++i)
+					++bounds[i];
+				continue;
+			}
+			
 			List<Contour> subList = new ArrayList<Contour>();
 			for(int x = 0; x < column.size(); ++x) {
 				if(column.get(x).getZ() == minCoord) {
@@ -238,8 +249,10 @@ public class DcmData {
 					bounds[x]++;
 				}
 			}
+			
 			if(!isDoseLoaded())
 				dcmFrames.add(new DcmFrame());
+			
 			dcmFrames.get(frameCounter).setContours(subList);
 			++frameCounter;
 		}
