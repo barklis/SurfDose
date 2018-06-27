@@ -83,17 +83,17 @@ public class DcmFrame {
 			for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 				for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
 					this.doseData.get(doseData.size()-1)[c][r] = new Point(
+						x0 + c*colsPixelSpacing,
+						y0 + r*rowsPixelSpacing,
+						0.0
+					);
+					if(sumDoseData[c][r] == null) {
+						sumDoseData[c][r] = new Point(
 							x0 + c*colsPixelSpacing,
 							y0 + r*rowsPixelSpacing,
 							0.0
 						);
-						if(DcmData.getDoseFilesLoaded() == 0) {
-							sumDoseData[c][r] = new Point(
-								x0 + c*colsPixelSpacing,
-								y0 + r*rowsPixelSpacing,
-								0.0
-							);
-						}
+					}
 				}
 			}
 			return;
