@@ -4,7 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
-import application.ErrorHandler;
+import Exceptions.ErrorHandler;
 import application.Preferences;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

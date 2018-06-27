@@ -91,6 +91,14 @@ public class GUI{
 		return alert.showAndWait().get();
 	}
 	
+	public void showInformationDialog(String title, String content) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setContentText(content);
+		alert.setHeaderText("");
+		alert.showAndWait();
+	}
+	
 	public Stage getMainWindow() {
 		return mainWindow;
 	}

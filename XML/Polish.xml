@@ -56,6 +56,7 @@
 		<noDocumentationFileContent>Nie można znaleźć pliku z dokumentacją</noDocumentationFileContent>
 		<resetDataTitle>Reset załadowanych danych</resetDataTitle>
 		<resetDataContent>Czy na pewno?</resetDataContent>
+		<notEnoughContours>W pliku RTSTRUCTUR nie ma wystarczająco konturów by obliczyć odległość między skanami</notEnoughContours>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>

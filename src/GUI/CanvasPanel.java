@@ -25,8 +25,6 @@ public class CanvasPanel extends Canvas {
 	
 public void drawFrame() {
 		// drawing dose
-		if(!DcmData.isDoseLoaded())
-			return;
 		
 		if(!gui.isResizeEventManaged()) {
 			setContainerSize();
@@ -124,11 +122,11 @@ public void drawFrame() {
 		
 		DcmFrame frame = DcmData.getDcmFrames().get(0);
 		for(DcmFrame f : DcmData.getDcmFrames()) {
-			if(Math.abs(f.getContours().get(0).getZ() - z0) < Math.abs(frame.getContours().get(0).getZ()-z0)) {
+			if(Math.abs(f.getZ() - z0) < Math.abs(frame.getZ()-z0)) {
 				frame = f;
 			}
 		}
-		if(DcmData.getDcmFrames().get(currentFrame).getContours().get(0).getZ() == frame.getContours().get(0).getZ())
+		if(DcmData.getDcmFrames().get(currentFrame).getZ() == frame.getZ())
 			gc.setFill(Color.DARKVIOLET);
 		else
 			gc.setFill(Color.GRAY);
@@ -171,11 +169,11 @@ public void drawFrame() {
 	}
 
 	public double getLocalX(double x) {
-		return (x-DcmData.getX0())*pixelSize/DcmData.getColsPixelSpacing();
+		return (x-DcmData.getX0()+DcmData.getColsPixelSpacing()/2)*pixelSize/DcmData.getColsPixelSpacing();
 	}
 	
 	public double getLocalY(double y) {
-		return (y-DcmData.getY0())*pixelSize/DcmData.getRowsPixelSpacing();
+		return (y-DcmData.getY0()+DcmData.getRowsPixelSpacing())*pixelSize/DcmData.getRowsPixelSpacing();
 	}
 
 	public void setPixelSize() {

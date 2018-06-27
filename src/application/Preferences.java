@@ -2,6 +2,7 @@ package application;
 
 import org.w3c.dom.Document;
 
+import Exceptions.ErrorHandler;
 import javafx.scene.paint.Color;
 
 // Stores user preferences, and allows to load text in chosen language
