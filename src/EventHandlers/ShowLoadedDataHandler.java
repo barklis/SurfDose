@@ -33,7 +33,7 @@ public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 			gui.getMenuBarClass().getShowFilesContentItem().setSelected(false);
 			
 			String message = Preferences.getLabel("missingFiles") + ":\n";	
-			if(!DcmData.isDoseLoaded())
+			if(!DcmData.isDoseLoaded() && !DcmData.isDosePreLoaded())
 				message += "\nRTDOSE";
 			if(!DcmData.isContourLoaded())
 				message += "\nRTSTRUCUR";

@@ -49,6 +49,7 @@ public class DrawingPanel extends StackPane {
 						this.currentFrame += sc;
 						gui.getBottomPanel().setCurrentFrameNumberLabel(currentFrame+1);
 						gui.getCenterPanel().getDrawingPanel().changeChart();
+						gui.getBottomPanel().setzCoordLabel(DcmData.getDcmFrames().get(currentFrame).getZ());
 					}
 				}
 			});

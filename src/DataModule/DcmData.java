@@ -46,6 +46,7 @@ public class DcmData {
 	private static int maxContourId = 0;
 	private static int verticalVoxels = 0;
 	private static double[] integerData = null;
+	private static boolean dosePreLoaded = false;
 	
 	public static final int EMPTY = 1010101010;
 	
@@ -106,6 +107,7 @@ public class DcmData {
 		maxContourId = 0;
 		verticalVoxels = 0;
 		integerData = null;
+		dosePreLoaded = false;
 	}
 	
 	public static double getMaxValueByContourId(int id) {
@@ -173,6 +175,7 @@ public class DcmData {
 		}
 		
 		shortData = null;
+		setDosePreLoaded(true);
 		
 		++doseFilesLoaded;
 		if(contourLoaded)
@@ -186,8 +189,8 @@ public class DcmData {
 		
 		for(int f = 0; f < numberOfFrames; f++)
 			dcmFrames.get(f).setDoseData(integerData, x0, y0, z0, colsPixelSpacing, rowsPixelSpacing, verticalVoxels);
-		integerData = null;
 		setDoseLoaded(true);
+		integerData = null;
 		return true;
 	}
 	
@@ -483,6 +486,14 @@ public class DcmData {
 
 	public static int getVerticalVoxels() {
 		return verticalVoxels;
+	}
+
+	public static boolean isDosePreLoaded() {
+		return dosePreLoaded;
+	}
+
+	public static void setDosePreLoaded(boolean dosePreLoaded) {
+		DcmData.dosePreLoaded = dosePreLoaded;
 	}
 	
 }

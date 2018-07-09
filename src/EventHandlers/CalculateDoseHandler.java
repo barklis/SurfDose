@@ -35,7 +35,7 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 		}
 		else {	
 			String message = Preferences.getLabel("missingFiles") + ":\n";	
-			if(!DcmData.isDoseLoaded())
+			if(!DcmData.isDosePreLoaded())
 				message += "\nRTDOSE";
 			if(!DcmData.isContourLoaded())
 				message += "\nRTSTRUCTUR";

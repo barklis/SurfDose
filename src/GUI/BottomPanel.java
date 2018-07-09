@@ -20,6 +20,7 @@ public class BottomPanel extends HBox {
 	Label currentframeNumberLabel;
 	Label maxframeNumberLabel;
 	Label separatorLabel;
+	Label zCoord;
 	
 	public BottomPanel(GUI gui) {
 		this.gui = gui;
@@ -46,6 +47,12 @@ public class BottomPanel extends HBox {
 		Region region2 = new Region();
 		HBox.setHgrow(region2, Priority.ALWAYS);
 		
+		zCoord = new Label("-");
+		VBox zCoordsBox = new VBox (new HBox(new Label("Z: "), zCoord));
+		zCoordsBox.getStyleClass().add("ZBox");
+		
+		Region region3 = new Region();
+		HBox.setHgrow(region3, Priority.ALWAYS);
 		
 		Label doseFileTextLabel = new Label(Preferences.getLabel("planFile") + ": ");
 		Label structurFileTextLabel = new Label(Preferences.getLabel("structurFile") + ": ");
@@ -59,7 +66,7 @@ public class BottomPanel extends HBox {
 		HBox right = new HBox(textColumn, nameColumn);
 		right.getStyleClass().add("RightBox");
 		
-		getChildren().addAll(left, region1, center, region2, right);
+		getChildren().addAll(left, region1, center, region2, zCoordsBox, region3, right);
 		
 	}
 	
@@ -67,12 +74,16 @@ public class BottomPanel extends HBox {
 		currentframeNumberLabel.setText(String.valueOf(startingFrame+1));
 		maxframeNumberLabel.setText(String.valueOf(endingFrame+1));
 		separatorLabel.setText(" - ");
+		
+		zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " - " + DcmData.getDcmFrames().get(endingFrame).getZ());
 	}
 	
 	public void showFrameCountMode() {
 		currentframeNumberLabel.setText(String.valueOf(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()));
 		maxframeNumberLabel.setText(String.valueOf(DcmData.getNumberOfFrames()));
 		separatorLabel.setText(" / ");
+		
+		zCoord.setText(String.valueOf(DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getZ()));
 	}
 	
 	public void resetData() {
@@ -106,6 +117,10 @@ public class BottomPanel extends HBox {
 
 	public void setMaxFrameNumberLabel(int maxframeNumberLabel) {
 		this.maxframeNumberLabel.setText(String.valueOf(maxframeNumberLabel));
+	}
+
+	public void setzCoordLabel(double value) {
+		this.zCoord.setText(String.valueOf(value));
 	}
 	
 }

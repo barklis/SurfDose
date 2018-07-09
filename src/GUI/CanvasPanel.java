@@ -31,6 +31,8 @@ public void drawFrame() {
 			gui.setResizeEventManaged(true);
 		}
 		
+		gui.getBottomPanel().setzCoordLabel(DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getZ());
+		
 		GraphicsContext gc = getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, DcmData.getNumberOfCols()*pixelSize, DcmData.getNumberOfRows()*pixelSize);
