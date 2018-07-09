@@ -34,6 +34,11 @@ BottomPanel .CenterBox{
 	-fx-font-weight: bold;
 }
 
+BottomPanel .ZBox{
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+}
+
 BottomPanel .RightBox{
 	-fx-font-size: 12px;
 }

@@ -56,6 +56,7 @@
 		<noDocumentationFileContent>Cannot find documentation file</noDocumentationFileContent>
 		<resetDataTitle>Reset loaded data</resetDataTitle>
 		<resetDataContent>Are you sure?</resetDataContent>
+		<notEnoughContours>There is not enough contours in RTSTRUCTUR file to calculate distance between frames</notEnoughContours>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>

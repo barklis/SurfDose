@@ -6,8 +6,6 @@ import application.Preferences;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 // Allow to calculate dose
 public class CalculateDoseHandler implements EventHandler<ActionEvent> {
@@ -20,7 +18,7 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(DcmData.isContourLoaded() && DcmData.isDoseLoaded() && DcmData.isPlanLoaded()) {
+		if(DcmData.isContourLoaded() && DcmData.isDoseLoaded()) {
 			gui.getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("calculating"));
 			Thread calc = new Thread(new Runnable() {
 				@Override
@@ -35,21 +33,14 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 			});
 			calc.start();
 		}
-		else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle(Preferences.getLabel("cannotCalculateTitle"));
-			
+		else {	
 			String message = Preferences.getLabel("missingFiles") + ":\n";	
-			if(!DcmData.isDoseLoaded())
+			if(!DcmData.isDosePreLoaded())
 				message += "\nRTDOSE";
 			if(!DcmData.isContourLoaded())
 				message += "\nRTSTRUCTUR";
-			if(!DcmData.isPlanLoaded())
-				message += "\nRTPLAN";
 			
-			alert.setContentText(message);
-			alert.setHeaderText("");
-			alert.showAndWait();
+			gui.showInformationDialog(Preferences.getLabel("cannotCalculateTitle"), message);
 		}
 	}
 

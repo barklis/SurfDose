@@ -2,6 +2,6 @@
 	<language>Polish</language>
 	<contourLineColor>#CC00CC</contourLineColor>
 	<contourLineWidth>1.5</contourLineWidth>
-	<pixelsInCol>60</pixelsInCol>
+	<pixelsInCol>70</pixelsInCol>
 	<interpolationRadius>1.8</interpolationRadius>
 </root>

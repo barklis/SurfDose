@@ -5,8 +5,6 @@ import GUI.GUI;
 import application.Preferences;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class ShowMapHandler implements EventHandler<ActionEvent> {
 	
@@ -29,11 +27,7 @@ public class ShowMapHandler implements EventHandler<ActionEvent> {
 		}
 		else {
 			gui.getMenuBarClass().getShowMapItem().setSelected(false);
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle(Preferences.getLabel("notCalculatedInformationTitle"));
-			alert.setContentText(Preferences.getLabel("notCalculatedInformationContent"));
-			alert.setHeaderText("");
-			alert.showAndWait();
+			gui.showInformationDialog(Preferences.getLabel("notCalculatedInformationTitle"), Preferences.getLabel("notCalculatedInformationContent"));
 		}
 	}
 

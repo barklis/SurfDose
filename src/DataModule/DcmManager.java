@@ -53,8 +53,8 @@ public class DcmManager {
 	}
 	
 	public static Color getDoseColorScale(double doseValue, double maxValue){
-		if(doseValue == 0)
-			return Color.BLACK;
+		//if(doseValue == 0)
+		//	return Color.BLACK;
 		//double colorValue = doseValue/maxDoseValue;
 		////double colorValue = doseValue / DcmData.getMaxDoseValue();
 		//return new Color(colorValue, colorValue, colorValue, 1.0);

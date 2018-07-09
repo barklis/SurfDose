@@ -1,4 +1,4 @@
-package application;
+package Exceptions;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
