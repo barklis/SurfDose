@@ -99,10 +99,11 @@ public class DcmFrame {
 			return;
 		}
 		
+		int layerNumber = (int) ((this.z-z0+rowsPixelSpacing/2)/rowsPixelSpacing);
+		//System.out.println(layerNumber*rowsPixelSpacing + " - " + (layerNumber+1)*rowsPixelSpacing + " = " + (this.z-z0+rowsPixelSpacing/2));
+		
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
-				
-				int layerNumber = (int) ((this.z-z0+rowsPixelSpacing/2)/rowsPixelSpacing);
 				double valuePoint = doseValues[DcmData.getNumberOfRows()*DcmData.getNumberOfCols()*layerNumber+DcmData.getNumberOfCols()*r+c];
 				
 				if(valuePoint > maxDoseValue)

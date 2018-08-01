@@ -63,9 +63,9 @@ public class DcmManager {
 		return Color.hsb(hue, 1.0, 1.0);
 	}
 	
-	public static boolean saveDoseDataToFile(Stage stage, Point[][] doseMatrix) {
+	public static boolean saveDataToFile(Stage stage, double[][] matrix) {
 		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+		chooser.setInitialDirectory(new File(lastPath));
 		File outputFile = chooser.showSaveDialog(stage);
 	    if(outputFile != null) {
 	    	PrintWriter writer = null;
@@ -75,9 +75,9 @@ public class DcmManager {
 				e.printStackTrace();
 				return false;
 			}
-	    	for(int r = 0; r < doseMatrix[0].length; r++) {
-	    		for(int c = 0; c < doseMatrix.length; c++)
-	    			writer.print(doseMatrix[c][r].getValue() + ", ");
+	    	for(int r = 0; r < matrix[0].length; r++) {
+	    		for(int c = 0; c < matrix.length; c++)
+	    			writer.print(matrix[c][r] + " ");
 	    		writer.println();
 	    	}
 	    	writer.close();

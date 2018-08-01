@@ -5,6 +5,7 @@ import EventHandlers.ChangeLanguageHandler;
 import EventHandlers.ContourLineColorHandler;
 import EventHandlers.ContourLineWidthHandler;
 import EventHandlers.ExitProgramHandler;
+import EventHandlers.ExportSurfaceDataHandler;
 import EventHandlers.MapSettingsHandler;
 import EventHandlers.OpenRTdoseFileHandler;
 import EventHandlers.OpenRTplanFileHandler;
@@ -47,10 +48,12 @@ public class MenuBarClass extends MenuBar {
 				openRTdoseFileItem.setOnAction(new OpenRTdoseFileHandler(gui));
 			MenuItem openRTplanFileItem = new MenuItem(Preferences.getLabel("openRTplanFile"));
 				openRTplanFileItem.setOnAction(new OpenRTplanFileHandler(gui));
+			MenuItem exportSurfaceDataItem = new MenuItem(Preferences.getLabel("exportSurfaceData"));
+				exportSurfaceDataItem.setOnAction(new ExportSurfaceDataHandler(gui));
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
 				
-			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exitItem);
+			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exportSurfaceDataItem, new SeparatorMenuItem(), exitItem);
 		
 		editMenu = new Menu(Preferences.getLabel("programMenu"));
 			showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));

@@ -7,6 +7,7 @@
 			<openRTstructurFile>Załaduj plik RTSTRUCTUR</openRTstructurFile>
 			<openRTdoseFile>Załaduj pliki RTDOSE</openRTdoseFile>
 			<openRTplanFile>Załaduj plik RTPLAN</openRTplanFile>
+			<exportSurfaceData>Eksport danych na powierzchni</exportSurfaceData>
 			<exit>Wyjście</exit>
 		</fileMenu>
 		<editMenu>
@@ -57,6 +58,8 @@
 		<resetDataTitle>Reset załadowanych danych</resetDataTitle>
 		<resetDataContent>Czy na pewno?</resetDataContent>
 		<notEnoughContours>W pliku RTSTRUCTUR nie ma wystarczająco konturów by obliczyć odległość między skanami</notEnoughContours>
+		<matrixNotGeneratedTitle>Nie można wyeksportować danych</matrixNotGeneratedTitle>
+		<matrixNotGeneratedContent>Dane powierzchni nie zostały do tej pory wygenerowane. Możesz to zrobić w menu programu.</matrixNotGeneratedContent>
 	</dialogs>
 	<lineWidthWindow>
 		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
