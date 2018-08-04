@@ -19,8 +19,7 @@
 		</editMenu>
 		<optionsMenu>
 			<options>Opcje</options>
-			<contourLineColor>Kolor konturu</contourLineColor>
-			<contourLineWidth>Grubość lini konturu</contourLineWidth>
+			<contourSettings>Ustawienia konturu</contourSettings>
 			<pixelRowsNumber>Ustawienia powierzchni</pixelRowsNumber>
 			<currentContour>Wybów konturu</currentContour>
 			<vectorDirection>Kierunek wektora</vectorDirection>
@@ -61,22 +60,27 @@
 		<matrixNotGeneratedTitle>Nie można wyeksportować danych</matrixNotGeneratedTitle>
 		<matrixNotGeneratedContent>Dane powierzchni nie zostały do tej pory wygenerowane. Możesz to zrobić w menu programu.</matrixNotGeneratedContent>
 	</dialogs>
-	<lineWidthWindow>
-		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
-		<contourWidthWindowLabel>Grubość lini konturu:</contourWidthWindowLabel>
-		<applyButton>Zatwierdź</applyButton>
+	<contourSettingsWindow>
+		<contourSettingsWindowTitle>Ustawienia konturów</contourSettingsWindowTitle>
+		<contourColorLabel>Kolor konturów</contourColorLabel>
+		<activeContourColorLabel>Kolor wybranego konturu</activeContourColorLabel>
+		<contourWidthLabel>Szerokość konturów</contourWidthLabel>
+		<activeContourWidthLabel>Szerokość wybranego konturu</activeContourWidthLabel>
 		<okButton>Ok</okButton>
-		<cancelButton>Anuluj</cancelButton>
-	</lineWidthWindow>
+	</contourSettingsWindow>
 	<currentContourWindow>
 		<currentContourWindowTitle>Wybór konturu</currentContourWindowTitle>
 		<currentContourWindowLabel>Wpisz ID konturu</currentContourWindowLabel>
 		<invalidCurrentContourId>Niepoprawne wyrażenie (oczekiwano całkowitej liczby)</invalidCurrentContourId>
 		<valueOutOfBounds>Wartosć poza przedziałem</valueOutOfBounds>
+		<okButton>Ok</okButton>
+		<applyButton>Zatwierdź</applyButton>
+		<cancelButton>Anuluj</cancelButton>
 	</currentContourWindow>
 	<mapSettingsWindow>
 		<mapSettingsWindowTitle>Ustawienia powierzchni</mapSettingsWindowTitle>
 		<pixelsInColLabel>Liczba pikseli w kolumnie</pixelsInColLabel>
+		<pixelsInRowLabel>Liczba pikseli w rzędzie</pixelsInRowLabel>
 		<interpolationRadiusLabel>Promień interpolacji (*odległość między skanami)</interpolationRadiusLabel>
 		<invalidExpression>Niepoprawne wyrażenie</invalidExpression>
 		<negativeNumber>Wartość nie może być ujemna</negativeNumber>

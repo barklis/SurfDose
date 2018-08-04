@@ -1,6 +1,6 @@
 package GUI;
 
-import EventHandlers.ContourLineWidthHandler;
+import EventHandlers.ContourSettingsHandler;
 import EventHandlers.MapSettingsHandler;
 import EventHandlers.SetCurrentContourHandler;
 import EventHandlers.VectorDirectionHandler;
@@ -68,8 +68,8 @@ public class GUI{
 		mainWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
-				if(ContourLineWidthHandler.getOptionsWindow() != null)
-					ContourLineWidthHandler.getOptionsWindow().close();
+				if(ContourSettingsHandler.getOptionsWindow() != null)
+					ContourSettingsHandler.getOptionsWindow().close();
 				if(SetCurrentContourHandler.getContourWindow() != null)
 					SetCurrentContourHandler.getContourWindow().close();
 				if(MapSettingsHandler.getMapSettingsWindow() != null)

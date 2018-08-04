@@ -2,8 +2,7 @@ package GUI;
 
 import EventHandlers.CalculateDoseHandler;
 import EventHandlers.ChangeLanguageHandler;
-import EventHandlers.ContourLineColorHandler;
-import EventHandlers.ContourLineWidthHandler;
+import EventHandlers.ContourSettingsHandler;
 import EventHandlers.ExitProgramHandler;
 import EventHandlers.ExportSurfaceDataHandler;
 import EventHandlers.MapSettingsHandler;
@@ -69,10 +68,8 @@ public class MenuBarClass extends MenuBar {
 			editMenu.getItems().addAll(showFilesContentItem, showHistogramItem, showMapItem, new SeparatorMenuItem(), calculateDoseItem);
 		
 		optionsMenu = new Menu(Preferences.getLabel("options"));
-			MenuItem contourColorItem = new MenuItem(Preferences.getLabel("contourLineColor"));
-				contourColorItem.setOnAction(new ContourLineColorHandler(gui));
-			MenuItem contourLineWidthItem = new MenuItem(Preferences.getLabel("contourLineWidth"));
-				contourLineWidthItem.setOnAction(new ContourLineWidthHandler(gui));
+			MenuItem contourSettingsItem = new MenuItem(Preferences.getLabel("contourSettings"));
+			contourSettingsItem.setOnAction(new ContourSettingsHandler(gui));
 			MenuItem mapSettingsItem = new MenuItem(Preferences.getLabel("pixelRowsNumber"));
 				mapSettingsItem.setOnAction(new MapSettingsHandler(gui));
 			MenuItem setCurrentContour = new MenuItem(Preferences.getLabel("currentContour"));
@@ -91,7 +88,7 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, mapSettingsItem, setCurrentContour,
+				optionsMenu.getItems().addAll(contourSettingsItem, mapSettingsItem, setCurrentContour,
 						setVectorDirectionItem, setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));

@@ -4,10 +4,6 @@ HBox{
 	-fx-padding: 6px;
 }
 
-HBox VBox{
-	-fx-alignment: baseline-center;
-}
-
 *{
 	-fx-font-size: 13px;
 }
@@ -35,6 +31,8 @@ TextField{
 .tableVbox Label{
 	-fx-pref-height: 30px;
 }
+
+
 
 
 

@@ -19,8 +19,7 @@
 		</editMenu>
 		<optionsMenu>
 			<options>Options</options>
-			<contourLineColor>Contour color</contourLineColor>
-			<contourLineWidth>Contour line width</contourLineWidth>
+			<contourSettings>Contour settings</contourSettings>
 			<pixelRowsNumber>Surface settings</pixelRowsNumber>
 			<currentContour>Choose contour</currentContour>
 			<vectorDirection>Vector direction</vectorDirection>
@@ -61,22 +60,27 @@
 		<matrixNotGeneratedTitle>Cannot export data</matrixNotGeneratedTitle>
 		<matrixNotGeneratedContent>Surface data has not yet been generated. You can do it in program menu.</matrixNotGeneratedContent>
 	</dialogs>
-	<lineWidthWindow>
-		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>
-		<contourWidthWindowLabel>Contour line width:</contourWidthWindowLabel>
-		<applyButton>Apply</applyButton>
+	<contourSettingsWindow>
+		<contourSettingsWindowTitle>Contour settings</contourSettingsWindowTitle>
+		<contourColorLabel>Contour color</contourColorLabel>
+		<activeContourColorLabel>Active contour color</activeContourColorLabel>
+		<contourWidthLabel>Contour width</contourWidthLabel>
+		<activeContourWidthLabel>Active contour width</activeContourWidthLabel>
 		<okButton>Ok</okButton>
-		<cancelButton>Cancel</cancelButton>
-	</lineWidthWindow>
+	</contourSettingsWindow>
 	<currentContourWindow>
 		<currentContourWindowTitle>Current contour</currentContourWindowTitle>
 		<currentContourWindowLabel>Enter contour id</currentContourWindowLabel>
 		<invalidCurrentContourId>Invalid expression (integer number expected)</invalidCurrentContourId>
 		<valueOutOfBounds>Value out of bounds</valueOutOfBounds>
+		<okButton>Ok</okButton>
+		<applyButton>Apply</applyButton>
+		<cancelButton>Cancel</cancelButton>
 	</currentContourWindow>
 	<mapSettingsWindow>
 		<mapSettingsWindowTitle>Surface settings</mapSettingsWindowTitle>
 		<pixelsInColLabel>Number of pixels in Column</pixelsInColLabel>
+		<pixelsInRowLabel>Number of pixels in Row</pixelsInRowLabel>
 		<interpolationRadiusLabel>Interpolation radius (*distance between frames)</interpolationRadiusLabel>
 		<invalidExpression>Invalid expression</invalidExpression>
 		<negativeNumber>Value cannot be negative</negativeNumber>

@@ -19,7 +19,6 @@ public class MapPanel extends Canvas {
 	double containerHeight;
 	
 	double[][] matrix;
-	int iterations;
 	
 	public MapPanel(GUI gui, double width, double height) {
 		this.gui = gui;
@@ -41,12 +40,21 @@ public class MapPanel extends Canvas {
 		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
 		int pixelsInCol = Preferences.getPixelsInCol();
-		int pixelSize = (int)(containerHeight/pixelsInCol);
-		iterations = (int) (containerWidth/pixelSize);
+		int pixelsInRow = Preferences.getPixelsInRow();
 		
-		setWidth(iterations*pixelSize);
-		setHeight(pixelSize*pixelsInCol);
-		matrix = new double[iterations][pixelsInCol];
+		int verticalPixelSize = (int)(containerHeight/pixelsInCol);
+		int horizontalPixelSize = (int)(containerWidth/pixelsInRow);
+		
+		int pixelSize;
+		
+		if(verticalPixelSize < horizontalPixelSize)
+			pixelSize = verticalPixelSize;
+		else
+			pixelSize = horizontalPixelSize;
+		
+		setWidth(pixelsInRow*pixelSize);
+		setHeight(pixelsInCol*pixelSize);
+		matrix = new double[pixelsInRow][pixelsInCol];
 		
 		double framePixelSize = getHeight()/(endingFrame-startingFrame);
 		double radius = Preferences.getInterpolationRadius()*framePixelSize;
@@ -64,7 +72,7 @@ public class MapPanel extends Canvas {
 			int minFrameIndex = (int)Math.ceil(startingFrame + ((h+0.5)*pixelSize-radius)/framePixelSize);
 			int maxFrameIndex = (int)Math.floor(startingFrame + ((h+0.5)*pixelSize+radius)/framePixelSize);
 			
-			for(int w = 0; w < iterations; ++w) {
+			for(int w = 0; w < pixelsInRow; ++w) {
 				Point pixelCoord = new Point((w+0.5)*pixelSize, (h+0.5)*pixelSize);
 				List<Point> neighbours = new ArrayList<Point>();
 				
@@ -77,8 +85,8 @@ public class MapPanel extends Canvas {
 							neighbours.add(p);
 					}
 				}
-				gc.setFill(getMeanValueColor(neighbours, currentId, w, h));
-				gc.fillRect(w*pixelSize, h*pixelSize, pixelSize, pixelSize);
+				gc.setFill(getMeanValueColor(neighbours, currentId, w, pixelsInCol-1-h));
+				gc.fillRect(w*pixelSize, (pixelsInCol-1-h)*pixelSize, pixelSize, pixelSize);
 			}
 		}
 		
@@ -126,10 +134,5 @@ public class MapPanel extends Canvas {
 	public double[][] getMatrix() {
 		return matrix;
 	}
-
-	public int getIterations() {
-		return iterations;
-	}
-	
 	
 }

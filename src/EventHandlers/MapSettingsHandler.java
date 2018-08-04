@@ -30,7 +30,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 		mapSettingsWindow = new Stage();
 		mapSettingsWindow.setTitle(Preferences.getLabel("mapSettingsWindowTitle"));
 		
-		TextField numberOfPixelsField = new TextField(String.valueOf(Preferences.getPixelsInCol()));
+		TextField pixelsInColField = new TextField(String.valueOf(Preferences.getPixelsInCol()));
+		TextField pixelsInRowField = new TextField(String.valueOf(Preferences.getPixelsInRow()));
 		TextField radiusField = new TextField(String.valueOf(Preferences.getInterpolationRadius()));
 		
 		Label errorLabel = new Label("");
@@ -41,16 +42,23 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					int retrievedPixelValue = Integer.parseInt(numberOfPixelsField.getText());
+					int retrievedPixelInColValue = Integer.parseInt(pixelsInColField.getText());
+					int retrievedPixelInRowValue = Integer.parseInt(pixelsInRowField.getText());
 					double retrievedRadiusValue = Double.parseDouble(radiusField.getText());
-					if(retrievedPixelValue == Preferences.getPixelsInCol() && retrievedRadiusValue == Preferences.getInterpolationRadius()) {
+					
+					if(retrievedPixelInColValue == Preferences.getPixelsInCol() && retrievedPixelInRowValue == Preferences.getPixelsInRow() && retrievedRadiusValue == Preferences.getInterpolationRadius()) {
 						mapSettingsWindow.close();
 						mapSettingsWindow = null;
 						return;
 					}
 					
-					if(retrievedPixelValue > 0)
-						Preferences.setPixelsInCol(retrievedPixelValue);
+					if(retrievedPixelInColValue > 0)
+						Preferences.setPixelsInCol(retrievedPixelInColValue);
+					else
+						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
+					
+					if(retrievedPixelInRowValue > 0)
+						Preferences.setPixelsInRow(retrievedPixelInRowValue);
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
@@ -76,13 +84,20 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					int retrievedPixelValue = Integer.parseInt(numberOfPixelsField.getText());
+					int retrievedPixelInColValue = Integer.parseInt(pixelsInColField.getText());
+					int retrievedPixelInRowValue = Integer.parseInt(pixelsInRowField.getText());
 					double retrievedRadiusValue = Double.parseDouble(radiusField.getText());
-					if(retrievedPixelValue == Preferences.getPixelsInCol() && retrievedRadiusValue == Preferences.getInterpolationRadius()) 
+					
+					if(retrievedPixelInColValue == Preferences.getPixelsInCol() && retrievedPixelInRowValue == Preferences.getPixelsInRow() && retrievedRadiusValue == Preferences.getInterpolationRadius())
 						return;
 					
-					if(retrievedPixelValue > 0)
-						Preferences.setPixelsInCol(retrievedPixelValue);
+					if(retrievedPixelInColValue > 0)
+						Preferences.setPixelsInCol(retrievedPixelInColValue);
+					else
+						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
+					
+					if(retrievedPixelInRowValue > 0)
+						Preferences.setPixelsInRow(retrievedPixelInRowValue);
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
@@ -110,8 +125,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			}
 		});
 		
-		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("pixelsInColLabel")+":")), new HBox(new Label(Preferences.getLabel("interpolationRadiusLabel")+":")));
-		VBox right = new VBox(new HBox(numberOfPixelsField), new HBox(radiusField));
+		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("pixelsInColLabel")+":")), new HBox(new Label(Preferences.getLabel("pixelsInRowLabel")+":")), new HBox(new Label(Preferences.getLabel("interpolationRadiusLabel")+":")));
+		VBox right = new VBox(new HBox(pixelsInColField), new HBox(pixelsInRowField), new HBox(radiusField));
 		
 		left.getStyleClass().add("tableVbox");
 		right.getStyleClass().add("tableVbox");

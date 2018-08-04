@@ -105,7 +105,8 @@ public void drawFrame() {
 			gc.closePath();
 		}
 		if(selectedContour != null) {
-			gc.setStroke(Preferences.getContourLineColor());
+			gc.setStroke(Preferences.getActiveContourLineColor());
+			gc.setLineWidth(Preferences.getActiveContourLineWidth());
 			gc.beginPath();
 			gc.moveTo(getLocalX(selectedContour.getData().get(0).getX()), getLocalY(selectedContour.getData().get(0).getY()));
 			for(int i = 1; i < selectedContour.getNumberOfPoints(); i++) {
