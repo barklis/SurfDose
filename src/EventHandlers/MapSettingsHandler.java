@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class MapSettingsHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
-	private static Stage mapSettingsWindow = null;
+	private static Stage window = null;
 	
 	public MapSettingsHandler(GUI gui) {
 		this.gui = gui;
@@ -25,10 +25,10 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(mapSettingsWindow != null)
-			mapSettingsWindow.close();
-		mapSettingsWindow = new Stage();
-		mapSettingsWindow.setTitle(Preferences.getLabel("mapSettingsWindowTitle"));
+		if(window != null)
+			window.close();
+		window = new Stage();
+		window.setTitle(Preferences.getLabel("windowTitle"));
 		
 		TextField pixelsInColField = new TextField(String.valueOf(Preferences.getPixelsInCol()));
 		TextField pixelsInRowField = new TextField(String.valueOf(Preferences.getPixelsInRow()));
@@ -47,8 +47,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 					double retrievedRadiusValue = Double.parseDouble(radiusField.getText());
 					
 					if(retrievedPixelInColValue == Preferences.getPixelsInCol() && retrievedPixelInRowValue == Preferences.getPixelsInRow() && retrievedRadiusValue == Preferences.getInterpolationRadius()) {
-						mapSettingsWindow.close();
-						mapSettingsWindow = null;
+						window.close();
+						window = null;
 						return;
 					}
 					
@@ -67,8 +67,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
-					mapSettingsWindow.close();
-					mapSettingsWindow = null;
+					window.close();
+					window = null;
 					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
 						gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
 				} catch (NumberFormatException e) {
@@ -120,8 +120,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				mapSettingsWindow.close();
-				mapSettingsWindow = null;
+				window.close();
+				window = null;
 			}
 		});
 		
@@ -148,13 +148,13 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Stylesheets/optionWindowStylesheet.css").toExternalForm());
 		
-		mapSettingsWindow.setScene(scene);
-		mapSettingsWindow.setResizable(false);
-		mapSettingsWindow.show();
+		window.setScene(scene);
+		window.setResizable(false);
+		window.show();
 	}
 
-	public static Stage getMapSettingsWindow() {
-		return mapSettingsWindow;
+	public static Stage getWindow() {
+		return window;
 	}
 
 }

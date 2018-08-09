@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class VectorDirectionHandler implements EventHandler<ActionEvent> {
-	static Stage angleWindow = null;
+	static Stage window = null;
 	GUI gui;
 	
 	public VectorDirectionHandler(GUI gui) {
@@ -26,10 +26,10 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		if(angleWindow != null)
-			angleWindow.close();
-		angleWindow = new Stage();
-		angleWindow.setTitle(Preferences.getLabel("vectorAngleWindowTitle"));
+		if(window != null)
+			window.close();
+		window = new Stage();
+		window.setTitle(Preferences.getLabel("vectorwindowTitle"));
 		
 		double currentFirstAngle = DcmManager.getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1])*180/Math.PI;
 		double currentSecondAngle = DcmData.getAngularWidth()*180/Math.PI;
@@ -46,8 +46,8 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				angleWindow.close();
-				angleWindow = null;
+				window.close();
+				window = null;
 			}
 		});
 		
@@ -74,8 +74,8 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 						gui.getCenterPanel().getDrawingPanel().redraw();
 					}
 					
-					angleWindow.close();
-					angleWindow = null;
+					window.close();
+					window = null;
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidAngle"));
 				} catch(IllegalArgumentException e) {
@@ -112,7 +112,7 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 			}
 		});
 		
-		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("firstAngleWindowLabel")+":")), new HBox(new Label(Preferences.getLabel("secondAngleWindowLabel")+":")));
+		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("firstwindowLabel")+":")), new HBox(new Label(Preferences.getLabel("secondwindowLabel")+":")));
 		VBox right = new VBox(new HBox(firstAngleField), new HBox(secondAngleField));
 		
 		left.getStyleClass().add("tableVbox");
@@ -135,12 +135,12 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Stylesheets/optionWindowStylesheet.css").toExternalForm());
 		
-		angleWindow.setScene(scene);
-		angleWindow.show();
+		window.setScene(scene);
+		window.show();
 	}
 
-	public static Stage getAngleWindow() {
-		return angleWindow;
+	public static Stage getWindow() {
+		return window;
 	}
 	
 }

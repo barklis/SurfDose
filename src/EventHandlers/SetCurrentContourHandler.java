@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 	
-	static Stage contourWindow = null;
+	static Stage window = null;
 	GUI gui;
 	
 	public SetCurrentContourHandler(GUI gui) {
@@ -26,10 +26,10 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		if(contourWindow != null)
-			contourWindow.close();
-		contourWindow = new Stage();
-		contourWindow.setTitle(Preferences.getLabel("currentContourWindowTitle"));
+		if(window != null)
+			window.close();
+		window = new Stage();
+		window.setTitle(Preferences.getLabel("currentwindowTitle"));
 		
 		TextField contourIdField = new TextField(String.valueOf(DcmData.getCurrentContourId()));
 		
@@ -41,8 +41,8 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				contourWindow.close();
-				contourWindow = null;
+				window.close();
+				window = null;
 			}
 		});
 		
@@ -50,7 +50,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		errorLabel.getStyleClass().add("errorLabel");
 		
 		HBox hboxTop = new HBox();
-		hboxTop.getChildren().add(new VBox(new Label(Preferences.getLabel("currentContourWindowLabel") + " (0 - " + DcmData.getMaxContourId() + ") ")));
+		hboxTop.getChildren().add(new VBox(new Label(Preferences.getLabel("currentwindowLabel") + " (0 - " + DcmData.getMaxContourId() + ") ")));
 		hboxTop.getChildren().add(contourIdField);
 		
 		HBox hboxBottom = new HBox();
@@ -69,8 +69,8 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 						throw new IndexOutOfBoundsException();
 					DcmData.setCurrentContourId(recievedId);
 					gui.getCenterPanel().getDrawingPanel().redraw();
-					contourWindow.close();
-					contourWindow = null;
+					window.close();
+					window = null;
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidCurrentContourId"));
 				} catch(IndexOutOfBoundsException e) {
@@ -113,12 +113,12 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Stylesheets/optionWindowStylesheet.css").toExternalForm());
 		
-		contourWindow.setScene(scene);
-		contourWindow.show();
+		window.setScene(scene);
+		window.show();
 	}
 
-	public static Stage getContourWindow() {
-		return contourWindow;
+	public static Stage getWindow() {
+		return window;
 	}
 	
 }

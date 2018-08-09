@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
-	private static Stage contourSettingsWindow = null;
+	private static Stage window = null;
 	
 	public ContourSettingsHandler(GUI gui) {
 		this.gui = gui;
@@ -27,10 +27,10 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(contourSettingsWindow != null)
-			contourSettingsWindow.close();
-		contourSettingsWindow = new Stage();
-		contourSettingsWindow.setTitle(Preferences.getLabel("contourSettingsWindowTitle"));
+		if(window != null)
+			window.close();
+		window = new Stage();
+		window.setTitle(Preferences.getLabel("windowTitle"));
 		
 		ColorPicker lineColorField = new ColorPicker(Preferences.getContourLineColor());
 		ColorPicker activeLineColorField = new ColorPicker(Preferences.getActiveContourLineColor());
@@ -71,8 +71,8 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 		okButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				contourSettingsWindow.close();
-				contourSettingsWindow = null;
+				window.close();
+				window = null;
 			}
 		});
 		
@@ -109,13 +109,13 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Stylesheets/optionWindowStylesheet.css").toExternalForm());
 		
-		contourSettingsWindow.setScene(scene);
-		contourSettingsWindow.setResizable(false);
-		contourSettingsWindow.show();
+		window.setScene(scene);
+		window.setResizable(false);
+		window.show();
 	}
 
-	public static Stage getOptionsWindow() {
-		return contourSettingsWindow;
+	public static Stage getWindow() {
+		return window;
 	}
 
 }

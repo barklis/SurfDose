@@ -205,7 +205,7 @@ public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
 		}
 	}
 	
-	public Stage getWindow() {
+	public static Stage getWindow() {
 		return window;
 	}
 
