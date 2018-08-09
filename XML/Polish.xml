@@ -21,6 +21,7 @@
 			<options>Opcje</options>
 			<contourSettings>Ustawienia konturu</contourSettings>
 			<pixelRowsNumber>Ustawienia powierzchni</pixelRowsNumber>
+			<planDataSettings>Ustawienia danych z RTPLAN</planDataSettings>
 			<currentContour>Wybów konturu</currentContour>
 			<vectorDirection>Kierunek wektora</vectorDirection>
 			<doseScaleResolution>Rozdzielczość skali dawki</doseScaleResolution>
@@ -68,6 +69,15 @@
 		<activeContourWidthLabel>Szerokość wybranego konturu</activeContourWidthLabel>
 		<okButton>Ok</okButton>
 	</contourSettingsWindow>
+	<planDataSettingsWindow>
+		<planDataSettingsWindowTitle>Ustawienia danych z RTPLAN</planDataSettingsWindowTitle>
+		<axesCheckboxLabel>Osie wiązek</axesCheckboxLabel>
+		<axesColorLabel>Kolor osi</axesColorLabel>
+		<isocenterCheckboxLabel>Izocentrum</isocenterCheckboxLabel>
+		<isocenterColorLabel>Kolor izocentrum</isocenterColorLabel>
+		<activeIsocenterColorLabel>Kolor aktywnego izocentrum</activeIsocenterColorLabel>
+		<isocenterDotRadiusLabel>Promień markera izocenrum</isocenterDotRadiusLabel>
+	</planDataSettingsWindow>
 	<currentContourWindow>
 		<currentContourWindowTitle>Wybór konturu</currentContourWindowTitle>
 		<currentContourWindowLabel>Wpisz ID konturu</currentContourWindowLabel>

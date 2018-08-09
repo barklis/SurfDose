@@ -9,6 +9,7 @@ import EventHandlers.MapSettingsHandler;
 import EventHandlers.OpenRTdoseFileHandler;
 import EventHandlers.OpenRTplanFileHandler;
 import EventHandlers.OpenRTstucturFileHandler;
+import EventHandlers.PlanDataSettingsHandler;
 import EventHandlers.ResetDataHandler;
 import EventHandlers.SetCurrentContourHandler;
 import EventHandlers.SetScaleGridsHandler;
@@ -72,6 +73,8 @@ public class MenuBarClass extends MenuBar {
 			contourSettingsItem.setOnAction(new ContourSettingsHandler(gui));
 			MenuItem mapSettingsItem = new MenuItem(Preferences.getLabel("pixelRowsNumber"));
 				mapSettingsItem.setOnAction(new MapSettingsHandler(gui));
+			MenuItem PlanDataSettingsItem = new MenuItem(Preferences.getLabel("planDataSettings"));
+				PlanDataSettingsItem.setOnAction(new PlanDataSettingsHandler(gui));
 			MenuItem setCurrentContour = new MenuItem(Preferences.getLabel("currentContour"));
 				setCurrentContour.setOnAction(new SetCurrentContourHandler(gui));
 			MenuItem setVectorDirectionItem = new MenuItem(Preferences.getLabel("vectorDirection"));
@@ -88,7 +91,7 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourSettingsItem, mapSettingsItem, setCurrentContour,
+				optionsMenu.getItems().addAll(contourSettingsItem, mapSettingsItem, PlanDataSettingsItem, setCurrentContour,
 						setVectorDirectionItem, setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));

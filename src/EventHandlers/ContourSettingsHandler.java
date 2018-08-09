@@ -43,7 +43,7 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 		SpinnerValueFactory<Double> factoryTwo = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.1, 100.0, Preferences.getActiveContourLineWidth(), 0.1);
 		activeLineWidthField.setValueFactory(factoryTwo);
 		
-		Button okButton = new Button(Preferences.getLabel("okButton"));	
+		Button okButton = new Button(Preferences.getLabel("okButton"));
 		
 		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("contourColorLabel")+":")),
 					new HBox(new Label(Preferences.getLabel("activeContourColorLabel")+":")),

@@ -21,6 +21,7 @@
 			<options>Options</options>
 			<contourSettings>Contour settings</contourSettings>
 			<pixelRowsNumber>Surface settings</pixelRowsNumber>
+			<planDataSettings>RTPLAN data settings</planDataSettings>
 			<currentContour>Choose contour</currentContour>
 			<vectorDirection>Vector direction</vectorDirection>
 			<doseScaleResolution>Dose scale resolution</doseScaleResolution>
@@ -68,6 +69,15 @@
 		<activeContourWidthLabel>Active contour width</activeContourWidthLabel>
 		<okButton>Ok</okButton>
 	</contourSettingsWindow>
+	<planDataSettingsWindow>
+		<planDataSettingsWindowTitle>RTPLAN data settings</planDataSettingsWindowTitle>
+		<axesCheckboxLabel>Axes of beams visibility</axesCheckboxLabel>
+		<axesColorLabel>Color of axes</axesColorLabel>
+		<isocenterCheckboxLabel>Isocenter visibility</isocenterCheckboxLabel>
+		<isocenterColorLabel>Isocenter color</isocenterColorLabel>
+		<activeIsocenterColorLabel>Active isocenter color</activeIsocenterColorLabel>
+		<isocenterDotRadiusLabel>Isocenter marker radius</isocenterDotRadiusLabel>
+	</planDataSettingsWindow>
 	<currentContourWindow>
 		<currentContourWindowTitle>Current contour</currentContourWindowTitle>
 		<currentContourWindowLabel>Enter contour id</currentContourWindowLabel>

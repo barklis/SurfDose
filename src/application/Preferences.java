@@ -18,6 +18,12 @@ public class Preferences {
 	private static int pixelsInCol;
 	private static int pixelsInRow;
 	private static double interpolationRadius;
+	private static Color axesColor;
+	private static Color isocenterColor;
+	private static Color activeIsocenterColor;
+	private static boolean axesVisible;
+	private static boolean isocenterVisible;
+	private static int isocenterDotRadius;
 	
 	public static boolean loadConfigFiles(){
 		try {
@@ -37,6 +43,13 @@ public class Preferences {
 			pixelsInCol = Integer.parseInt(XmlHandler.getLabel(configDocument, "pixelsInCol"));
 			pixelsInRow = Integer.parseInt(XmlHandler.getLabel(configDocument, "pixelsInRow"));
 			interpolationRadius = Double.parseDouble(XmlHandler.getLabel(configDocument, "interpolationRadius"));
+			axesColor = Color.valueOf(XmlHandler.getLabel(configDocument, "axesOfBeamsColor"));
+			isocenterColor = Color.valueOf(XmlHandler.getLabel(configDocument, "isocenterColor"));
+			activeIsocenterColor = Color.valueOf(XmlHandler.getLabel(configDocument, "activeIsocenterColor"));
+			axesVisible = Boolean.valueOf(XmlHandler.getLabel(configDocument, "axesVisibility"));
+			isocenterVisible = Boolean.valueOf(XmlHandler.getLabel(configDocument, "isocenterVisibility"));
+			isocenterDotRadius = Integer.parseInt(XmlHandler.getLabel(configDocument, "isocenterDotRadius"));
+			
 		} catch (Exception e) {
 			new ErrorHandler("Cannot find "+XmlHandler.getLabel(configDocument, "language")+".xml").showDialog();
 			return false;
@@ -128,6 +141,63 @@ public class Preferences {
 				(int)( color.getRed() * 255 ),
 				(int)( color.getGreen() * 255 ),
 				(int)( color.getBlue() * 255 ) );
+	}
+
+	public static Color getAxesColor() {
+		return axesColor;
+	}
+
+	public static void setAxesColor(Color axesColor) {
+		Preferences.axesColor = axesColor;
+		String valStr = getColorString(axesColor);
+		XmlHandler.changeSelectorValue("axesOfBeamsColor", valStr, configDocument, "config.xml");
+	}
+
+	public static Color getIsocenterColor() {
+		return isocenterColor;
+	}
+
+	public static void setIsocenterColor(Color isocenterColor) {
+		Preferences.isocenterColor = isocenterColor;
+		String valStr = getColorString(isocenterColor);
+		XmlHandler.changeSelectorValue("isocenterColor", valStr, configDocument, "config.xml");
+	}
+
+	public static Color getActiveIsocenterColor() {
+		return activeIsocenterColor;
+	}
+
+	public static void setActiveIsocenterColor(Color activeIsocenterColor) {
+		Preferences.activeIsocenterColor = activeIsocenterColor;
+		String valStr = getColorString(activeIsocenterColor);
+		XmlHandler.changeSelectorValue("activeIsocenterColor", valStr, configDocument, "config.xml");
+	}
+
+	public static boolean isAxesVisible() {
+		return axesVisible;
+	}
+
+	public static void setAxesVisible(boolean axesVisible) {
+		Preferences.axesVisible = axesVisible;
+		XmlHandler.changeSelectorValue("axesVisibility", String.valueOf(axesVisible), configDocument, "config.xml");
+	}
+
+	public static boolean isIsocenterVisible() {
+		return isocenterVisible;
+	}
+
+	public static void setIsocenterVisible(boolean isocenterVisible) {
+		Preferences.isocenterVisible = isocenterVisible;
+		XmlHandler.changeSelectorValue("isocenterVisibility", String.valueOf(isocenterVisible), configDocument, "config.xml");
+	}
+
+	public static int getIsocenterDotRadius() {
+		return isocenterDotRadius;
+	}
+
+	public static void setIsocenterDotRadius(int isocenterDotRadius) {
+		Preferences.isocenterDotRadius = isocenterDotRadius;
+		XmlHandler.changeSelectorValue("isocenterDotRadius", String.valueOf(isocenterDotRadius), configDocument, "config.xml");
 	}
 	
 }
