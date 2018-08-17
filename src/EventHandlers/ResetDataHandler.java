@@ -19,7 +19,7 @@ public class ResetDataHandler implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent event) {
 		if(gui.showConfirmationDialog(Preferences.getLabel("resetDataTitle"), Preferences.getLabel("resetDataContent")) == ButtonType.OK) {
 			DcmData.resetData();
-			gui.getCenterPanel().getDrawingPanel().unEmbed();
+			gui.getCenterPanel().getDrawingPanel().unEmbedToReset();
 			gui.getBottomPanel().resetData();
 			gui.getMenuBarClass().reset();
 		}

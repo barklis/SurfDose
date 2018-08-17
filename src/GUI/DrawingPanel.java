@@ -52,23 +52,44 @@ public class DrawingPanel extends StackPane {
 						gui.getBottomPanel().setzCoordLabel(DcmData.getDcmFrames().get(currentFrame).getZ());
 					}
 				}
+				
+				if(mapEmbeded) {
+					getMapPanel().getPointersPanel().movePointer(sc);
+					getMapPanel().getPointersPanel().drawLines();
+				}
 			});
 		});
 		
 	}
 	
-	public void unEmbed() {
-		if(isCanvasEmbeded() || isMapEmbeded() || isChartEmbeded())
+	public void unEmbedToReset() {
+		if(isCanvasEmbeded() || isChartEmbeded())
 			getChildren().remove(0);
+		if(isMapEmbeded()) {
+			getChildren().remove(0);
+			getChildren().remove(0);
+		}
+			
 		mapEmbeded = false;
 		chartEmbeded = false;
 		canvasEmbeded = false;
 		currentFrame = 0;
 	}
 	
-	public void placeCanvas() {
-		if(chartEmbeded || canvasEmbeded || mapEmbeded)
+	public void unEmbed() {
+		if(isCanvasEmbeded() || isChartEmbeded())
 			getChildren().remove(0);
+		if(isMapEmbeded()) {
+			getChildren().remove(0);
+			getChildren().remove(0);
+		}
+		mapEmbeded = false;
+		chartEmbeded = false;
+		canvasEmbeded = false;
+	}
+	
+	public void placeCanvas() {
+		unEmbed();
 		getChildren().add(canvasPanel);
 		mapEmbeded = false;
 		chartEmbeded = false;
@@ -76,8 +97,7 @@ public class DrawingPanel extends StackPane {
 	}
 	
 	public void placeChart() {
-		if(chartEmbeded || canvasEmbeded || mapEmbeded)
-			getChildren().remove(0);
+		unEmbed();
 		getChildren().add(chartPanel.getChart());
 		canvasEmbeded = false;
 		mapEmbeded = false;
@@ -85,9 +105,9 @@ public class DrawingPanel extends StackPane {
 	}
 	
 	public void placeMap() {
-		if(chartEmbeded || canvasEmbeded || mapEmbeded)
-			getChildren().remove(0);
+		unEmbed();
 		getChildren().add(mapPanel);
+		getChildren().add(mapPanel.getPointersPanel());
 		canvasEmbeded = false;
 		chartEmbeded = false;
 		mapEmbeded = true;
