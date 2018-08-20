@@ -7,13 +7,15 @@ import java.util.Collections;
 import java.util.List;
 
 import com.pixelmed.dicom.Attribute;
-import com.pixelmed.dicom.AttributeList;
 import com.pixelmed.dicom.AttributeTag;
 import com.pixelmed.dicom.DicomException;
 import com.pixelmed.dicom.SequenceAttribute;
 
 import Exceptions.ErrorHandler;
+import Exceptions.MissingTagException;
 import Exceptions.NotEnoughContoursException;
+import application.Preferences;
+import javafx.application.Platform;
 
 // Contains loaded and calculated data
 public class DcmData {
@@ -130,29 +132,32 @@ public class DcmData {
 		
 		short[] shortData = null;
 		double scalingFactor = 0;
+		
 		try {
-			AttributeList list = new AttributeList();
+			AttributeListExcept list = new AttributeListExcept();
 			list.read(dcmFile);
 			Attribute data = list.getPixelData();
-			numberOfRows = list.get(new AttributeTag("0x0028,0x0010")).getSingleIntegerValueOrDefault(0);
-			numberOfCols = list.get(new AttributeTag("0x0028,0x0011")).getSingleIntegerValueOrDefault(0);
-			verticalVoxels = list.get(new AttributeTag("0x0028,0x0008")).getSingleIntegerValueOrDefault(0);
+			numberOfRows = list.getSafe(new AttributeTag("0x0028,0x0010")).getSingleIntegerValueOrDefault(0);
+			numberOfCols = list.getSafe(new AttributeTag("0x0028,0x0011")).getSingleIntegerValueOrDefault(0);
+			verticalVoxels = list.getSafe(new AttributeTag("0x0028,0x0008")).getSingleIntegerValueOrDefault(0);
 			
-			double[] offset = list.get(new AttributeTag("0x0020,0x0032")).getDoubleValues();
+			double[] offset = list.getSafe(new AttributeTag("0x0020,0x0032")).getDoubleValues();
 			x0 = offset[0];
 			y0 = offset[1];
 			z0 = offset[2];
 			
-			double[] pixelSpacing = list.get(new AttributeTag("0x0028,0x0030")).getDoubleValues();
+			double[] pixelSpacing = list.getSafe(new AttributeTag("0x0028,0x0030")).getDoubleValues();
 			rowsPixelSpacing = pixelSpacing[0];
 			colsPixelSpacing = pixelSpacing[1];
 			
-			scalingFactor = list.get(new AttributeTag("0x3004,0x000e")).getSingleDoubleValueOrDefault(0.0);
+			scalingFactor = list.getSafe(new AttributeTag("0x3004,0x000e")).getSingleDoubleValueOrDefault(0.0);
 			
 			shortData = data.getShortValues();
 		} catch (DicomException | IOException e) {
 			e.printStackTrace();
 			return false;
+		} catch (MissingTagException e) {
+			Platform.runLater(() -> new ErrorHandler(Preferences.getLabel("missingTag") + " RTDOSE: " + e.getTag()).showDialog());
 		}
 		
 		if(integerData == null) {
@@ -189,6 +194,7 @@ public class DcmData {
 		
 		for(int f = 0; f < numberOfFrames; f++)
 			dcmFrames.get(f).setDoseData(integerData, x0, y0, z0, colsPixelSpacing, rowsPixelSpacing, verticalVoxels);
+		
 		setDoseLoaded(true);
 		integerData = null;
 		return true;
@@ -211,14 +217,14 @@ public class DcmData {
 			dcmFrames.clear();
 		
 		try {
-			AttributeList list = new AttributeList();
+			AttributeListExcept list = new AttributeListExcept();
 			list.read(dcmFile);
-			sequenceOfMainContours = (SequenceAttribute) list.get(new AttributeTag("0x3006,0x0039"));
+			sequenceOfMainContours = (SequenceAttribute) list.getSafe(new AttributeTag("0x3006,0x0039"));
 			
 			maxContourId = sequenceOfMainContours.getNumberOfItems()-1;
 					
 			for(int i = 0; i < sequenceOfMainContours.getNumberOfItems(); ++i) {
-				SequenceAttribute itemsOfData = (SequenceAttribute) sequenceOfMainContours.getItem(i).getAttributeList().get(new AttributeTag("0x3006,0x0040"));
+				SequenceAttribute itemsOfData = (SequenceAttribute) AttributeListExcept.getInnerInstance(sequenceOfMainContours.getItem(i).getAttributeList()).getSafe(new AttributeTag("0x3006,0x0040"));
 				
 				List<Contour> multiContours = new ArrayList<Contour>();
 				for(int x = 0; x < itemsOfData.getNumberOfItems(); ++x) {
@@ -234,6 +240,8 @@ public class DcmData {
 		} catch (DicomException | IOException e) {
 			e.printStackTrace();
 			return false;
+		} catch (MissingTagException e) {
+			Platform.runLater(() -> new ErrorHandler(Preferences.getLabel("missingTag") + " RTSTRUCTUR: " + e.getTag()).showDialog());
 		}
 		
 		try {
@@ -313,29 +321,31 @@ public class DcmData {
 	
 	public synchronized static boolean setPlanData(File dcmFile) {
 		try {
-			AttributeList list = new AttributeList();
+			AttributeListExcept list = new AttributeListExcept();
 			list.read(dcmFile);
-			SequenceAttribute fractionGroupSequence = (SequenceAttribute) list.get(new AttributeTag("0x300a,0x0070"));
-			numberOfFractions = fractionGroupSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x0078")).getSingleIntegerValueOrDefault(0);
-			numberOfBeams = fractionGroupSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x0080")).getSingleIntegerValueOrDefault(0);
+			SequenceAttribute fractionGroupSequence = (SequenceAttribute) list.getSafe(new AttributeTag("0x300a,0x0070"));
+			numberOfFractions = AttributeListExcept.getInnerInstance(fractionGroupSequence.getItem(0).getAttributeList()).getSafe(new AttributeTag("0x300a,0x0078")).getSingleIntegerValueOrDefault(0);
+			numberOfBeams = AttributeListExcept.getInnerInstance(fractionGroupSequence.getItem(0).getAttributeList()).getSafe(new AttributeTag("0x300a,0x0080")).getSingleIntegerValueOrDefault(0);
 			
 			gantryAngles = new double[numberOfBeams];
 			
-			SequenceAttribute beamSequence = (SequenceAttribute) list.get(new AttributeTag("0x300a,0x00b0"));
+			SequenceAttribute beamSequence = (SequenceAttribute) list.getSafe(new AttributeTag("0x300a,0x00b0"));
 			for(int i = 0; i < beamSequence.getNumberOfItems(); ++i) {
 				
-				SequenceAttribute controlPointSequence = (SequenceAttribute) beamSequence.getItem(i).getAttributeList().get(new AttributeTag("0x300a,0x0111"));
-				gantryAngles[i] = controlPointSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x011e")).getSingleDoubleValueOrDefault(0.0);
+				SequenceAttribute controlPointSequence = (SequenceAttribute) AttributeListExcept.getInnerInstance(beamSequence.getItem(i).getAttributeList()).getSafe(new AttributeTag("0x300a,0x0111"));
+				gantryAngles[i] = AttributeListExcept.getInnerInstance(controlPointSequence.getItem(0).getAttributeList()).getSafe(new AttributeTag("0x300a,0x011e")).getSingleDoubleValueOrDefault(0.0);
 				gantryAngles[i] *= Math.PI/180;
 				
 				if(i == 0) {
-					isocenterPosition = controlPointSequence.getItem(0).getAttributeList().get(new AttributeTag("0x300a,0x012c")).getDoubleValues();
+					isocenterPosition = AttributeListExcept.getInnerInstance(controlPointSequence.getItem(0).getAttributeList()).getSafe(new AttributeTag("0x300a,0x012c")).getDoubleValues();
 				}
 			}
 			
 		} catch (IOException | DicomException e) {
 			e.printStackTrace();
 			return false;
+		} catch (MissingTagException e) {
+			Platform.runLater(() -> new ErrorHandler(Preferences.getLabel("missingTag") + " RTPLAN: " + e.getTag()).showDialog());
 		}
 		
 		setPlanLoaded(true);

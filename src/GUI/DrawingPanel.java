@@ -1,6 +1,7 @@
 package GUI;
 
 import DataModule.DcmData;
+import application.Preferences;
 import javafx.application.Platform;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
@@ -48,14 +49,16 @@ public class DrawingPanel extends StackPane {
 					else if(chartEmbeded) {
 						this.currentFrame += sc;
 						gui.getBottomPanel().setCurrentFrameNumberLabel(currentFrame+1);
-						gui.getCenterPanel().getDrawingPanel().changeChart();
+						changeChart();
 						gui.getBottomPanel().setzCoordLabel(DcmData.getDcmFrames().get(currentFrame).getZ());
 					}
 				}
 				
-				if(mapEmbeded) {
+				if(mapEmbeded && Preferences.isRowPointerEnabled()) {
 					getMapPanel().getPointersPanel().movePointer(sc);
 					getMapPanel().getPointersPanel().drawLines();
+					
+					gui.getBottomPanel().setExtendedZCoordLabel();
 				}
 			});
 		});

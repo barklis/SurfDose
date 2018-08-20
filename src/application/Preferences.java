@@ -24,6 +24,7 @@ public class Preferences {
 	private static boolean axesVisible;
 	private static boolean isocenterVisible;
 	private static int isocenterDotRadius;
+	private static boolean rowPointerEnabled;
 	
 	public static boolean loadConfigFiles(){
 		try {
@@ -49,6 +50,7 @@ public class Preferences {
 			axesVisible = Boolean.valueOf(XmlHandler.getLabel(configDocument, "axesVisibility"));
 			isocenterVisible = Boolean.valueOf(XmlHandler.getLabel(configDocument, "isocenterVisibility"));
 			isocenterDotRadius = Integer.parseInt(XmlHandler.getLabel(configDocument, "isocenterDotRadius"));
+			rowPointerEnabled = Boolean.valueOf(XmlHandler.getLabel(configDocument, "rowPointerEnabled"));
 			
 		} catch (Exception e) {
 			new ErrorHandler("Cannot find "+XmlHandler.getLabel(configDocument, "language")+".xml").showDialog();
@@ -198,6 +200,15 @@ public class Preferences {
 	public static void setIsocenterDotRadius(int isocenterDotRadius) {
 		Preferences.isocenterDotRadius = isocenterDotRadius;
 		XmlHandler.changeSelectorValue("isocenterDotRadius", String.valueOf(isocenterDotRadius), configDocument, "config.xml");
+	}
+
+	public static boolean isRowPointerEnabled() {
+		return rowPointerEnabled;
+	}
+
+	public static void setRowPointerEnabled(boolean rowPointerEnabled) {
+		Preferences.rowPointerEnabled = rowPointerEnabled;
+		XmlHandler.changeSelectorValue("rowPointerEnabled", String.valueOf(rowPointerEnabled), configDocument, "config.xml");
 	}
 	
 }

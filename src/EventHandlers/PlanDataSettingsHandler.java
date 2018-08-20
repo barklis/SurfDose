@@ -172,37 +172,26 @@ public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
 	}
 	
 	private void setIsoenterSectionEnabled(boolean flag) {
-		if(flag) {
-			isocenterColorField.setDisable(false);
-			activeIsocenterColorField.setDisable(false);
-			isocenterLabel.setTextFill(Color.BLACK);
-			activeIsocenterLabel.setTextFill(Color.BLACK);
+		Color textColor = flag ? Color.BLACK : Color.GRAY;
+		
+		isocenterColorField.setDisable(!flag);
+		activeIsocenterColorField.setDisable(!flag);
+		isocenterDotRadiusField.setDisable(!flag);
 			
-			Preferences.setIsocenterVisible(true);
-		}
-		else {
-			isocenterColorField.setDisable(true);
-			activeIsocenterColorField.setDisable(true);
-			isocenterLabel.setTextFill(Color.GRAY);
-			activeIsocenterLabel.setTextFill(Color.GRAY);
-			
-			Preferences.setIsocenterVisible(false);
-		}
+		isocenterLabel.setTextFill(textColor);
+		activeIsocenterLabel.setTextFill(textColor);
+		isocenterDotDiameterLabel.setTextFill(textColor);
+		
+		Preferences.setIsocenterVisible(flag);
 	}
 	
 	private void setAxesSectionEnabled(boolean flag){
-		if(flag) {
-			axesColorField.setDisable(false);
-			axesLabel.setTextFill(Color.BLACK);
-			
-			Preferences.setAxesVisible(true);
-		}
-		else {
-			axesColorField.setDisable(true);
-			axesLabel.setTextFill(Color.GRAY);
-			
-			Preferences.setAxesVisible(false);
-		}
+		Color textColor = flag ? Color.BLACK : Color.GRAY;
+		
+		axesColorField.setDisable(!flag);
+		axesLabel.setTextFill(textColor);
+		
+		Preferences.setAxesVisible(flag);
 	}
 	
 	public static Stage getWindow() {

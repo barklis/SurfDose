@@ -30,7 +30,7 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 		if(window != null)
 			window.close();
 		window = new Stage();
-		window.setTitle(Preferences.getLabel("windowTitle"));
+		window.setTitle(Preferences.getLabel("contourSettingsWindowTitle"));
 		
 		ColorPicker lineColorField = new ColorPicker(Preferences.getContourLineColor());
 		ColorPicker activeLineColorField = new ColorPicker(Preferences.getActiveContourLineColor());

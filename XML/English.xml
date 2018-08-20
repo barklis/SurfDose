@@ -60,6 +60,7 @@
 		<notEnoughContours>There is not enough contours in RTSTRUCTUR file to calculate distance between frames</notEnoughContours>
 		<matrixNotGeneratedTitle>Cannot export data</matrixNotGeneratedTitle>
 		<matrixNotGeneratedContent>Surface data has not yet been generated. You can do it in program menu.</matrixNotGeneratedContent>
+		<missingTag>Missing tag in</missingTag>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Contour settings</contourSettingsWindowTitle>
@@ -92,6 +93,7 @@
 		<pixelsInColLabel>Number of pixels in Column</pixelsInColLabel>
 		<pixelsInRowLabel>Number of pixels in Row</pixelsInRowLabel>
 		<interpolationRadiusLabel>Interpolation radius (*distance between frames)</interpolationRadiusLabel>
+		<rowPointerCheckboxLabel>Show Z coordinate pointer</rowPointerCheckboxLabel>
 		<invalidExpression>Invalid expression</invalidExpression>
 		<negativeNumber>Value cannot be negative</negativeNumber>
 	</mapSettingsWindow>

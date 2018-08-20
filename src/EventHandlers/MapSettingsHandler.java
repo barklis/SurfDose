@@ -1,12 +1,16 @@
 package EventHandlers;
 
 import GUI.GUI;
+import GUI.PointersPanel;
 import application.Preferences;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -28,11 +32,15 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 		if(window != null)
 			window.close();
 		window = new Stage();
-		window.setTitle(Preferences.getLabel("windowTitle"));
+		window.setTitle(Preferences.getLabel("mapSettingsWindowTitle"));
 		
 		TextField pixelsInColField = new TextField(String.valueOf(Preferences.getPixelsInCol()));
 		TextField pixelsInRowField = new TextField(String.valueOf(Preferences.getPixelsInRow()));
 		TextField radiusField = new TextField(String.valueOf(Preferences.getInterpolationRadius()));
+		
+		CheckBox rowPointerCheckbox = new CheckBox(Preferences.getLabel("rowPointerCheckboxLabel"));
+		if(Preferences.isRowPointerEnabled())
+			rowPointerCheckbox.setSelected(true);
 		
 		Label errorLabel = new Label("");
 		errorLabel.getStyleClass().add("errorLabel");
@@ -125,8 +133,35 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			}
 		});
 		
-		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("pixelsInColLabel")+":")), new HBox(new Label(Preferences.getLabel("pixelsInRowLabel")+":")), new HBox(new Label(Preferences.getLabel("interpolationRadiusLabel")+":")));
-		VBox right = new VBox(new HBox(pixelsInColField), new HBox(pixelsInRowField), new HBox(radiusField));
+		rowPointerCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
+				if(newVal) {
+					Preferences.setRowPointerEnabled(true);
+					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded()) {
+						gui.getBottomPanel().setExtendedZCoordLabel();
+						gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().drawLines();
+					}
+				}
+				else {
+					Preferences.setRowPointerEnabled(false);
+					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded()) {
+						gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().eraseLines();
+						
+						PointersPanel pPanel = gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel();
+						gui.getBottomPanel().showMapMode(pPanel.getStartingFrame(), pPanel.getEndingFrame());
+					}
+				}
+			}
+		});
+		
+		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("pixelsInColLabel")+":")),
+							 new HBox(new Label(Preferences.getLabel("pixelsInRowLabel")+":")),
+							 new HBox(new Label(Preferences.getLabel("interpolationRadiusLabel")+":")),
+							 new HBox(rowPointerCheckbox));
+		
+		VBox right = new VBox(new HBox(pixelsInColField), 
+							  new HBox(pixelsInRowField),
+							  new HBox(radiusField));
 		
 		left.getStyleClass().add("tableVbox");
 		right.getStyleClass().add("tableVbox");

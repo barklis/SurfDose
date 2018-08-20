@@ -27,7 +27,7 @@ public class MapPanel extends Canvas {
 		setHeight(height);
 		setWidth(width);
 		
-		pointersPanel = new PointersPanel(width, height, 1, 1);
+		pointersPanel = new PointersPanel(width, height, 1, 1, gui);
 		
 		matrix = null;
 	}
@@ -41,7 +41,6 @@ public class MapPanel extends Canvas {
 		
 		int startingFrame = getStartingFrame(currentId);
 		int endingFrame = getEndingFrame(currentId);
-		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
 		int pixelsInCol = Preferences.getPixelsInCol();
 		int pixelsInRow = Preferences.getPixelsInRow();
@@ -94,9 +93,12 @@ public class MapPanel extends Canvas {
 			}
 		}
 		
-		pointersPanel.setVariables(pixelSize, pixelsInCol, pixelsInRow, getWidth(), getHeight());
-		//if(pointer mode on)
+		pointersPanel.setVariables(pixelSize, pixelsInCol, pixelsInRow, startingFrame, endingFrame, getWidth(), getHeight());
+		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
+		
+		if(Preferences.isRowPointerEnabled()) {
 			pointersPanel.drawLines();
+		}
 		
 	}
 	
