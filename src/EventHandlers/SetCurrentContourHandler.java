@@ -29,7 +29,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		if(window != null)
 			window.close();
 		window = new Stage();
-		window.setTitle(Preferences.getLabel("currentwindowTitle"));
+		window.setTitle(Preferences.getLabel("currentContourWindowTitle"));
 		
 		TextField contourIdField = new TextField(String.valueOf(DcmData.getCurrentContourId()));
 		
@@ -50,7 +50,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 		errorLabel.getStyleClass().add("errorLabel");
 		
 		HBox hboxTop = new HBox();
-		hboxTop.getChildren().add(new VBox(new Label(Preferences.getLabel("currentwindowLabel") + " (0 - " + DcmData.getMaxContourId() + ") ")));
+		hboxTop.getChildren().add(new VBox(new Label(Preferences.getLabel("currentContourWindowLabel") + " (0 - " + DcmData.getMaxContourId() + ") ")));
 		hboxTop.getChildren().add(contourIdField);
 		
 		HBox hboxBottom = new HBox();

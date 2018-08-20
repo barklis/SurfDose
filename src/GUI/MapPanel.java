@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 public class MapPanel extends Canvas {
 	GUI gui;
 	
+	PointersPanel pointersPanel;
+	
 	double containerWidth;
 	double containerHeight;
 	
@@ -24,6 +26,8 @@ public class MapPanel extends Canvas {
 		this.gui = gui;
 		setHeight(height);
 		setWidth(width);
+		
+		pointersPanel = new PointersPanel(width, height, 1, 1, gui);
 		
 		matrix = null;
 	}
@@ -37,7 +41,6 @@ public class MapPanel extends Canvas {
 		
 		int startingFrame = getStartingFrame(currentId);
 		int endingFrame = getEndingFrame(currentId);
-		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
 		int pixelsInCol = Preferences.getPixelsInCol();
 		int pixelsInRow = Preferences.getPixelsInRow();
@@ -90,6 +93,13 @@ public class MapPanel extends Canvas {
 			}
 		}
 		
+		pointersPanel.setVariables(pixelSize, pixelsInCol, pixelsInRow, startingFrame, endingFrame, getWidth(), getHeight());
+		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
+		
+		if(Preferences.isRowPointerEnabled()) {
+			pointersPanel.drawLines();
+		}
+		
 	}
 	
 	public Color getMeanValueColor(List<Point> points, int id, int w, int h) {
@@ -127,12 +137,14 @@ public class MapPanel extends Canvas {
 	public void setContainerSize() {
 		containerWidth = gui.getScene().getWidth()-gui.getCenterPanel().getScalePanel().getWidth();
 		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
-		//setWidth(containerWidth);
-		//setHeight(containerHeight);
 	}
 
 	public double[][] getMatrix() {
 		return matrix;
+	}
+
+	public PointersPanel getPointersPanel() {
+		return pointersPanel;
 	}
 	
 }

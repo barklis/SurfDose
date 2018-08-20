@@ -29,7 +29,7 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 		if(window != null)
 			window.close();
 		window = new Stage();
-		window.setTitle(Preferences.getLabel("vectorwindowTitle"));
+		window.setTitle(Preferences.getLabel("vectorAngleWindowTitle"));
 		
 		double currentFirstAngle = DcmManager.getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1])*180/Math.PI;
 		double currentSecondAngle = DcmData.getAngularWidth()*180/Math.PI;
@@ -112,7 +112,7 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 			}
 		});
 		
-		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("firstwindowLabel")+":")), new HBox(new Label(Preferences.getLabel("secondwindowLabel")+":")));
+		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("firstAngleWindowLabel")+":")), new HBox(new Label(Preferences.getLabel("secondAngleWindowLabel")+":")));
 		VBox right = new VBox(new HBox(firstAngleField), new HBox(secondAngleField));
 		
 		left.getStyleClass().add("tableVbox");

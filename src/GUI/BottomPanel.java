@@ -75,7 +75,10 @@ public class BottomPanel extends HBox {
 		maxframeNumberLabel.setText(String.valueOf(endingFrame+1));
 		separatorLabel.setText(" - ");
 		
-		zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " - " + DcmData.getDcmFrames().get(endingFrame).getZ());
+		if(Preferences.isRowPointerEnabled() && gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
+			zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " / " + gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().getZPos()[1] + " / " + DcmData.getDcmFrames().get(endingFrame).getZ());
+		else
+			zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " / " + DcmData.getDcmFrames().get(endingFrame).getZ());
 	}
 	
 	public void showFrameCountMode() {
@@ -121,6 +124,11 @@ public class BottomPanel extends HBox {
 
 	public void setzCoordLabel(double value) {
 		this.zCoord.setText(String.valueOf(value));
+	}
+	
+	public void setExtendedZCoordLabel() {
+		double[] zCoords = gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().getZPos();
+		this.zCoord.setText(zCoords[0] + " / " + Math.round(zCoords[1]*100)/100.0 + " / " + zCoords[2]);
 	}
 	
 }
