@@ -53,10 +53,7 @@ public class DcmManager {
 	}
 	
 	public static Color getDoseColorScale(double doseValue, double maxValue){
-		//if(doseValue == 0)
-		//	return Color.BLACK;
 		//double colorValue = doseValue/maxDoseValue;
-		////double colorValue = doseValue / DcmData.getMaxDoseValue();
 		//return new Color(colorValue, colorValue, colorValue, 1.0);
 		
 		double hue = Color.BLUE.getHue() + (Color.RED.getHue() - Color.BLUE.getHue()) * doseValue / maxValue ;
@@ -150,30 +147,6 @@ public class DcmManager {
 				return false;
 			}
 	    	writer.println(list);
-	    	writer.close();
-	    	
-	    	return true;
-	    }
-	    return false;
-	}
-	
-	public static boolean saveMarkedAttributesToFile(Stage stage, Collection<Attribute> list) {
-		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-		File outputFile = chooser.showSaveDialog(stage);
-	    if(outputFile != null) {
-	    	PrintWriter writer = null;
-			try {
-				writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
-			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return false;
-			}
-			int i = 1;
-			for(Attribute x : list) {
-				writer.println("\n[XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: " + i + "]\n" + x);
-				i++;
-			}
 	    	writer.close();
 	    	
 	    	return true;
