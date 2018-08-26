@@ -74,12 +74,14 @@ public class DcmFrame {
 		}
 	}
 
-	public void setDoseData(double[] doseValues, double x0, double y0, double z0, double colsPixelSpacing, double rowsPixelSpacing, double height) {
+	public void setDoseData(double[] doseValues, double x0, double y0, double z0, double colsPixelSpacing, double rowsPixelSpacing, double height, double[] offset) {
 		if(sumDoseData == null)
 			sumDoseData = new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()];
 		this.doseData.add(new Point[DcmData.getNumberOfCols()][DcmData.getNumberOfRows()]);
 		
-		if(this.z < z0-rowsPixelSpacing/2 || this.z > z0+(height-0.5)*rowsPixelSpacing) {
+		double firstVSpacing = offset[1]-offset[0];
+		double lastVSpacing = offset[offset.length-1] - offset[offset.length-2];
+		if(this.z < z0-firstVSpacing/2 || this.z > z0 + offset[offset.length-1] + lastVSpacing/2) {
 			for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 				for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
 					this.doseData.get(doseData.size()-1)[c][r] = new Point(
@@ -99,8 +101,22 @@ public class DcmFrame {
 			return;
 		}
 		
-		int layerNumber = (int) ((this.z-z0+rowsPixelSpacing/2)/rowsPixelSpacing);
-		//System.out.println(layerNumber*rowsPixelSpacing + " - " + (layerNumber+1)*rowsPixelSpacing + " = " + (this.z-z0+rowsPixelSpacing/2));
+		int layerNumber = 0;
+		double minDist = 0;;
+		for(int i = 0; i < offset.length; ++i) {
+			double dist = Math.abs(this.z-z0-offset[i]);
+			if(i == 0) {
+				minDist = dist;
+				layerNumber = i;
+			}
+			else if(minDist > dist) {
+				minDist = dist;
+				layerNumber = i;
+			}
+		}
+		
+		if(layerNumber +1 < offset.length - 1)
+			System.out.println((offset[layerNumber]+z0) + " - " + (offset[layerNumber+1]+z0) + " = " + this.z);
 		
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {

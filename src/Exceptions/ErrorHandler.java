@@ -26,7 +26,6 @@ public class ErrorHandler extends Exception{
 			@Override
 			public void handle(ActionEvent event) {
 				stage.close();
-				System.exit(1);
 			}
 		});
 		

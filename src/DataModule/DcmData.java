@@ -47,6 +47,7 @@ public class DcmData {
 	private static int currentContourId = 0;
 	private static int maxContourId = 0;
 	private static int verticalVoxels = 0;
+	private static double[] frameOffset = null;
 	private static double[] integerData = null;
 	private static boolean dosePreLoaded = false;
 	
@@ -110,6 +111,7 @@ public class DcmData {
 		verticalVoxels = 0;
 		integerData = null;
 		dosePreLoaded = false;
+		frameOffset = null;
 	}
 	
 	public static double getMaxValueByContourId(int id) {
@@ -140,6 +142,14 @@ public class DcmData {
 			numberOfRows = list.getSafe(new AttributeTag("0x0028,0x0010")).getSingleIntegerValueOrDefault(0);
 			numberOfCols = list.getSafe(new AttributeTag("0x0028,0x0011")).getSingleIntegerValueOrDefault(0);
 			verticalVoxels = list.getSafe(new AttributeTag("0x0028,0x0008")).getSingleIntegerValueOrDefault(0);
+			frameOffset = list.getSafe(new AttributeTag("0x3004,0x000c")).getDoubleValues();
+			
+			if(frameOffset[0] != 0.0) {
+				double diff = frameOffset[0];
+				for(double i : frameOffset) {
+					i = i - diff;
+				}
+			}
 			
 			double[] offset = list.getSafe(new AttributeTag("0x0020,0x0032")).getDoubleValues();
 			x0 = offset[0];
@@ -193,7 +203,7 @@ public class DcmData {
 			return false;
 		
 		for(int f = 0; f < numberOfFrames; f++)
-			dcmFrames.get(f).setDoseData(integerData, x0, y0, z0, colsPixelSpacing, rowsPixelSpacing, verticalVoxels);
+			dcmFrames.get(f).setDoseData(integerData, x0, y0, z0, colsPixelSpacing, rowsPixelSpacing, verticalVoxels, frameOffset);
 		
 		setDoseLoaded(true);
 		integerData = null;
@@ -504,6 +514,10 @@ public class DcmData {
 
 	public static void setDosePreLoaded(boolean dosePreLoaded) {
 		DcmData.dosePreLoaded = dosePreLoaded;
+	}
+
+	public static double[] getFrameOffset() {
+		return frameOffset;
 	}
 	
 }
