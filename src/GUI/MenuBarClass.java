@@ -2,13 +2,14 @@ package GUI;
 
 import EventHandlers.CalculateDoseHandler;
 import EventHandlers.ChangeLanguageHandler;
-import EventHandlers.ContourLineColorHandler;
-import EventHandlers.ContourLineWidthHandler;
+import EventHandlers.ContourSettingsHandler;
 import EventHandlers.ExitProgramHandler;
+import EventHandlers.ExportSurfaceDataHandler;
 import EventHandlers.MapSettingsHandler;
 import EventHandlers.OpenRTdoseFileHandler;
 import EventHandlers.OpenRTplanFileHandler;
 import EventHandlers.OpenRTstucturFileHandler;
+import EventHandlers.PlanDataSettingsHandler;
 import EventHandlers.ResetDataHandler;
 import EventHandlers.SetCurrentContourHandler;
 import EventHandlers.SetScaleGridsHandler;
@@ -47,10 +48,12 @@ public class MenuBarClass extends MenuBar {
 				openRTdoseFileItem.setOnAction(new OpenRTdoseFileHandler(gui));
 			MenuItem openRTplanFileItem = new MenuItem(Preferences.getLabel("openRTplanFile"));
 				openRTplanFileItem.setOnAction(new OpenRTplanFileHandler(gui));
+			MenuItem exportSurfaceDataItem = new MenuItem(Preferences.getLabel("exportSurfaceData"));
+				exportSurfaceDataItem.setOnAction(new ExportSurfaceDataHandler(gui));
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
 				
-			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exitItem);
+			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exportSurfaceDataItem, new SeparatorMenuItem(), exitItem);
 		
 		editMenu = new Menu(Preferences.getLabel("programMenu"));
 			showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
@@ -66,12 +69,12 @@ public class MenuBarClass extends MenuBar {
 			editMenu.getItems().addAll(showFilesContentItem, showHistogramItem, showMapItem, new SeparatorMenuItem(), calculateDoseItem);
 		
 		optionsMenu = new Menu(Preferences.getLabel("options"));
-			MenuItem contourColorItem = new MenuItem(Preferences.getLabel("contourLineColor"));
-				contourColorItem.setOnAction(new ContourLineColorHandler(gui));
-			MenuItem contourLineWidthItem = new MenuItem(Preferences.getLabel("contourLineWidth"));
-				contourLineWidthItem.setOnAction(new ContourLineWidthHandler(gui));
+			MenuItem contourSettingsItem = new MenuItem(Preferences.getLabel("contourSettings"));
+			contourSettingsItem.setOnAction(new ContourSettingsHandler(gui));
 			MenuItem mapSettingsItem = new MenuItem(Preferences.getLabel("pixelRowsNumber"));
 				mapSettingsItem.setOnAction(new MapSettingsHandler(gui));
+			MenuItem PlanDataSettingsItem = new MenuItem(Preferences.getLabel("planDataSettings"));
+				PlanDataSettingsItem.setOnAction(new PlanDataSettingsHandler(gui));
 			MenuItem setCurrentContour = new MenuItem(Preferences.getLabel("currentContour"));
 				setCurrentContour.setOnAction(new SetCurrentContourHandler(gui));
 			MenuItem setVectorDirectionItem = new MenuItem(Preferences.getLabel("vectorDirection"));
@@ -88,7 +91,7 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English", gui));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourColorItem, contourLineWidthItem, mapSettingsItem, setCurrentContour,
+				optionsMenu.getItems().addAll(contourSettingsItem, mapSettingsItem, PlanDataSettingsItem, setCurrentContour,
 						setVectorDirectionItem, setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));

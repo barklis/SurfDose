@@ -22,7 +22,7 @@ public class XmlHandler {
 	
 	public static String getLabel(Document doc, String name) {
 		NodeList list = doc.getElementsByTagName(name);
-		return (list.getLength() != 0) ? list.item(0).getTextContent() : "";
+		return (list.getLength() != 0) ? list.item(0).getTextContent() : "[MISSING LABEL]";
 	}
 	
 	public static Document loadXMLDocument(String fileName) throws ParserConfigurationException, SAXException, IOException {

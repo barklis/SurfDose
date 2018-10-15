@@ -1,7 +1,8 @@
 package GUI;
 
-import EventHandlers.ContourLineWidthHandler;
+import EventHandlers.ContourSettingsHandler;
 import EventHandlers.MapSettingsHandler;
+import EventHandlers.PlanDataSettingsHandler;
 import EventHandlers.SetCurrentContourHandler;
 import EventHandlers.VectorDirectionHandler;
 import EventHandlers.WindowMaximizeHandler;
@@ -68,16 +69,19 @@ public class GUI{
 		mainWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
-				if(ContourLineWidthHandler.getOptionsWindow() != null)
-					ContourLineWidthHandler.getOptionsWindow().close();
-				if(SetCurrentContourHandler.getContourWindow() != null)
-					SetCurrentContourHandler.getContourWindow().close();
-				if(MapSettingsHandler.getMapSettingsWindow() != null)
-					MapSettingsHandler.getMapSettingsWindow().close();
-				if(VectorDirectionHandler.getAngleWindow() != null)
-					VectorDirectionHandler.getAngleWindow().close();
+				if(ContourSettingsHandler.getWindow() != null)
+					ContourSettingsHandler.getWindow().close();
+				if(SetCurrentContourHandler.getWindow() != null)
+					SetCurrentContourHandler.getWindow().close();
+				if(MapSettingsHandler.getWindow() != null)
+					MapSettingsHandler.getWindow().close();
+				if(VectorDirectionHandler.getWindow() != null)
+					VectorDirectionHandler.getWindow().close();
+				if(PlanDataSettingsHandler.getWindow() != null)
+					PlanDataSettingsHandler.getWindow().close();
 			}
 		});
+		
 		mainWindow.setScene(scene);
 		mainWindow.setTitle("DICOM Analyzer");
 		mainWindow.show();
@@ -89,6 +93,14 @@ public class GUI{
 		alert.setContentText(content);
 		alert.setHeaderText("");
 		return alert.showAndWait().get();
+	}
+	
+	public void showInformationDialog(String title, String content) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setContentText(content);
+		alert.setHeaderText("");
+		alert.showAndWait();
 	}
 	
 	public Stage getMainWindow() {

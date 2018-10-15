@@ -15,13 +15,21 @@ import javafx.scene.paint.Color;
 public class MapPanel extends Canvas {
 	GUI gui;
 	
+	PointersPanel pointersPanel;
+	
 	double containerWidth;
 	double containerHeight;
+	
+	double[][] matrix;
 	
 	public MapPanel(GUI gui, double width, double height) {
 		this.gui = gui;
 		setHeight(height);
 		setWidth(width);
+		
+		pointersPanel = new PointersPanel(width, height, 1, 1, gui);
+		
+		matrix = null;
 	}
 	
 	public void drawMap() {
@@ -30,27 +38,44 @@ public class MapPanel extends Canvas {
 		
 		if(!DcmData.isDoseCalculated())
 			return;
-		GraphicsContext gc = getGraphicsContext2D();
-		gc.clearRect(0, 0, containerWidth, containerHeight);
-		gc.setFill(Color.BLACK);
 		
 		int startingFrame = getStartingFrame(currentId);
 		int endingFrame = getEndingFrame(currentId);
-		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
 		int pixelsInCol = Preferences.getPixelsInCol();
-		int pixelSize = (int)(containerHeight/pixelsInCol);
-		int iterations = (int) (containerWidth/pixelSize);
+		int pixelsInRow = Preferences.getPixelsInRow();
 		
-		double framePixelSize = containerHeight/(endingFrame-startingFrame);
+		int verticalPixelSize = (int)(containerHeight/pixelsInCol);
+		int horizontalPixelSize = (int)(containerWidth/pixelsInRow);
+		
+		int pixelSize;
+		
+		if(verticalPixelSize < horizontalPixelSize)
+			pixelSize = verticalPixelSize;
+		else
+			pixelSize = horizontalPixelSize;
+		
+		setWidth(pixelsInRow*pixelSize);
+		setHeight(pixelsInCol*pixelSize);
+		matrix = new double[pixelsInRow][pixelsInCol];
+		
+		double framePixelSize = getHeight()/(endingFrame-startingFrame);
 		double radius = Preferences.getInterpolationRadius()*framePixelSize;
 		
-		// Main rectangle
+		//System.out.println(getWidth() + " - " + getHeight());
+		//System.out.println(containerWidth + " - " + containerHeight);
+		//System.out.println(pixelSize + " - " + pixelsInCol + " - " + iterations);
+		//System.out.println(framePixelSize + " - " + (endingFrame-startingFrame));
+		
+		GraphicsContext gc = getGraphicsContext2D();
+		gc.clearRect(0, 0, getWidth(), getHeight());
+		gc.setFill(Color.BLACK);
+		
 		for(int h = 0; h < pixelsInCol; ++h) {
 			int minFrameIndex = (int)Math.ceil(startingFrame + ((h+0.5)*pixelSize-radius)/framePixelSize);
 			int maxFrameIndex = (int)Math.floor(startingFrame + ((h+0.5)*pixelSize+radius)/framePixelSize);
 			
-			for(int w = 0; w < iterations; ++w) {
+			for(int w = 0; w < pixelsInRow; ++w) {
 				Point pixelCoord = new Point((w+0.5)*pixelSize, (h+0.5)*pixelSize);
 				List<Point> neighbours = new ArrayList<Point>();
 				
@@ -58,75 +83,35 @@ public class MapPanel extends Canvas {
 					if(f < startingFrame || f > endingFrame)
 						continue;
 					for(Point p : DcmData.getDcmFrames().get(f).getContourById(currentId).getData()) {
-						Point setPoint = new Point(p.getAngle()*containerWidth/DcmData.getAngularWidth(), (f-startingFrame)*framePixelSize);
+						Point setPoint = new Point(p.getAngle()*getWidth()/DcmData.getAngularWidth(), (f-startingFrame)*framePixelSize);
 						if(Point.distance(pixelCoord, setPoint) < radius)
 							neighbours.add(p);
 					}
 				}
-				gc.setFill(getMeanValueColor(neighbours, currentId));
-				gc.fillRect(w*pixelSize, h*pixelSize, pixelSize, pixelSize);
-			}
-			//Right remaining rectangle
-			Point pixelCoord = new Point((iterations*pixelSize+containerWidth)*0.5, (h+0.5)*pixelSize);
-			List<Point> neighbours = new ArrayList<Point>();
-			for(int f = minFrameIndex; f <= maxFrameIndex; ++f) {
-				if(f < startingFrame || f > endingFrame)
-					continue;
-				for(Point p : DcmData.getDcmFrames().get(f).getContourById(currentId).getData()) {
-					Point setPoint = new Point(p.getAngle()*containerWidth/Math.PI*0.5, (f-startingFrame)*framePixelSize);
-					if(Point.distance(pixelCoord, setPoint) < radius)
-						neighbours.add(p);
-				}
-			}
-			gc.setFill(getMeanValueColor(neighbours, currentId));
-			gc.fillRect(iterations*pixelSize, h*pixelSize, (int)(containerWidth-iterations*pixelSize), pixelSize);
-		}
-		//Bottom remaining rectangle
-		int remainingHeight = (int) (containerHeight-pixelsInCol*pixelSize);
-		int minFrameIndex = (int)Math.ceil(startingFrame + (containerHeight-remainingHeight*0.5-radius)/framePixelSize);
-		int maxFrameIndex = (int)Math.floor(startingFrame + (containerHeight-remainingHeight*0.5+radius)/framePixelSize);
-		for(int w = 0; w < iterations; ++w) {
-			Point pixelCoord = new Point((w+0.5)*pixelSize, containerHeight-remainingHeight*0.5);
-			List<Point> neighbours = new ArrayList<Point>();
-			
-			for(int f = minFrameIndex; f <= maxFrameIndex; ++f) {
-				if(f < startingFrame || f > endingFrame)
-					continue;
-				for(Point p : DcmData.getDcmFrames().get(f).getContourById(currentId).getData()) {
-					Point setPoint = new Point(p.getAngle()*containerWidth/Math.PI*0.5, (f-startingFrame)*framePixelSize);
-					if(Point.distance(pixelCoord, setPoint) < radius)
-						neighbours.add(p);
-				}
-			}
-			gc.setFill(getMeanValueColor(neighbours, currentId));
-			gc.fillRect(w*pixelSize, (int)(containerHeight-remainingHeight), pixelSize, pixelSize);
-		}
-		// Bottom-right pixel
-		Point pixelCoord = new Point((iterations*pixelSize+containerWidth)*0.5, containerHeight-remainingHeight*0.5);
-		List<Point> neighbours = new ArrayList<Point>();
-		for(int f = minFrameIndex; f <= maxFrameIndex; ++f) {
-			if(f < startingFrame || f > endingFrame)
-				continue;
-			for(Point p : DcmData.getDcmFrames().get(f).getContourById(currentId).getData()) {
-				Point setPoint = new Point(p.getAngle()*containerWidth/Math.PI*0.5, (f-startingFrame)*framePixelSize);
-				if(Point.distance(pixelCoord, setPoint) < radius)
-					neighbours.add(p);
+				gc.setFill(getMeanValueColor(neighbours, currentId, w, pixelsInCol-1-h));
+				gc.fillRect(w*pixelSize, (pixelsInCol-1-h)*pixelSize, pixelSize, pixelSize);
 			}
 		}
-		gc.setFill(getMeanValueColor(neighbours, currentId));
-		gc.fillRect(iterations*pixelSize, (int)(containerHeight-remainingHeight), (int)(containerWidth-iterations*pixelSize), pixelSize);
 		
+		pointersPanel.setVariables(pixelSize, pixelsInCol, pixelsInRow, startingFrame, endingFrame, getWidth(), getHeight());
+		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
+		if(Preferences.isRowPointerEnabled()) {
+			pointersPanel.drawLines();
+		}
 		
 	}
 	
-	public Color getMeanValueColor(List<Point> points, int id) {
-		if(points.size() == 0)
+	public Color getMeanValueColor(List<Point> points, int id, int w, int h) {
+		if(points.size() == 0) {
+			matrix[w][h] = 0.0;
 			return DcmManager.getDoseColorScale(0.0, DcmData.getMaxValueByContourId(id));
+		}
 		double sum = 0.0;
 		for(Point p : points)
 			sum += p.getValue();
-		return DcmManager.getDoseColorScale(sum/points.size(), DcmData.getMaxValueByContourId(id));
+		matrix[w][h] = sum/points.size();
+		return DcmManager.getDoseColorScale(matrix[w][h], DcmData.getMaxValueByContourId(id));
 	}
 	
 	public int getStartingFrame(int id) {
@@ -152,7 +137,14 @@ public class MapPanel extends Canvas {
 	public void setContainerSize() {
 		containerWidth = gui.getScene().getWidth()-gui.getCenterPanel().getScalePanel().getWidth();
 		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
-		setWidth(containerWidth);
-		setHeight(containerHeight);
 	}
+
+	public double[][] getMatrix() {
+		return matrix;
+	}
+
+	public PointersPanel getPointersPanel() {
+		return pointersPanel;
+	}
+	
 }

@@ -7,6 +7,7 @@
 			<openRTstructurFile>Load RTSTRUCTUR file</openRTstructurFile>
 			<openRTdoseFile>Load RTDOSE files</openRTdoseFile>
 			<openRTplanFile>Load RTPLAN file</openRTplanFile>
+			<exportSurfaceData>Export surface data</exportSurfaceData>
 			<exit>Exit</exit>
 		</fileMenu>
 		<editMenu>
@@ -18,9 +19,9 @@
 		</editMenu>
 		<optionsMenu>
 			<options>Options</options>
-			<contourLineColor>Contour color</contourLineColor>
-			<contourLineWidth>Contour line width</contourLineWidth>
+			<contourSettings>Contour settings</contourSettings>
 			<pixelRowsNumber>Surface settings</pixelRowsNumber>
+			<planDataSettings>RTPLAN data settings</planDataSettings>
 			<currentContour>Choose contour</currentContour>
 			<vectorDirection>Vector direction</vectorDirection>
 			<doseScaleResolution>Dose scale resolution</doseScaleResolution>
@@ -56,24 +57,43 @@
 		<noDocumentationFileContent>Cannot find documentation file</noDocumentationFileContent>
 		<resetDataTitle>Reset loaded data</resetDataTitle>
 		<resetDataContent>Are you sure?</resetDataContent>
+		<notEnoughContours>There is not enough contours in RTSTRUCTUR file to calculate distance between frames</notEnoughContours>
+		<matrixNotGeneratedTitle>Cannot export data</matrixNotGeneratedTitle>
+		<matrixNotGeneratedContent>Surface data has not yet been generated. You can do it in program menu.</matrixNotGeneratedContent>
+		<missingTag>Missing tag in</missingTag>
 	</dialogs>
-	<lineWidthWindow>
-		<contourWidthWindowTitle>Contour line width</contourWidthWindowTitle>
-		<contourWidthWindowLabel>Contour line width:</contourWidthWindowLabel>
-		<applyButton>Apply</applyButton>
+	<contourSettingsWindow>
+		<contourSettingsWindowTitle>Contour settings</contourSettingsWindowTitle>
+		<contourColorLabel>Contour color</contourColorLabel>
+		<activeContourColorLabel>Active contour color</activeContourColorLabel>
+		<contourWidthLabel>Contour width</contourWidthLabel>
+		<activeContourWidthLabel>Active contour width</activeContourWidthLabel>
 		<okButton>Ok</okButton>
-		<cancelButton>Cancel</cancelButton>
-	</lineWidthWindow>
+	</contourSettingsWindow>
+	<planDataSettingsWindow>
+		<planDataSettingsWindowTitle>RTPLAN data settings</planDataSettingsWindowTitle>
+		<axesCheckboxLabel>Axes of beams visibility</axesCheckboxLabel>
+		<axesColorLabel>Color of axes</axesColorLabel>
+		<isocenterCheckboxLabel>Isocenter visibility</isocenterCheckboxLabel>
+		<isocenterColorLabel>Isocenter color</isocenterColorLabel>
+		<activeIsocenterColorLabel>Active isocenter color</activeIsocenterColorLabel>
+		<isocenterDotRadiusLabel>Isocenter marker radius</isocenterDotRadiusLabel>
+	</planDataSettingsWindow>
 	<currentContourWindow>
 		<currentContourWindowTitle>Current contour</currentContourWindowTitle>
 		<currentContourWindowLabel>Enter contour id</currentContourWindowLabel>
 		<invalidCurrentContourId>Invalid expression (integer number expected)</invalidCurrentContourId>
 		<valueOutOfBounds>Value out of bounds</valueOutOfBounds>
+		<okButton>Ok</okButton>
+		<applyButton>Apply</applyButton>
+		<cancelButton>Cancel</cancelButton>
 	</currentContourWindow>
 	<mapSettingsWindow>
 		<mapSettingsWindowTitle>Surface settings</mapSettingsWindowTitle>
 		<pixelsInColLabel>Number of pixels in Column</pixelsInColLabel>
+		<pixelsInRowLabel>Number of pixels in Row</pixelsInRowLabel>
 		<interpolationRadiusLabel>Interpolation radius (*distance between frames)</interpolationRadiusLabel>
+		<rowPointerCheckboxLabel>Show Z coordinate pointer</rowPointerCheckboxLabel>
 		<invalidExpression>Invalid expression</invalidExpression>
 		<negativeNumber>Value cannot be negative</negativeNumber>
 	</mapSettingsWindow>

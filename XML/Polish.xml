@@ -7,6 +7,7 @@
 			<openRTstructurFile>Załaduj plik RTSTRUCTUR</openRTstructurFile>
 			<openRTdoseFile>Załaduj pliki RTDOSE</openRTdoseFile>
 			<openRTplanFile>Załaduj plik RTPLAN</openRTplanFile>
+			<exportSurfaceData>Eksport danych na powierzchni</exportSurfaceData>
 			<exit>Wyjście</exit>
 		</fileMenu>
 		<editMenu>
@@ -18,9 +19,9 @@
 		</editMenu>
 		<optionsMenu>
 			<options>Opcje</options>
-			<contourLineColor>Kolor konturu</contourLineColor>
-			<contourLineWidth>Grubość lini konturu</contourLineWidth>
+			<contourSettings>Ustawienia konturu</contourSettings>
 			<pixelRowsNumber>Ustawienia powierzchni</pixelRowsNumber>
+			<planDataSettings>Ustawienia danych z RTPLAN</planDataSettings>
 			<currentContour>Wybów konturu</currentContour>
 			<vectorDirection>Kierunek wektora</vectorDirection>
 			<doseScaleResolution>Rozdzielczość skali dawki</doseScaleResolution>
@@ -56,24 +57,43 @@
 		<noDocumentationFileContent>Nie można znaleźć pliku z dokumentacją</noDocumentationFileContent>
 		<resetDataTitle>Reset załadowanych danych</resetDataTitle>
 		<resetDataContent>Czy na pewno?</resetDataContent>
+		<notEnoughContours>W pliku RTSTRUCTUR nie ma wystarczająco konturów by obliczyć odległość między skanami</notEnoughContours>
+		<matrixNotGeneratedTitle>Nie można wyeksportować danych</matrixNotGeneratedTitle>
+		<matrixNotGeneratedContent>Dane powierzchni nie zostały do tej pory wygenerowane. Możesz to zrobić w menu programu.</matrixNotGeneratedContent>
+		<missingTag>Brakujący tag w</missingTag>
 	</dialogs>
-	<lineWidthWindow>
-		<contourWidthWindowTitle>Grubość konturu</contourWidthWindowTitle>
-		<contourWidthWindowLabel>Grubość lini konturu:</contourWidthWindowLabel>
-		<applyButton>Zatwierdź</applyButton>
+	<contourSettingsWindow>
+		<contourSettingsWindowTitle>Ustawienia konturów</contourSettingsWindowTitle>
+		<contourColorLabel>Kolor konturów</contourColorLabel>
+		<activeContourColorLabel>Kolor wybranego konturu</activeContourColorLabel>
+		<contourWidthLabel>Szerokość konturów</contourWidthLabel>
+		<activeContourWidthLabel>Szerokość wybranego konturu</activeContourWidthLabel>
 		<okButton>Ok</okButton>
-		<cancelButton>Anuluj</cancelButton>
-	</lineWidthWindow>
+	</contourSettingsWindow>
+	<planDataSettingsWindow>
+		<planDataSettingsWindowTitle>Ustawienia danych z RTPLAN</planDataSettingsWindowTitle>
+		<axesCheckboxLabel>Osie wiązek</axesCheckboxLabel>
+		<axesColorLabel>Kolor osi</axesColorLabel>
+		<isocenterCheckboxLabel>Izocentrum</isocenterCheckboxLabel>
+		<isocenterColorLabel>Kolor izocentrum</isocenterColorLabel>
+		<activeIsocenterColorLabel>Kolor aktywnego izocentrum</activeIsocenterColorLabel>
+		<isocenterDotRadiusLabel>Promień markera izocenrum</isocenterDotRadiusLabel>
+	</planDataSettingsWindow>
 	<currentContourWindow>
 		<currentContourWindowTitle>Wybór konturu</currentContourWindowTitle>
 		<currentContourWindowLabel>Wpisz ID konturu</currentContourWindowLabel>
 		<invalidCurrentContourId>Niepoprawne wyrażenie (oczekiwano całkowitej liczby)</invalidCurrentContourId>
 		<valueOutOfBounds>Wartosć poza przedziałem</valueOutOfBounds>
+		<okButton>Ok</okButton>
+		<applyButton>Zatwierdź</applyButton>
+		<cancelButton>Anuluj</cancelButton>
 	</currentContourWindow>
 	<mapSettingsWindow>
 		<mapSettingsWindowTitle>Ustawienia powierzchni</mapSettingsWindowTitle>
 		<pixelsInColLabel>Liczba pikseli w kolumnie</pixelsInColLabel>
+		<pixelsInRowLabel>Liczba pikseli w rzędzie</pixelsInRowLabel>
 		<interpolationRadiusLabel>Promień interpolacji (*odległość między skanami)</interpolationRadiusLabel>
+		<rowPointerCheckboxLabel>Pokaż wskaźnik współrzędnej Z</rowPointerCheckboxLabel>
 		<invalidExpression>Niepoprawne wyrażenie</invalidExpression>
 		<negativeNumber>Wartość nie może być ujemna</negativeNumber>
 	</mapSettingsWindow>

@@ -40,7 +40,7 @@ public class ScalePanel extends Canvas {
 		gc.setLineWidth(1);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.strokeText("[GY]", width*0.5, gridHeight);
-		for(int i = 0; i < grids; ++i) {
+		for(int i = 0; i <= grids; ++i) {
 			double value = (grids-i)*maxDose/grids;
 			gc.setFill(DcmManager.getDoseColorScale(value, maxDose));
 			gc.fillRect(width*0.125, 2*gridHeight + gridHeight*i, width*0.25, gridHeight);

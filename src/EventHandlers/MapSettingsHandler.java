@@ -1,12 +1,16 @@
 package EventHandlers;
 
 import GUI.GUI;
+import GUI.PointersPanel;
 import application.Preferences;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +21,7 @@ import javafx.stage.Stage;
 public class MapSettingsHandler implements EventHandler<ActionEvent> {
 
 	GUI gui;
-	private static Stage mapSettingsWindow = null;
+	private static Stage window = null;
 	
 	public MapSettingsHandler(GUI gui) {
 		this.gui = gui;
@@ -25,13 +29,18 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(mapSettingsWindow != null)
-			mapSettingsWindow.close();
-		mapSettingsWindow = new Stage();
-		mapSettingsWindow.setTitle(Preferences.getLabel("mapSettingsWindowTitle"));
+		if(window != null)
+			window.close();
+		window = new Stage();
+		window.setTitle(Preferences.getLabel("mapSettingsWindowTitle"));
 		
-		TextField numberOfPixelsField = new TextField(String.valueOf(Preferences.getPixelsInCol()));
+		TextField pixelsInColField = new TextField(String.valueOf(Preferences.getPixelsInCol()));
+		TextField pixelsInRowField = new TextField(String.valueOf(Preferences.getPixelsInRow()));
 		TextField radiusField = new TextField(String.valueOf(Preferences.getInterpolationRadius()));
+		
+		CheckBox rowPointerCheckbox = new CheckBox(Preferences.getLabel("rowPointerCheckboxLabel"));
+		if(Preferences.isRowPointerEnabled())
+			rowPointerCheckbox.setSelected(true);
 		
 		Label errorLabel = new Label("");
 		errorLabel.getStyleClass().add("errorLabel");
@@ -41,16 +50,23 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					int retrievedPixelValue = Integer.parseInt(numberOfPixelsField.getText());
+					int retrievedPixelInColValue = Integer.parseInt(pixelsInColField.getText());
+					int retrievedPixelInRowValue = Integer.parseInt(pixelsInRowField.getText());
 					double retrievedRadiusValue = Double.parseDouble(radiusField.getText());
-					if(retrievedPixelValue == Preferences.getPixelsInCol() && retrievedRadiusValue == Preferences.getInterpolationRadius()) {
-						mapSettingsWindow.close();
-						mapSettingsWindow = null;
+					
+					if(retrievedPixelInColValue == Preferences.getPixelsInCol() && retrievedPixelInRowValue == Preferences.getPixelsInRow() && retrievedRadiusValue == Preferences.getInterpolationRadius()) {
+						window.close();
+						window = null;
 						return;
 					}
 					
-					if(retrievedPixelValue > 0)
-						Preferences.setPixelsInCol(retrievedPixelValue);
+					if(retrievedPixelInColValue > 0)
+						Preferences.setPixelsInCol(retrievedPixelInColValue);
+					else
+						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
+					
+					if(retrievedPixelInRowValue > 0)
+						Preferences.setPixelsInRow(retrievedPixelInRowValue);
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
@@ -59,8 +75,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
-					mapSettingsWindow.close();
-					mapSettingsWindow = null;
+					window.close();
+					window = null;
 					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
 						gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
 				} catch (NumberFormatException e) {
@@ -76,13 +92,20 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					int retrievedPixelValue = Integer.parseInt(numberOfPixelsField.getText());
+					int retrievedPixelInColValue = Integer.parseInt(pixelsInColField.getText());
+					int retrievedPixelInRowValue = Integer.parseInt(pixelsInRowField.getText());
 					double retrievedRadiusValue = Double.parseDouble(radiusField.getText());
-					if(retrievedPixelValue == Preferences.getPixelsInCol() && retrievedRadiusValue == Preferences.getInterpolationRadius()) 
+					
+					if(retrievedPixelInColValue == Preferences.getPixelsInCol() && retrievedPixelInRowValue == Preferences.getPixelsInRow() && retrievedRadiusValue == Preferences.getInterpolationRadius())
 						return;
 					
-					if(retrievedPixelValue > 0)
-						Preferences.setPixelsInCol(retrievedPixelValue);
+					if(retrievedPixelInColValue > 0)
+						Preferences.setPixelsInCol(retrievedPixelInColValue);
+					else
+						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
+					
+					if(retrievedPixelInRowValue > 0)
+						Preferences.setPixelsInRow(retrievedPixelInRowValue);
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
@@ -105,13 +128,40 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				mapSettingsWindow.close();
-				mapSettingsWindow = null;
+				window.close();
+				window = null;
 			}
 		});
 		
-		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("pixelsInColLabel")+":")), new HBox(new Label(Preferences.getLabel("interpolationRadiusLabel")+":")));
-		VBox right = new VBox(new HBox(numberOfPixelsField), new HBox(radiusField));
+		rowPointerCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
+				if(newVal) {
+					Preferences.setRowPointerEnabled(true);
+					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded()) {
+						gui.getBottomPanel().setExtendedZCoordLabel();
+						gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().drawLines();
+					}
+				}
+				else {
+					Preferences.setRowPointerEnabled(false);
+					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded()) {
+						gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().eraseLines();
+						
+						PointersPanel pPanel = gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel();
+						gui.getBottomPanel().showMapMode(pPanel.getStartingFrame(), pPanel.getEndingFrame());
+					}
+				}
+			}
+		});
+		
+		VBox left = new VBox(new HBox(new Label(Preferences.getLabel("pixelsInColLabel")+":")),
+							 new HBox(new Label(Preferences.getLabel("pixelsInRowLabel")+":")),
+							 new HBox(new Label(Preferences.getLabel("interpolationRadiusLabel")+":")),
+							 new HBox(rowPointerCheckbox));
+		
+		VBox right = new VBox(new HBox(pixelsInColField), 
+							  new HBox(pixelsInRowField),
+							  new HBox(radiusField));
 		
 		left.getStyleClass().add("tableVbox");
 		right.getStyleClass().add("tableVbox");
@@ -133,13 +183,13 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Stylesheets/optionWindowStylesheet.css").toExternalForm());
 		
-		mapSettingsWindow.setScene(scene);
-		mapSettingsWindow.setResizable(false);
-		mapSettingsWindow.show();
+		window.setScene(scene);
+		window.setResizable(false);
+		window.show();
 	}
 
-	public static Stage getMapSettingsWindow() {
-		return mapSettingsWindow;
+	public static Stage getWindow() {
+		return window;
 	}
 
 }
