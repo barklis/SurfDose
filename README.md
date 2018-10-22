@@ -2,7 +2,7 @@
 Java application made for Centre of Oncology in Warsaw.
 Its goal is to analyze radiation absorbed by surfaces of internal organs.
 
-To launch the program, run launcher.jar
+To launch the program, run Program.jar
 
 Program requires XML and manual folders to be in the same directory as launcher.
 
