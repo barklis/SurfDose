@@ -11,4 +11,6 @@ Program is compiled in Java 9.0.4
 XML and manual folders need to be in the same directory as launcher.
 
 ## Screenshoots
-![data loaded from DICOM files](screenshoots/data.png?raw=true "Title")
+![Screen 1](screenshoots/data.png?raw=true "Data loaded from DICOM files")
+![Screen 2](screenshoots/surface.png?raw=true "Surface of internal organ seen from the inside")
+![Screen 3](screenshoots/chart.png?raw=true "Dose absorbed by a specific slice of surface")
