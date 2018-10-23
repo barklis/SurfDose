@@ -12,28 +12,22 @@ import javafx.event.EventHandler;
 
 // Load RTDOSE file
 public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
-
-	GUI gui;
-	
-	public OpenRTdoseFileHandler(GUI gui) {
-		this.gui = gui;
-	}
 	
 	@Override
 	public void handle(ActionEvent event) {
-		List<File> doseFiles = DcmManager.getDcmFiles(gui.getMainWindow(), "RTDOSE");
+		List<File> doseFiles = DcmManager.getDcmFiles(GUI.instance().getMainWindow(), "RTDOSE");
 		if(doseFiles != null) {
-			gui.getBottomPanel().setDoseFilesLoadedLabel(DcmData.getDoseFilesLoaded()+" + ...");
+			GUI.instance().getBottomPanel().setDoseFilesLoadedLabel(DcmData.getDoseFilesLoaded()+" + ...");
 			Thread loadData = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					for(File file : doseFiles)
 						DcmData.setDoseData(file);
 					Platform.runLater(() -> {
-						gui.getBottomPanel().setDoseFilesLoadedLabel(String.valueOf(DcmData.getDoseFilesLoaded()));
-						gui.getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
-						gui.getCenterPanel().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
-						gui.getCenterPanel().getDrawingPanel().redraw();
+						GUI.instance().getBottomPanel().setDoseFilesLoadedLabel(String.valueOf(DcmData.getDoseFilesLoaded()));
+						GUI.instance().getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
+						GUI.instance().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
+						GUI.instance().getDrawingPanel().redraw();
 					});
 				}
 			});

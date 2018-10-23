@@ -18,11 +18,6 @@ import javafx.stage.Stage;
 public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 	
 	static Stage window = null;
-	GUI gui;
-	
-	public SetCurrentContourHandler(GUI gui) {
-		this.gui = gui;
-	}
 	
 	@Override
 	public void handle(ActionEvent event) {
@@ -68,7 +63,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 					if(recievedId < 0 || recievedId > DcmData.getMaxContourId())
 						throw new IndexOutOfBoundsException();
 					DcmData.setCurrentContourId(recievedId);
-					gui.getCenterPanel().getDrawingPanel().redraw();
+					GUI.instance().getDrawingPanel().redraw();
 					window.close();
 					window = null;
 				} catch(NumberFormatException e) {
@@ -87,7 +82,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 					errorLabel.setText("");
 					contourIdField.setText(String.valueOf(current+1));
 					DcmData.setCurrentContourId(current+1);
-					gui.getCenterPanel().getDrawingPanel().redraw();
+					GUI.instance().getDrawingPanel().redraw();
 				}
 			}
 		});
@@ -100,7 +95,7 @@ public class SetCurrentContourHandler implements EventHandler<ActionEvent> {
 					errorLabel.setText("");
 					contourIdField.setText(String.valueOf(current-1));
 					DcmData.setCurrentContourId(current-1);
-					gui.getCenterPanel().getDrawingPanel().redraw();
+					GUI.instance().getDrawingPanel().redraw();
 				}
 			}
 		});

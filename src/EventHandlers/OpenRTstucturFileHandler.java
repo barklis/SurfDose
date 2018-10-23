@@ -11,25 +11,19 @@ import javafx.event.EventHandler;
 
 // Load RTSTRUCUR file
 public class OpenRTstucturFileHandler implements EventHandler<ActionEvent> {
-
-	GUI gui;
-	
-	public OpenRTstucturFileHandler(GUI gui) {
-		this.gui = gui;
-	}
 	
 	@Override
 	public void handle(ActionEvent event) {
-		File contourFile = DcmManager.getDcmFile(gui.getMainWindow(), "RTSTRUCTUR");
+		File contourFile = DcmManager.getDcmFile(GUI.instance().getMainWindow(), "RTSTRUCTUR");
 		if(contourFile != null) {
-			gui.getBottomPanel().setStructurFileName("Processing...");
+			GUI.instance().getBottomPanel().setStructurFileName("Processing...");
 			Thread loadData = new Thread(new Runnable() {	
 				@Override
 				public void run() {
 					DcmData.setContourData(contourFile);
 					Platform.runLater(()->{
-						gui.getBottomPanel().setStructurFileName(contourFile.getName());
-						gui.getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
+						GUI.instance().getBottomPanel().setStructurFileName(contourFile.getName());
+						GUI.instance().getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
 					});
 				}
 			});

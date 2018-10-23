@@ -10,21 +10,16 @@ import javafx.scene.layout.VBox;
 
 //Bottom panel
 public class BottomPanel extends HBox {
-	GUI gui;
-	
-	//Label doseFileName;
-	Label planFileName;
-	Label structurFileName;
-	Label doseCalculatedLabel;
-	Label doseFilesLoadedLabel;
-	Label currentframeNumberLabel;
-	Label maxframeNumberLabel;
-	Label separatorLabel;
-	Label zCoord;
+	private Label planFileName;
+	private Label structurFileName;
+	private Label doseCalculatedLabel;
+	private Label doseFilesLoadedLabel;
+	private Label currentframeNumberLabel;
+	private Label maxframeNumberLabel;
+	private Label separatorLabel;
+	private Label zCoord;
 	
 	public BottomPanel(GUI gui) {
-		this.gui = gui;
-		
 		Label doseCalculatedTextLabel = new Label(Preferences.getLabel("doseCalculated")+": ");
 		Label doseFilesLoadedTextLabel = new Label(Preferences.getLabel("doseFilesLoaded")+": ");
 		doseCalculatedLabel = new Label((DcmData.isDoseCalculated() ? Preferences.getLabel("yes") : Preferences.getLabel("no")));
@@ -37,7 +32,7 @@ public class BottomPanel extends HBox {
 		
 		
 		separatorLabel = new Label(" / ");
-		currentframeNumberLabel = new Label(String.valueOf(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()));
+		currentframeNumberLabel = new Label(String.valueOf(gui.getDrawingPanel().getCurrentFrame()));
 		maxframeNumberLabel = new Label(String.valueOf(DcmData.getNumberOfFrames()));
 		
 		VBox center = new VBox(new HBox(currentframeNumberLabel, separatorLabel, maxframeNumberLabel));
@@ -75,18 +70,18 @@ public class BottomPanel extends HBox {
 		maxframeNumberLabel.setText(String.valueOf(endingFrame+1));
 		separatorLabel.setText(" - ");
 		
-		if(Preferences.isRowPointerEnabled() && gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
-			zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " / " + gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().getZPos()[1] + " / " + DcmData.getDcmFrames().get(endingFrame).getZ());
+		if(Preferences.isRowPointerEnabled() && GUI.instance().getDrawingPanel().isMapEmbeded())
+			zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " / " + GUI.instance().getMapPanel().getPointersPanel().getZPos()[1] + " / " + DcmData.getDcmFrames().get(endingFrame).getZ());
 		else
 			zCoord.setText(DcmData.getDcmFrames().get(startingFrame).getZ() + " / " + DcmData.getDcmFrames().get(endingFrame).getZ());
 	}
 	
 	public void showFrameCountMode() {
-		currentframeNumberLabel.setText(String.valueOf(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()));
+		currentframeNumberLabel.setText(String.valueOf(GUI.instance().getDrawingPanel().getCurrentFrame()));
 		maxframeNumberLabel.setText(String.valueOf(DcmData.getNumberOfFrames()));
 		separatorLabel.setText(" / ");
 		
-		zCoord.setText(String.valueOf(DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getZ()));
+		zCoord.setText(String.valueOf(DcmData.getDcmFrames().get(GUI.instance().getDrawingPanel().getCurrentFrame()).getZ()));
 	}
 	
 	public void resetData() {
@@ -127,7 +122,7 @@ public class BottomPanel extends HBox {
 	}
 	
 	public void setExtendedZCoordLabel() {
-		double[] zCoords = gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().getZPos();
+		double[] zCoords = GUI.instance().getMapPanel().getPointersPanel().getZPos();
 		this.zCoord.setText(zCoords[0] + " / " + Math.round(zCoords[1]*100)/100.0 + " / " + zCoords[2]);
 	}
 	

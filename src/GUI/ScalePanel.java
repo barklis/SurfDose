@@ -7,15 +7,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class ScalePanel extends Canvas {
-	GUI gui;
-	double maxDose;
-	int grids;
+	private double maxDose;
+	private int grids;
 	
-	double width;
-	double containerHeight;
+	private double width;
+	private double containerHeight;
 
 	public ScalePanel(GUI gui) {
-		this.gui = gui;
 		maxDose = 1.0;
 		
 		grids = 30;
@@ -58,7 +56,7 @@ public class ScalePanel extends Canvas {
 	}
 
 	public void setContainerSize() {
-		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
+		containerHeight = GUI.instance().getScene().getHeight()-GUI.instance().getBottomPanel().getHeight()-GUI.instance().getMenuBarClass().getHeight();
 		setHeight(containerHeight);
 	}
 

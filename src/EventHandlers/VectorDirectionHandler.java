@@ -18,11 +18,6 @@ import javafx.stage.Stage;
 
 public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 	static Stage window = null;
-	GUI gui;
-	
-	public VectorDirectionHandler(GUI gui) {
-		this.gui = gui;
-	}
 	
 	@Override
 	public void handle(ActionEvent event) {
@@ -71,7 +66,7 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 						DcmData.setuVector(firstVectorX, firstVectorY);
 						DcmData.setAngularWidth(recievedSecondAngle);
 						DcmData.recalculateAngle();
-						gui.getCenterPanel().getDrawingPanel().redraw();
+						GUI.instance().getDrawingPanel().redraw();
 					}
 					
 					window.close();
@@ -102,7 +97,7 @@ public class VectorDirectionHandler implements EventHandler<ActionEvent> {
 					DcmData.setuVector(Math.sin(recievedFirstAngle), -Math.cos(recievedFirstAngle));
 					DcmData.setAngularWidth(recievedSecondAngle);
 					DcmData.recalculateAngle();
-					gui.getCenterPanel().getDrawingPanel().redraw();
+					GUI.instance().getDrawingPanel().redraw();
 				
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidAngle"));

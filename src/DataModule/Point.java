@@ -2,9 +2,9 @@ package DataModule;
 
 // Stores information about value in certain position
 public class Point{
-	double x, y;
-	double value;
-	double angle;
+	private double x, y;
+	private double value;
+	private double angle;
 
 	public Point(double x, double y) {
 		this.x = x;

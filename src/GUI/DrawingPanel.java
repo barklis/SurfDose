@@ -7,30 +7,27 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 
 public class DrawingPanel extends StackPane {
-	GUI gui;
-	
 	CanvasPanel canvasPanel;
 	ChartPanel chartPanel;
 	MapPanel mapPanel;
 	
-	boolean chartEmbeded;
-	boolean canvasEmbeded;
-	boolean mapEmbeded;
+	private boolean chartEmbeded;
+	private boolean canvasEmbeded;
+	private boolean mapEmbeded;
 	
-	Integer currentFrame;
+	private int currentFrame;
 	
-	double width, height;
+	private double width, height;
 	
 	public DrawingPanel(GUI gui) {
-		this.gui = gui;
 		this.width = 1000;
 		this.height = 500;
 		this.currentFrame = 0;
 		setPrefSize(width, height);
 		
-		canvasPanel = new CanvasPanel(gui, width, height);
-		chartPanel = new ChartPanel(gui);
-		mapPanel = new MapPanel(gui, width, height);
+		canvasPanel = new CanvasPanel(width, height);
+		chartPanel = new ChartPanel();
+		mapPanel = new MapPanel(width, height);
 		
 		this.chartEmbeded = false;
 		this.canvasEmbeded = false;
@@ -171,7 +168,7 @@ public class DrawingPanel extends StackPane {
 		this.canvasEmbeded = canvasEmbeded;
 	}
 
-	public Integer getCurrentFrame() {
+	public int getCurrentFrame() {
 		return currentFrame;
 	}
 

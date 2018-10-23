@@ -58,9 +58,10 @@
 		<resetDataTitle>Reset załadowanych danych</resetDataTitle>
 		<resetDataContent>Czy na pewno?</resetDataContent>
 		<notEnoughContours>W pliku RTSTRUCTUR nie ma wystarczająco konturów by obliczyć odległość między skanami</notEnoughContours>
-		<matrixNotGeneratedTitle>Nie można wyeksportować danych</matrixNotGeneratedTitle>
+		<cannotExportData>Nie można wyeksportować danych</cannotExportData>
 		<matrixNotGeneratedContent>Dane powierzchni nie zostały do tej pory wygenerowane. Możesz to zrobić w menu programu.</matrixNotGeneratedContent>
 		<missingTag>Brakujący tag w</missingTag>
+		<textFile>Plik tekstowy</textFile>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Ustawienia konturów</contourSettingsWindowTitle>

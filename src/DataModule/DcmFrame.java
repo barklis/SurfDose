@@ -26,9 +26,9 @@ public class DcmFrame {
 	}
 	
 	public Contour getContourById(int id) {
-		for(int i = 0; i < contours.size(); ++i) {
-			if(id == contours.get(i).getId()) {
-				return contours.get(i);
+		for(Contour c : contours) {
+			if(id == c.getId()) {
+				return c;
 			}
 		}
 		return new Contour(DcmData.EMPTY);
@@ -114,9 +114,6 @@ public class DcmFrame {
 				layerNumber = i;
 			}
 		}
-		
-		if(layerNumber +1 < offset.length - 1)
-			System.out.println((offset[layerNumber]+z0) + " - " + (offset[layerNumber+1]+z0) + " = " + this.z);
 		
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {

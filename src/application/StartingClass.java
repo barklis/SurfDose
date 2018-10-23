@@ -7,11 +7,9 @@ import javafx.stage.Stage;
 // Starting class
 public class StartingClass extends Application {
 	
-	GUI gui;
-	
 	@Override
 	public void start(Stage primaryStage) {
-		gui = new GUI(primaryStage);
+		GUI.instance(primaryStage);
 	}
 	
 	public static void main(String[] args) {

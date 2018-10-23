@@ -218,6 +218,10 @@ public class DcmData {
 		return (u ^ (1<<15));
 	}
 	
+	public static DcmFrame getFrame(int index) {
+		return dcmFrames.get(index);
+	}
+	
 	public synchronized static boolean setContourData(File dcmFile) {
 		
 		SequenceAttribute sequenceOfMainContours = null;

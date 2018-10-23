@@ -9,22 +9,20 @@ import javafx.scene.control.ButtonType;
 // Allows to change language od the application
 public class ChangeLanguageHandler implements EventHandler<ActionEvent> {
 	String language;
-	GUI gui;
 	
-	public ChangeLanguageHandler(String language, GUI gui) {
+	public ChangeLanguageHandler(String language) {
 		this.language = language;
-		this.gui = gui;
 	}
 
 	@Override
 	public void handle(ActionEvent arg0) {
 		Preferences.setLanguage(language);
 		
-		if(gui.showConfirmationDialog(
+		if(GUI.instance().showConfirmationDialog(
 				Preferences.getLabel("languageConformationTitle"),
 				Preferences.getLabel("languageConformationContent")
 			) == ButtonType.OK){
-			gui.restart();
+			GUI.instance().restart();
 		}
 	}
 

@@ -12,11 +12,9 @@ import javafx.scene.chart.XYChart;
 
 public class ChartPanel{
 
-	GUI gui;
-	List<AreaChart<Number,Number>> charts;
+	private List<AreaChart<Number,Number>> charts;
 	
-	public ChartPanel(GUI gui) {
-		this.gui = gui;
+	public ChartPanel() {
 		charts = new ArrayList<AreaChart<Number,Number>>();
 	}
 	
@@ -31,7 +29,7 @@ public class ChartPanel{
 	}
 	
 	public synchronized AreaChart<Number,Number> getChart(){
-		return charts.get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame());
+		return charts.get(GUI.instance().getCenterPanel().getDrawingPanel().getCurrentFrame());
 	}
 	
 	private AreaChart<Number, Number> createChart(int frameNumber) {

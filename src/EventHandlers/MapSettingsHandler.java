@@ -20,12 +20,7 @@ import javafx.stage.Stage;
 
 public class MapSettingsHandler implements EventHandler<ActionEvent> {
 
-	GUI gui;
 	private static Stage window = null;
-	
-	public MapSettingsHandler(GUI gui) {
-		this.gui = gui;
-	}
 
 	@Override
 	public void handle(ActionEvent event) {
@@ -77,8 +72,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 					
 					window.close();
 					window = null;
-					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
-						gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
+					if(GUI.instance().getDrawingPanel().isMapEmbeded())
+						GUI.instance().getMapPanel().drawMap();
 				} catch (NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidExpression"));
 				} catch (IllegalArgumentException e) {
@@ -114,8 +109,8 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 					else
 						throw new IllegalArgumentException(Preferences.getLabel("negativeNumber"));
 					
-					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
-						gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
+					if(GUI.instance().getDrawingPanel().isMapEmbeded())
+						GUI.instance().getMapPanel().drawMap();
 				} catch (NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidExpression"));
 				} catch (IllegalArgumentException e) {
@@ -137,18 +132,18 @@ public class MapSettingsHandler implements EventHandler<ActionEvent> {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
 				if(newVal) {
 					Preferences.setRowPointerEnabled(true);
-					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded()) {
-						gui.getBottomPanel().setExtendedZCoordLabel();
-						gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().drawLines();
+					if(GUI.instance().getDrawingPanel().isMapEmbeded()) {
+						GUI.instance().getBottomPanel().setExtendedZCoordLabel();
+						GUI.instance().getMapPanel().getPointersPanel().drawLines();
 					}
 				}
 				else {
 					Preferences.setRowPointerEnabled(false);
-					if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded()) {
-						gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel().eraseLines();
+					if(GUI.instance().getDrawingPanel().isMapEmbeded()) {
+						GUI.instance().getMapPanel().getPointersPanel().eraseLines();
 						
-						PointersPanel pPanel = gui.getCenterPanel().getDrawingPanel().getMapPanel().getPointersPanel();
-						gui.getBottomPanel().showMapMode(pPanel.getStartingFrame(), pPanel.getEndingFrame());
+						PointersPanel pPanel = GUI.instance().getMapPanel().getPointersPanel();
+						GUI.instance().getBottomPanel().showMapMode(pPanel.getStartingFrame(), pPanel.getEndingFrame());
 					}
 				}
 			}

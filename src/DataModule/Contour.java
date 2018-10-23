@@ -9,12 +9,12 @@ import com.pixelmed.dicom.SequenceItem;
 
 // Stores information about single contour
 public class Contour {
-	int numberOfPoints;
-	List<Point> data;
-	double z;
-	int id;
-	double centerX, centerY;
-	double maxValue;
+	private int numberOfPoints;
+	private List<Point> data;
+	private double z;
+	private int id;
+	private double centerX, centerY;
+	private double maxValue;
 	
 	public Contour(SequenceItem item, int id) {
 		this.id = id;

@@ -8,26 +8,20 @@ import javafx.event.EventHandler;
 
 public class ShowMapHandler implements EventHandler<ActionEvent> {
 	
-	GUI gui;
-	
-	public ShowMapHandler(GUI gui) {
-		this.gui = gui;
-	}
-	
 	@Override
 	public void handle(ActionEvent event) {
 		if(DcmData.isDoseCalculated()) {
-			gui.getCenterPanel().getDrawingPanel().placeMap();
-			gui.getCenterPanel().getDrawingPanel().getMapPanel().setContainerSize();
-			gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
+			GUI.instance().getDrawingPanel().placeMap();
+			GUI.instance().getMapPanel().setContainerSize();
+			GUI.instance().getMapPanel().drawMap();
 			
-			gui.getMenuBarClass().getShowHistogramItem().setSelected(false);
-			gui.getMenuBarClass().getShowFilesContentItem().setSelected(false);
-			gui.getMenuBarClass().getShowMapItem().setSelected(true);
+			GUI.instance().getMenuBarClass().getShowHistogramItem().setSelected(false);
+			GUI.instance().getMenuBarClass().getShowFilesContentItem().setSelected(false);
+			GUI.instance().getMenuBarClass().getShowMapItem().setSelected(true);
 		}
 		else {
-			gui.getMenuBarClass().getShowMapItem().setSelected(false);
-			gui.showInformationDialog(Preferences.getLabel("notCalculatedInformationTitle"), Preferences.getLabel("notCalculatedInformationContent"));
+			GUI.instance().getMenuBarClass().getShowMapItem().setSelected(false);
+			GUI.instance().showInformationDialog(Preferences.getLabel("notCalculatedInformationTitle"), Preferences.getLabel("notCalculatedInformationContent"));
 		}
 	}
 

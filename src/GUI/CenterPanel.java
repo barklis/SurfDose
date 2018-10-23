@@ -3,13 +3,11 @@ package GUI;
 import javafx.scene.layout.BorderPane;
 
 public class CenterPanel extends BorderPane {
-	GUI gui;
 	
 	DrawingPanel drawingPanel;
 	ScalePanel scalePanel;
 	
 	public CenterPanel(GUI gui) {
-		this.gui = gui;
 		
 		drawingPanel = new DrawingPanel(gui);
 		scalePanel = new ScalePanel(gui);

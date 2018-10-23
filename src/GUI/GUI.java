@@ -19,20 +19,32 @@ import javafx.stage.WindowEvent;
 
 //contains all interface classes
 public class GUI{
-	Stage mainWindow;
-	Scene scene;
+	private static GUI ins = null;
 	
-	MenuBarClass menuBarClass;
-	CenterPanel centerPanel;
-	BottomPanel bottomPanel;
+	private Stage mainWindow;
+	private Scene scene;
 	
-	boolean resizeEventManaged;
+	private MenuBarClass menuBarClass;
+	private CenterPanel centerPanel;
+	private BottomPanel bottomPanel;
 	
-	public GUI(Stage stage) {
+	private boolean resizeEventManaged;
+	
+	private GUI(Stage stage) {
 		mainWindow = stage;
 		resizeEventManaged = true;
 		
 		init();
+	}
+	
+	public static GUI instance(Stage stage) {
+		if(ins == null)
+			ins = new GUI(stage);
+		return ins;
+	}
+	
+	public static GUI instance() {
+		return ins;
 	}
 	
 	public void restart() {
@@ -48,7 +60,7 @@ public class GUI{
 		if(!Preferences.loadConfigFiles())
 			return;
 		
-		menuBarClass = new MenuBarClass(this);
+		menuBarClass = new MenuBarClass();
 		centerPanel = new CenterPanel(this);
 		bottomPanel = new BottomPanel(this);
 		
@@ -60,7 +72,7 @@ public class GUI{
 		scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/Stylesheets/stylesheet.css").toExternalForm()); 
 		
-		mainWindow.maximizedProperty().addListener(new WindowMaximizeHandler(this));
+		mainWindow.maximizedProperty().addListener(new WindowMaximizeHandler());
 		
 		WindowResizedHandler resizeHandler = new WindowResizedHandler(this);
 		mainWindow.widthProperty().addListener(resizeHandler);
@@ -128,5 +140,25 @@ public class GUI{
 	}
 	public Scene getScene() {
 		return scene;
+	}
+	
+	public CanvasPanel getCanvasPanel() {
+		return centerPanel.drawingPanel.canvasPanel;
+	}
+	
+	public MapPanel getMapPanel() {
+		return centerPanel.drawingPanel.mapPanel;
+	}
+	
+	public ChartPanel getChartPanel() {
+		return centerPanel.drawingPanel.chartPanel;
+	}
+	
+	public DrawingPanel getDrawingPanel() {
+		return centerPanel.drawingPanel;
+	}
+	
+	public ScalePanel getScalePanel() {
+		return centerPanel.scalePanel;
 	}
 }

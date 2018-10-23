@@ -6,9 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class PointersPanel extends Canvas {
-	
-	GUI gui;
-	
 	private int rowCounter;
 	private int colCounter;
 	private int pixelSize;
@@ -17,7 +14,7 @@ public class PointersPanel extends Canvas {
 	private int startingFrame;
 	private int endingFrame;
 	
-	public PointersPanel(double width, double height, int row, int col, GUI gui) {
+	public PointersPanel(double width, double height, int row, int col) {
 		setWidth(width);
 		setHeight(height);
 		
@@ -27,8 +24,6 @@ public class PointersPanel extends Canvas {
 		pixelSize = 0;
 		pixelsInCol = 0;
 		pixelsInRow = 0;
-		
-		this.gui = gui;
 	}
 	
 	public void movePointer(int delta) {

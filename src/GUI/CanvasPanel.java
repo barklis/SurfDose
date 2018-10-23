@@ -11,14 +11,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class CanvasPanel extends Canvas {
-	GUI gui;
-	int pixelSize;
+	private int pixelSize;
 	
-	double containerWidth;
-	double containerHeight;
+	private double containerWidth;
+	private double containerHeight;
 
-	public CanvasPanel(GUI gui, double width, double height) {
-		this.gui = gui;
+	public CanvasPanel(double width, double height) {
 		setHeight(height);
 		setWidth(width);
 	}
@@ -26,12 +24,12 @@ public class CanvasPanel extends Canvas {
 public void drawFrame() {
 		// drawing dose
 		
-		if(!gui.isResizeEventManaged()) {
+		if(!GUI.instance().isResizeEventManaged()) {
 			setContainerSize();
-			gui.setResizeEventManaged(true);
+			GUI.instance().setResizeEventManaged(true);
 		}
 		
-		gui.getBottomPanel().setzCoordLabel(DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getZ());
+		GUI.instance().getBottomPanel().setzCoordLabel(DcmData.getDcmFrames().get(GUI.instance().getDrawingPanel().getCurrentFrame()).getZ());
 		
 		GraphicsContext gc = getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
@@ -69,7 +67,7 @@ public void drawFrame() {
 	}
 
 	private void drawDose(GraphicsContext gc) {
-		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
+		int currentFrame = GUI.instance().getDrawingPanel().getCurrentFrame();
 		for(int r = 0; r < DcmData.getNumberOfRows(); r++) {
 			for(int c = 0; c < DcmData.getNumberOfCols(); c++) {
 				gc.setFill(
@@ -83,7 +81,7 @@ public void drawFrame() {
 		}
 	}
 	private void drawContours(GraphicsContext gc) {
-		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
+		int currentFrame = GUI.instance().getDrawingPanel().getCurrentFrame();
 		gc.setLineWidth(Preferences.getContourLineWidth());
 		gc.setStroke(Color.WHITE);
 		
@@ -121,7 +119,7 @@ public void drawFrame() {
 	}
 
 	private void drawIsocenter(GraphicsContext gc) {
-		int currentFrame = gui.getCenterPanel().getDrawingPanel().getCurrentFrame();
+		int currentFrame = GUI.instance().getDrawingPanel().getCurrentFrame();
 		Point isoPoint = new Point(DcmData.getIsocenterPosition()[0], DcmData.getIsocenterPosition()[1]);
 		double z0 = DcmData.getIsocenterPosition()[2];
 		
@@ -152,7 +150,7 @@ public void drawFrame() {
 	}
 	
 	private void drawVectors(GraphicsContext gc) {
-		Contour c = DcmData.getDcmFrames().get(gui.getCenterPanel().getDrawingPanel().getCurrentFrame()).getContourById(DcmData.getCurrentContourId());
+		Contour c = DcmData.getDcmFrames().get(GUI.instance().getCenterPanel().getDrawingPanel().getCurrentFrame()).getContourById(DcmData.getCurrentContourId());
 		if(c.getData().size() != 0) {
 			
 			// center of the contour
@@ -195,8 +193,8 @@ public void drawFrame() {
 	}
 
 	public void setContainerSize() {
-		containerWidth = gui.getScene().getWidth()-gui.getCenterPanel().getScalePanel().getWidth();
-		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
+		containerWidth = GUI.instance().getScene().getWidth()-GUI.instance().getScalePanel().getWidth();
+		containerHeight = GUI.instance().getScene().getHeight()-GUI.instance().getBottomPanel().getHeight()-GUI.instance().getMenuBarClass().getHeight();
 		if(DcmData.isDoseLoaded())
 			setPixelSize();
 	}

@@ -58,9 +58,10 @@
 		<resetDataTitle>Reset loaded data</resetDataTitle>
 		<resetDataContent>Are you sure?</resetDataContent>
 		<notEnoughContours>There is not enough contours in RTSTRUCTUR file to calculate distance between frames</notEnoughContours>
-		<matrixNotGeneratedTitle>Cannot export data</matrixNotGeneratedTitle>
+		<cannotExportData>Cannot export data</cannotExportData>
 		<matrixNotGeneratedContent>Surface data has not yet been generated. You can do it in program menu.</matrixNotGeneratedContent>
 		<missingTag>Missing tag in</missingTag>
+		<textFile>Text file</textFile>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Contour settings</contourSettingsWindowTitle>
