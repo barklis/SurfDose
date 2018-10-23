@@ -8,7 +8,8 @@ Library used to read DICOM files:
 
 &nbsp;
 ## Running
-Program is compiled in Java 9.0.4.
+Program is compiled in Java 9.0.4
+
 XML and manual folders need to be in the same directory as launcher.
 
 &nbsp;
