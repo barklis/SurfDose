@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class ErrorHandler extends Exception{
-	String message;
+	private String message;
 
 	public ErrorHandler(String message) {
 		this.message = message;

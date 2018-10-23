@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataModule.DcmData;
-import DataModule.DcmFrame;
 import DataModule.DcmManager;
 import DataModule.Point;
 import application.Preferences;
@@ -13,34 +12,31 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class MapPanel extends Canvas {
-	GUI gui;
-	
 	PointersPanel pointersPanel;
 	
-	double containerWidth;
-	double containerHeight;
+	private double containerWidth;
+	private double containerHeight;
 	
-	double[][] matrix;
+	private double[][] matrix;
 	
-	public MapPanel(GUI gui, double width, double height) {
-		this.gui = gui;
+	public MapPanel(double width, double height) {
 		setHeight(height);
 		setWidth(width);
 		
-		pointersPanel = new PointersPanel(width, height, 1, 1, gui);
+		pointersPanel = new PointersPanel(width, height, 1, 1);
 		
 		matrix = null;
 	}
 	
 	public void drawMap() {
-		gui.getCenterPanel().getScalePanel().setMaxDoseAndReload(DcmData.getMaxValueByContourId(DcmData.getCurrentContourId()));
+		GUI.instance().getScalePanel().setMaxDoseAndReload(DcmData.getMaxValueByContourId(DcmData.getCurrentContourId()));
 		int currentId = DcmData.getCurrentContourId();
 		
 		if(!DcmData.isDoseCalculated())
 			return;
 		
-		int startingFrame = getStartingFrame(currentId);
-		int endingFrame = getEndingFrame(currentId);
+		int startingFrame = DcmManager.getStartingFrame(currentId);
+		int endingFrame = DcmManager.getEndingFrame(currentId);
 		
 		int pixelsInCol = Preferences.getPixelsInCol();
 		int pixelsInRow = Preferences.getPixelsInRow();
@@ -61,11 +57,6 @@ public class MapPanel extends Canvas {
 		
 		double framePixelSize = getHeight()/(endingFrame-startingFrame);
 		double radius = Preferences.getInterpolationRadius()*framePixelSize;
-		
-		//System.out.println(getWidth() + " - " + getHeight());
-		//System.out.println(containerWidth + " - " + containerHeight);
-		//System.out.println(pixelSize + " - " + pixelsInCol + " - " + iterations);
-		//System.out.println(framePixelSize + " - " + (endingFrame-startingFrame));
 		
 		GraphicsContext gc = getGraphicsContext2D();
 		gc.clearRect(0, 0, getWidth(), getHeight());
@@ -94,7 +85,7 @@ public class MapPanel extends Canvas {
 		}
 		
 		pointersPanel.setVariables(pixelSize, pixelsInCol, pixelsInRow, startingFrame, endingFrame, getWidth(), getHeight());
-		gui.getBottomPanel().showMapMode(startingFrame, endingFrame);
+		GUI.instance().getBottomPanel().showMapMode(startingFrame, endingFrame);
 		
 		if(Preferences.isRowPointerEnabled()) {
 			pointersPanel.drawLines();
@@ -113,30 +104,10 @@ public class MapPanel extends Canvas {
 		matrix[w][h] = sum/points.size();
 		return DcmManager.getDoseColorScale(matrix[w][h], DcmData.getMaxValueByContourId(id));
 	}
-	
-	public int getStartingFrame(int id) {
-		for(int f = 0; f < DcmData.getDcmFrames().size(); ++f) {
-			DcmFrame frame = DcmData.getDcmFrames().get(f);
-			for(int x = 0; x < frame.getContours().size(); ++x)
-				if(frame.getContours().get(x).getId() == id)
-					return f;
-		}
-		return 0;
-	}
-	
-	public int getEndingFrame(int id) {
-		for(int f = DcmData.getDcmFrames().size()-1; f >= 0; --f) {
-			DcmFrame frame = DcmData.getDcmFrames().get(f);
-			for(int x = 0; x < frame.getContours().size(); ++x)
-				if(frame.getContours().get(x).getId() == id)
-					return f;
-		}
-		return 0;
-	}
 
 	public void setContainerSize() {
-		containerWidth = gui.getScene().getWidth()-gui.getCenterPanel().getScalePanel().getWidth();
-		containerHeight = gui.getScene().getHeight()-gui.getBottomPanel().getHeight()-gui.getMenuBarClass().getHeight();
+		containerWidth = GUI.instance().getScene().getWidth()-GUI.instance().getScalePanel().getWidth();
+		containerHeight = GUI.instance().getScene().getHeight()-GUI.instance().getBottomPanel().getHeight()-GUI.instance().getMenuBarClass().getHeight();
 	}
 
 	public double[][] getMatrix() {
@@ -145,6 +116,10 @@ public class MapPanel extends Canvas {
 
 	public PointersPanel getPointersPanel() {
 		return pointersPanel;
+	}
+
+	public void resetMatrix() {
+		matrix = null;
 	}
 	
 }

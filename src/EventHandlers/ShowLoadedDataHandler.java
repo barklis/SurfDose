@@ -9,28 +9,22 @@ import javafx.event.EventHandler;
 //shows data stored in loaded DICOM files
 public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 
-	GUI gui;
-	
-	public ShowLoadedDataHandler(GUI gui) {
-		this.gui = gui;
-	}
-
 	@Override
 	public void handle(ActionEvent event) {
 		if(DcmData.isDoseLoaded() && DcmData.isContourLoaded()) {
-			gui.getCenterPanel().getDrawingPanel().placeCanvas();
-			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
-			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+			GUI.instance().getDrawingPanel().placeCanvas();
+			GUI.instance().getCanvasPanel().setContainerSize();
+			GUI.instance().getCanvasPanel().drawFrame();
 			
-			gui.getBottomPanel().showFrameCountMode();
-			gui.getCenterPanel().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
+			GUI.instance().getBottomPanel().showFrameCountMode();
+			GUI.instance().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
 			
-			gui.getMenuBarClass().getShowHistogramItem().setSelected(false);
-			gui.getMenuBarClass().getShowMapItem().setSelected(false);
-			gui.getMenuBarClass().getShowFilesContentItem().setSelected(true);
+			GUI.instance().getMenuBarClass().getShowHistogramItem().setSelected(false);
+			GUI.instance().getMenuBarClass().getShowMapItem().setSelected(false);
+			GUI.instance().getMenuBarClass().getShowFilesContentItem().setSelected(true);
 		}
 		else {
-			gui.getMenuBarClass().getShowFilesContentItem().setSelected(false);
+			GUI.instance().getMenuBarClass().getShowFilesContentItem().setSelected(false);
 			
 			String message = Preferences.getLabel("missingFiles") + ":\n";	
 			if(!DcmData.isDoseLoaded() && !DcmData.isDosePreLoaded())
@@ -38,7 +32,7 @@ public class ShowLoadedDataHandler implements EventHandler<ActionEvent> {
 			if(!DcmData.isContourLoaded())
 				message += "\nRTSTRUCUR";
 			
-			gui.showInformationDialog(Preferences.getLabel("cannotDisplayLoadedDataTitle"), message);
+			GUI.instance().showInformationDialog(Preferences.getLabel("cannotDisplayLoadedDataTitle"), message);
 			
 		}
 	}

@@ -21,8 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
-
-	private GUI gui;
 	private static Stage window = null;
 	
 	private CheckBox axesCheckBox;
@@ -37,10 +35,6 @@ public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
 	Label isocenterLabel;
 	Label activeIsocenterLabel;
 	Label isocenterDotDiameterLabel;
-	
-	public PlanDataSettingsHandler(GUI gui) {
-		this.gui = gui;
-	}
 
 	@Override
 	public void handle(ActionEvent event) {
@@ -81,8 +75,8 @@ public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				Preferences.setAxesColor(axesColorField.getValue());
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
@@ -90,8 +84,8 @@ public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				Preferences.setIsocenterColor(isocenterColorField.getValue());
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
@@ -99,31 +93,31 @@ public class PlanDataSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				Preferences.setActiveIsocenterColor(activeIsocenterColorField.getValue());
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
 		axesCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
 				setAxesSectionEnabled(newVal);
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
 		isocenterCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean newVal) {
 				setIsoenterSectionEnabled(newVal);
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
 		isocenterDotRadiusField.valueProperty().addListener((obs, oldValue, newValue) -> {
 			Preferences.setIsocenterDotRadius(isocenterDotRadiusField.getValue());
-			if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+			if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+				GUI.instance().getCanvasPanel().drawFrame();
 		});
 		
 		okButton.setOnAction(new EventHandler<ActionEvent>() {

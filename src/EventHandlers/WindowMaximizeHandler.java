@@ -7,23 +7,18 @@ import javafx.beans.value.ObservableValue;
 
 //handle window maximize event
 public class WindowMaximizeHandler implements ChangeListener<Boolean> {
-	GUI gui;
-	
-	public WindowMaximizeHandler(GUI gui) {
-		this.gui = gui;
-	}
 	
 	@Override
 	public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
 		Platform.runLater(()-> {
-			gui.getCenterPanel().getDrawingPanel().getCanvasPanel().setContainerSize();
-			gui.getCenterPanel().getDrawingPanel().getMapPanel().setContainerSize();
-			gui.getCenterPanel().getScalePanel().drawScale();
+			GUI.instance().getCanvasPanel().setContainerSize();
+			GUI.instance().getMapPanel().setContainerSize();
+			GUI.instance().getScalePanel().drawScale();
 			
-			if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
-			else if(gui.getCenterPanel().getDrawingPanel().isMapEmbeded())
-				gui.getCenterPanel().getDrawingPanel().getMapPanel().drawMap();
+			if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+				GUI.instance().getCanvasPanel().drawFrame();
+			else if(GUI.instance().getDrawingPanel().isMapEmbeded())
+				GUI.instance().getMapPanel().drawMap();
 		});
 	}
 

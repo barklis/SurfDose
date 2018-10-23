@@ -8,20 +8,17 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ButtonType;
 
 public class ResetDataHandler implements EventHandler<ActionEvent> {
-	
-	GUI gui;
-	
-	public ResetDataHandler(GUI gui) {
-		this.gui = gui;
-	}
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(gui.showConfirmationDialog(Preferences.getLabel("resetDataTitle"), Preferences.getLabel("resetDataContent")) == ButtonType.OK) {
+		if(GUI.instance().showConfirmationDialog(Preferences.getLabel("resetDataTitle"), Preferences.getLabel("resetDataContent"))
+		== ButtonType.OK) {
+			
 			DcmData.resetData();
-			gui.getCenterPanel().getDrawingPanel().unEmbedToReset();
-			gui.getBottomPanel().resetData();
-			gui.getMenuBarClass().reset();
+			GUI.instance().getDrawingPanel().unEmbedToReset();
+			GUI.instance().getBottomPanel().resetData();
+			GUI.instance().getMenuBarClass().reset();
+			GUI.instance().getMapPanel().resetMatrix();
 		}
 	}
 

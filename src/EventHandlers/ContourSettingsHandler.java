@@ -18,12 +18,7 @@ import javafx.stage.Stage;
 
 public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 
-	GUI gui;
 	private static Stage window = null;
-	
-	public ContourSettingsHandler(GUI gui) {
-		this.gui = gui;
-	}
 
 	@Override
 	public void handle(ActionEvent event) {
@@ -80,8 +75,8 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				Preferences.setContourLineColor(lineColorField.getValue());
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
@@ -89,21 +84,21 @@ public class ContourSettingsHandler implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {
 				Preferences.setActiveContourLineColor(activeLineColorField.getValue());
-				if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-					gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+				if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+					GUI.instance().getCanvasPanel().drawFrame();
 			}
 		});
 		
 		lineWidthField.valueProperty().addListener((obs, oldValue, newValue) -> {
 			Preferences.setContourLineWidth(lineWidthField.getValue());
-			if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+			if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+				GUI.instance().getCanvasPanel().drawFrame();
 		});
 		
 		activeLineWidthField.valueProperty().addListener((obs, oldValue, newValue) -> {
 			Preferences.setActiveContourLineWidth(activeLineWidthField.getValue());
-			if(gui.getCenterPanel().getDrawingPanel().isCanvasEmbeded())
-				gui.getCenterPanel().getDrawingPanel().getCanvasPanel().drawFrame();
+			if(GUI.instance().getDrawingPanel().isCanvasEmbeded())
+				GUI.instance().getCanvasPanel().drawFrame();
 		});
 		
 		Scene scene = new Scene(root);

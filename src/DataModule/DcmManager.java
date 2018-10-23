@@ -5,12 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import com.pixelmed.dicom.Attribute;
 import com.pixelmed.dicom.AttributeList;
 
+import application.Preferences;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 // Contains static methods to work witch DICOM files, like loading and saving
 public class DcmManager {
 	
-	static String lastPath = null;
+	private static String lastPath = null;
 	
 	public static File getDcmFile(Stage stage, String fileType) {
 		FileChooser chooser = new FileChooser();
@@ -53,11 +52,6 @@ public class DcmManager {
 	}
 	
 	public static Color getDoseColorScale(double doseValue, double maxValue){
-		//if(doseValue == 0)
-		//	return Color.BLACK;
-		//double colorValue = doseValue/maxDoseValue;
-		////double colorValue = doseValue / DcmData.getMaxDoseValue();
-		//return new Color(colorValue, colorValue, colorValue, 1.0);
 		
 		double hue = Color.BLUE.getHue() + (Color.RED.getHue() - Color.BLUE.getHue()) * doseValue / maxValue ;
 		return Color.hsb(hue, 1.0, 1.0);
@@ -66,8 +60,15 @@ public class DcmManager {
 	public static boolean saveDataToFile(Stage stage, double[][] matrix) {
 		FileChooser chooser = new FileChooser();
 		chooser.setInitialDirectory(new File(lastPath));
+		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(Preferences.getLabel("textFile") + " (*.txt)", "*.txt"));
+		chooser.setInitialFileName("data");
 		File outputFile = chooser.showSaveDialog(stage);
+		
 	    if(outputFile != null) {
+	    	if (!outputFile.getName().endsWith(".txt")) {
+	    		outputFile.renameTo(new File(outputFile.getName() + ".txt"));
+	    	}
+	    	
 	    	PrintWriter writer = null;
 			try {
 				writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
@@ -75,16 +76,57 @@ public class DcmManager {
 				e.printStackTrace();
 				return false;
 			}
+			
+			// grid size - (row col)
+			writer.println(Preferences.getPixelsInRow() + " " + Preferences.getPixelsInCol());
+			
+			int currentId = DcmData.getCurrentContourId();
+			int startingFrame = getStartingFrame(currentId);
+			int endingFrame = getEndingFrame(currentId);
+			
+			// Z coord of contour - (min max)
+			writer.println(DcmData.getFrame(startingFrame).getZ() + " " + DcmData.getFrame(endingFrame).getZ());
+			
+			// relative enters of contour - [X:Y]
+			double isoX = DcmData.getIsocenterPosition()[0];
+			double isoY = DcmData.getIsocenterPosition()[1];
+			for(int i = startingFrame; i <= endingFrame; ++i){
+				Contour c = DcmData.getFrame(i).getContourById(currentId);
+				writer.print("[" + (c.getCenterX() - isoX) + ":" + (c.getCenterY() - isoY) + "]");
+			}
+			writer.println();
+			
+			// data
 	    	for(int r = 0; r < matrix[0].length; r++) {
 	    		for(int c = 0; c < matrix.length; c++)
 	    			writer.print(matrix[c][r] + " ");
 	    		writer.println();
 	    	}
-	    	writer.close();
 	    	
+	    	writer.close();
 	    	return true;
 	    }
 	    return false;
+	}
+	
+	public static int getStartingFrame(int id) {
+		for(int f = 0; f < DcmData.getDcmFrames().size(); ++f) {
+			DcmFrame frame = DcmData.getDcmFrames().get(f);
+			for(int x = 0; x < frame.getContours().size(); ++x)
+				if(frame.getContours().get(x).getId() == id)
+					return f;
+		}
+		return 0;
+	}
+	
+	public static int getEndingFrame(int id) {
+		for(int f = DcmData.getDcmFrames().size()-1; f >= 0; --f) {
+			DcmFrame frame = DcmData.getDcmFrames().get(f);
+			for(int x = 0; x < frame.getContours().size(); ++x)
+				if(frame.getContours().get(x).getId() == id)
+					return f;
+		}
+		return 0;
 	}
 	
 	public static boolean saveRecievedDoseData(Stage stage, List<DcmFrame> list) {
@@ -150,30 +192,6 @@ public class DcmManager {
 				return false;
 			}
 	    	writer.println(list);
-	    	writer.close();
-	    	
-	    	return true;
-	    }
-	    return false;
-	}
-	
-	public static boolean saveMarkedAttributesToFile(Stage stage, Collection<Attribute> list) {
-		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-		File outputFile = chooser.showSaveDialog(stage);
-	    if(outputFile != null) {
-	    	PrintWriter writer = null;
-			try {
-				writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
-			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return false;
-			}
-			int i = 1;
-			for(Attribute x : list) {
-				writer.println("\n[XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: " + i + "]\n" + x);
-				i++;
-			}
 	    	writer.close();
 	    	
 	    	return true;

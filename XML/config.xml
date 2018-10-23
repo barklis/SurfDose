@@ -4,14 +4,14 @@
 	<activeContourLineColor>#FF6666</activeContourLineColor>
 	<contourLineWidth>1.5</contourLineWidth>
 	<activeContourLineWidth>2.3</activeContourLineWidth>
-	<pixelsInCol>40</pixelsInCol>
-	<pixelsInRow>90</pixelsInRow>
-	<interpolationRadius>1.8</interpolationRadius>
+	<pixelsInCol>60</pixelsInCol>
+	<pixelsInRow>120</pixelsInRow>
+	<interpolationRadius>1.7</interpolationRadius>
 	<axesOfBeamsColor>#692DB2</axesOfBeamsColor>
 	<isocenterColor>#1A1A1A</isocenterColor>
 	<activeIsocenterColor>#666666</activeIsocenterColor>
 	<axesVisibility>true</axesVisibility>
 	<isocenterVisibility>true</isocenterVisibility>
 	<isocenterDotRadius>4</isocenterDotRadius>
-	<rowPointerEnabled>true</rowPointerEnabled>
+	<rowPointerEnabled>false</rowPointerEnabled>
 </root>

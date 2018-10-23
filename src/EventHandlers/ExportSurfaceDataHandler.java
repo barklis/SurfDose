@@ -1,5 +1,6 @@
 package EventHandlers;
 
+import DataModule.DcmData;
 import DataModule.DcmManager;
 import GUI.GUI;
 import application.Preferences;
@@ -8,21 +9,19 @@ import javafx.event.EventHandler;
 
 public class ExportSurfaceDataHandler implements EventHandler<ActionEvent> {
 
-	GUI gui;
-	
-	public ExportSurfaceDataHandler(GUI gui) {
-		this.gui = gui;
-	}
-
 	@Override
 	public void handle(ActionEvent event) {
-		double[][] matrix = gui.getCenterPanel().getDrawingPanel().getMapPanel().getMatrix();
+		double[][] matrix = GUI.instance().getMapPanel().getMatrix();
 		
-		if(matrix != null) {
-			DcmManager.saveDataToFile(gui.getMainWindow(), matrix);
+		if(matrix != null && DcmData.isPlanLoaded()) {
+			DcmManager.saveDataToFile(GUI.instance().getMainWindow(), matrix);
+		}
+		else if(!DcmData.isPlanLoaded()){
+			String message = Preferences.getLabel("missingFiles") + ":\n\nRTPLAN";	
+			GUI.instance().showInformationDialog(Preferences.getLabel("cannotExportData"), message);
 		}
 		else {
-			gui.showInformationDialog(Preferences.getLabel("matrixNotGeneratedTitle"), Preferences.getLabel("matrixNotGeneratedContent"));
+			GUI.instance().showInformationDialog(Preferences.getLabel("cannotExportData"), Preferences.getLabel("matrixNotGeneratedContent"));
 		}
 	}
 

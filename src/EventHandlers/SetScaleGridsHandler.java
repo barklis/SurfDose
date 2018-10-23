@@ -17,11 +17,6 @@ import javafx.stage.Stage;
 public class SetScaleGridsHandler implements EventHandler<ActionEvent> {
 	
 	static Stage scaleGridWindow = null;
-	GUI gui;
-	
-	public SetScaleGridsHandler(GUI gui) {
-		this.gui = gui;
-	}
 	
 	@Override
 	public void handle(ActionEvent event) {
@@ -30,7 +25,7 @@ public class SetScaleGridsHandler implements EventHandler<ActionEvent> {
 		scaleGridWindow = new Stage();
 		scaleGridWindow.setTitle(Preferences.getLabel("scaleGridWindowTitle"));
 		
-		TextField scaleField = new TextField(String.valueOf(gui.getCenterPanel().getScalePanel().getGrids()));
+		TextField scaleField = new TextField(String.valueOf(GUI.instance().getScalePanel().getGrids()));
 		
 		Button okButton = new Button(Preferences.getLabel("okButton"));
 		Button applyButton = new Button(Preferences.getLabel("applyButton"));
@@ -66,7 +61,7 @@ public class SetScaleGridsHandler implements EventHandler<ActionEvent> {
 					if(recievedScale < 0)
 						throw new IndexOutOfBoundsException();
 					
-					gui.getCenterPanel().getScalePanel().setGridsAndReload(recievedScale);
+					GUI.instance().getScalePanel().setGridsAndReload(recievedScale);
 					scaleGridWindow.close();
 					scaleGridWindow = null;
 				} catch(NumberFormatException e) {
@@ -85,7 +80,7 @@ public class SetScaleGridsHandler implements EventHandler<ActionEvent> {
 					if(recievedScale < 0)
 						throw new IndexOutOfBoundsException();
 					
-					gui.getCenterPanel().getScalePanel().setGridsAndReload(recievedScale);
+					GUI.instance().getScalePanel().setGridsAndReload(recievedScale);
 				} catch(NumberFormatException e) {
 					errorLabel.setText(Preferences.getLabel("invalidScale"));
 				} catch(IndexOutOfBoundsException e) {

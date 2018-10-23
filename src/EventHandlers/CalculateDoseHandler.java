@@ -10,16 +10,10 @@ import javafx.event.EventHandler;
 // Allow to calculate dose
 public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 
-	GUI gui;
-	
-	public CalculateDoseHandler(GUI gui) {
-		this.gui = gui;
-	}
-
 	@Override
 	public void handle(ActionEvent event) {
 		if(DcmData.isContourLoaded() && DcmData.isDoseLoaded()) {
-			gui.getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("calculating"));
+			GUI.instance().getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("calculating"));
 			Thread calc = new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -27,7 +21,7 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 						DcmData.calculateDose(i);
 					
 					Platform.runLater(()->{
-						gui.getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("yes"));
+						GUI.instance().getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("yes"));
 					});
 				}
 			});
@@ -40,7 +34,7 @@ public class CalculateDoseHandler implements EventHandler<ActionEvent> {
 			if(!DcmData.isContourLoaded())
 				message += "\nRTSTRUCTUR";
 			
-			gui.showInformationDialog(Preferences.getLabel("cannotCalculateTitle"), message);
+			GUI.instance().showInformationDialog(Preferences.getLabel("cannotCalculateTitle"), message);
 		}
 	}
 

@@ -11,23 +11,17 @@ import javafx.event.EventHandler;
 
 public class OpenRTplanFileHandler implements EventHandler<ActionEvent> {
 	
-	GUI gui;
-	
-	public OpenRTplanFileHandler(GUI gui) {
-		this.gui = gui;
-	}
-	
 	@Override
 	public void handle(ActionEvent event) {
-		File planFile = DcmManager.getDcmFile(gui.getMainWindow(), "RTPLAN");
+		File planFile = DcmManager.getDcmFile(GUI.instance().getMainWindow(), "RTPLAN");
 		if(planFile != null) {
-			gui.getBottomPanel().setPlanFileName("Processing...");
+			GUI.instance().getBottomPanel().setPlanFileName("Processing...");
 			Thread loadData = new Thread(new Runnable() {	
 				@Override
 				public void run() {
 					DcmData.setPlanData(planFile);
 					Platform.runLater(()->{
-						gui.getBottomPanel().setPlanFileName(planFile.getName());
+						GUI.instance().getBottomPanel().setPlanFileName(planFile.getName());
 					});
 				}
 			});
