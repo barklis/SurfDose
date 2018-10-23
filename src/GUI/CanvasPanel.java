@@ -38,11 +38,6 @@ public void drawFrame() {
 		// drawing dose
 		drawDose(gc);
 		
-		// drawing border
-		gc.setStroke(Color.RED);
-		gc.setLineWidth(1);
-		gc.strokeRect(0, 0, DcmData.getNumberOfCols()*pixelSize, DcmData.getNumberOfRows()*pixelSize);
-		
 		// drawing contours
 		if(DcmData.isContourLoaded()) {
 			drawContours(gc);
