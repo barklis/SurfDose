@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.pixelmed.dicom.Attribute;
@@ -220,6 +221,22 @@ public class DcmData {
 	
 	public static DcmFrame getFrame(int index) {
 		return dcmFrames.get(index);
+	}
+	
+	public static DcmFrame getFrameByZ(double zCoord) {
+		return Collections.min(dcmFrames, new Comparator<DcmFrame>() {
+			@Override
+			public int compare(DcmFrame o1, DcmFrame o2) {
+				double d1 = Math.abs(o1.getZ()-zCoord);
+				double d2 = Math.abs(o2.getZ()-zCoord);
+				
+				if(d1 < d2)
+					return -1;
+				else if(d2 > d1)
+					return 1;
+				return 0;
+			}
+		});
 	}
 	
 	public synchronized static boolean setContourData(File dcmFile) {

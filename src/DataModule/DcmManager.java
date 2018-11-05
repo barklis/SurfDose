@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.pixelmed.dicom.AttributeList;
 
+import GUI.GUI;
 import application.Preferences;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -17,16 +18,13 @@ import javafx.stage.Stage;
 // Contains static methods to work witch DICOM files, like loading and saving
 public class DcmManager {
 	
-	private static String lastPath = null;
+	private static String lastPath = System.getProperty("user.home");
 	
 	public static File getDcmFile(Stage stage, String fileType) {
 		FileChooser chooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
 		chooser.getExtensionFilters().add(extFilter);
-		if(lastPath != null)
-			chooser.setInitialDirectory(new File(lastPath));
-		else
-			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		chooser.setInitialDirectory(new File(lastPath));
 		File selectedFile = chooser.showOpenDialog(stage);
 	    if(selectedFile != null) {
 	    	lastPath = selectedFile.getParent();
@@ -64,49 +62,40 @@ public class DcmManager {
 		chooser.setInitialFileName("data");
 		File outputFile = chooser.showSaveDialog(stage);
 		
-	    if(outputFile != null) {
-	    	if (!outputFile.getName().endsWith(".txt")) {
-	    		outputFile.renameTo(new File(outputFile.getName() + ".txt"));
-	    	}
-	    	
-	    	PrintWriter writer = null;
-			try {
-				writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
-			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return false;
-			}
-			
-			// grid size - (row col)
-			writer.println(Preferences.getPixelsInRow() + " " + Preferences.getPixelsInCol());
-			
-			int currentId = DcmData.getCurrentContourId();
-			int startingFrame = getStartingFrame(currentId);
-			int endingFrame = getEndingFrame(currentId);
-			
-			// Z coord of contour - (min max)
-			writer.println(DcmData.getFrame(startingFrame).getZ() + " " + DcmData.getFrame(endingFrame).getZ());
-			
-			// relative enters of contour - [X:Y]
-			double isoX = DcmData.getIsocenterPosition()[0];
-			double isoY = DcmData.getIsocenterPosition()[1];
-			for(int i = startingFrame; i <= endingFrame; ++i){
-				Contour c = DcmData.getFrame(i).getContourById(currentId);
-				writer.print("[" + (c.getCenterX() - isoX) + ":" + (c.getCenterY() - isoY) + "]");
-			}
-			writer.println();
-			
-			// data
-	    	for(int r = 0; r < matrix[0].length; r++) {
-	    		for(int c = 0; c < matrix.length; c++)
-	    			writer.print(matrix[c][r] + " ");
-	    		writer.println();
-	    	}
-	    	
-	    	writer.close();
-	    	return true;
+	    if(outputFile == null) {
+	    	return false;
 	    }
-	    return false;
+	    
+    	if (!outputFile.getName().endsWith(".txt")) {
+    		outputFile.renameTo(new File(outputFile.getName() + ".txt"));
+    	}
+    	
+    	PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		// grid size - (row col)
+		writer.println(Preferences.getPixelsInRow() + " " + Preferences.getPixelsInCol());
+		double angle = getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1]);
+		writer.println(toDegrees(angle) + " " + toDegrees(DcmData.getAngularWidth()));
+		
+		// data
+    	for(int r = 0; r < matrix[0].length; r++) {
+    		for(int c = 0; c < matrix.length; c++)
+    			writer.print(matrix[c][r] + " ");
+    		writer.println();
+    	}
+    	
+    	writer.close();
+    	return true;
+	}
+	
+	public static double toDegrees(double radians) {
+		return 180.0/Math.PI*radians;
 	}
 	
 	public static int getStartingFrame(int id) {
@@ -127,6 +116,53 @@ public class DcmManager {
 					return f;
 		}
 		return 0;
+	}
+	
+	public static boolean saveContourCenter() {
+		FileChooser chooser = new FileChooser();
+		chooser.setInitialDirectory(new File(lastPath));
+		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(Preferences.getLabel("textFile") + " (*.txt)", "*.txt"));
+		chooser.setInitialFileName("contour_center");
+		File outputFile = chooser.showSaveDialog(GUI.instance().getMainWindow());
+		
+	    if(outputFile == null) {
+	    	return false;
+	    }
+	    
+    	if (!outputFile.getName().endsWith(".txt")) {
+    		outputFile.renameTo(new File(outputFile.getName() + ".txt"));
+    	}
+    	
+    	PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		int currentId = DcmData.getCurrentContourId();
+		int startingFrame = getStartingFrame(currentId);
+		int endingFrame = getEndingFrame(currentId);
+    	
+		// Z coord of contour - (min max)
+			writer.println(DcmData.getFrame(startingFrame).getZ() + ";" + DcmData.getFrame(endingFrame).getZ());
+			
+			// relative centers of contours - [X:Y]
+			double isoX = DcmData.getIsocenterPosition()[0];
+			double isoY = DcmData.getIsocenterPosition()[1];
+			
+			for(int i = startingFrame; i <= endingFrame; ++i){
+				DcmFrame frame = DcmData.getFrame(i);
+				Contour c = frame.getContourById(currentId);
+				writer.print((c.getCenterX() - isoX) + ":" + (c.getCenterY() - isoY));
+				if(i != endingFrame)
+					writer.print(";");
+			}
+			
+			writer.println();
+		
+    	return true;
 	}
 	
 	public static boolean saveRecievedDoseData(Stage stage, List<DcmFrame> list) {
