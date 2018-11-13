@@ -20,9 +20,9 @@ public class DcmManager {
 	
 	private static String lastPath = System.getProperty("user.home");
 	
-	public static File getDcmFile(Stage stage, String fileType) {
+	public static File getDcmFile(Stage stage, String fileType, String extension) {
 		FileChooser chooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*." + extension + ")", "*." + extension);
 		chooser.getExtensionFilters().add(extFilter);
 		chooser.setInitialDirectory(new File(lastPath));
 		File selectedFile = chooser.showOpenDialog(stage);
@@ -33,9 +33,9 @@ public class DcmManager {
 	    return null;
 	}
 	
-	public static List<File> getDcmFiles(Stage stage, String fileType) {
+	public static List<File> getDcmFiles(Stage stage, String fileType, String extension) {
 		FileChooser chooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*.dcm)", "*.dcm");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(fileType + " files (*." + extension + ")", "*." + extension);
 		chooser.getExtensionFilters().add(extFilter);
 		if(lastPath != null)
 			chooser.setInitialDirectory(new File(lastPath));
@@ -140,28 +140,24 @@ public class DcmManager {
 			e.printStackTrace();
 			return false;
 		}
-		
 		int currentId = DcmData.getCurrentContourId();
 		int startingFrame = getStartingFrame(currentId);
 		int endingFrame = getEndingFrame(currentId);
-    	
-		// Z coord of contour - (min max)
-			writer.println(DcmData.getFrame(startingFrame).getZ() + ";" + DcmData.getFrame(endingFrame).getZ());
 			
-			// relative centers of contours - [X:Y]
-			double isoX = DcmData.getIsocenterPosition()[0];
-			double isoY = DcmData.getIsocenterPosition()[1];
-			
-			for(int i = startingFrame; i <= endingFrame; ++i){
-				DcmFrame frame = DcmData.getFrame(i);
-				Contour c = frame.getContourById(currentId);
-				writer.print((c.getCenterX() - isoX) + ":" + (c.getCenterY() - isoY));
-				if(i != endingFrame)
-					writer.print(";");
-			}
-			
-			writer.println();
+		// relative centers of contours - [X:Y]
+		double isoX = DcmData.getIsocenterPosition()[0];
+		double isoY = DcmData.getIsocenterPosition()[1];
+		double isoZ = DcmData.getIsocenterPosition()[2];
 		
+		// Z coord of contour - (min max)
+		writer.println((DcmData.getFrame(startingFrame).getZ() - isoZ) + " " + (DcmData.getFrame(endingFrame).getZ() - isoZ));
+		
+		for(int i = startingFrame; i <= endingFrame; ++i){
+			DcmFrame frame = DcmData.getFrame(i);
+			Contour c = frame.getContourById(currentId);
+			writer.println((c.getCenterX() - isoX) + " " + (c.getCenterY() - isoY));
+		}
+		writer.close();
     	return true;
 	}
 	

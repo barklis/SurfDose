@@ -13,7 +13,7 @@ public class OpenRTplanFileHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		File planFile = DcmManager.getDcmFile(GUI.instance().getMainWindow(), "RTPLAN");
+		File planFile = DcmManager.getDcmFile(GUI.instance().getMainWindow(), "RTPLAN", "dcm");
 		if(planFile != null) {
 			GUI.instance().getBottomPanel().setPlanFileName("Processing...");
 			Thread loadData = new Thread(new Runnable() {	

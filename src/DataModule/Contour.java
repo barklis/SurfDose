@@ -85,4 +85,12 @@ public class Contour {
 		this.maxValue = maxValue;
 	}
 	
+	public void setCenterX(double cx) {
+		centerX = cx;
+	}
+	
+	public void setCenterY(double cy) {
+		centerY = cy;
+	}
+	
 }

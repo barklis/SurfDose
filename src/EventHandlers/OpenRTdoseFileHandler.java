@@ -15,7 +15,7 @@ public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
 	
 	@Override
 	public void handle(ActionEvent event) {
-		List<File> doseFiles = DcmManager.getDcmFiles(GUI.instance().getMainWindow(), "RTDOSE");
+		List<File> doseFiles = DcmManager.getDcmFiles(GUI.instance().getMainWindow(), "RTDOSE", "dcm");
 		if(doseFiles != null) {
 			GUI.instance().getBottomPanel().setDoseFilesLoadedLabel(DcmData.getDoseFilesLoaded()+" + ...");
 			Thread loadData = new Thread(new Runnable() {

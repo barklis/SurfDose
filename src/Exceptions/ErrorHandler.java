@@ -1,5 +1,6 @@
 package Exceptions;
 
+import application.Preferences;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -38,7 +39,7 @@ public class ErrorHandler extends Exception{
 		
 		Scene scene = new Scene(root, 250, 120);
 		stage.setScene(scene);
-		stage.setTitle("Error");
+		stage.setTitle(Preferences.getLabel("error"));
 		stage.show();
 	}
 	

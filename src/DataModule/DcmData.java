@@ -15,6 +15,7 @@ import com.pixelmed.dicom.SequenceAttribute;
 import Exceptions.ErrorHandler;
 import Exceptions.MissingTagException;
 import Exceptions.NotEnoughContoursException;
+import application.ContourCenterContainer;
 import application.Preferences;
 import javafx.application.Platform;
 
@@ -58,13 +59,11 @@ public class DcmData {
 		if(!doseLoaded || !contourLoaded)
 			return;
 		
-		dcmFrames.get(frameIndex).sumDose();
+		getFrame(frameIndex).sumDose();
 		
-		for(Contour contour : dcmFrames.get(frameIndex).getContours()) {
-			//contour.calculateCenter();
+		for(Contour contour : getFrame(frameIndex).getContours()) {
 			for(Point point : contour.getData()) {	
-				point.setValue(dcmFrames.get(frameIndex).getInterpolatedDose( point.getX(), point.getY() ));
-				//point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
+				point.setValue( getFrame(frameIndex).getInterpolatedDose(point.getX(), point.getY()) );
 				if(contour.getMaxValue() < point.getValue())
 					contour.setMaxValue(point.getValue());
 			}
@@ -217,6 +216,35 @@ public class DcmData {
 		signed ^= (1<<15);
 		long u = signed;
 		return (u ^ (1<<15));
+	}
+	
+	public static void setContourCenterData(ContourCenterContainer centerData) {
+		int startFrameIndex =getFrameByZ(centerData.getStartZ()).getFrameNumber();
+		int dataLength = centerData.getDataLength();
+		int currentId = getCurrentContourId();
+		int localStartFrameIndex = DcmManager.getStartingFrame(currentId);
+		int localEndFrameIndex = DcmManager.getEndingFrame(currentId);
+		
+		int diff = localStartFrameIndex - startFrameIndex;
+		
+		for(int i = localStartFrameIndex; i <= localEndFrameIndex; ++i) {
+			Contour c = DcmData.getFrame(i).getContourById(currentId);
+			if(i <= startFrameIndex) {
+				c.setCenterX(centerData.getInitialX());
+				c.setCenterY(centerData.getInitialY());
+			}
+			else if(i >= startFrameIndex + dataLength-1) {
+				c.setCenterX(centerData.getEndingX());
+				c.setCenterY(centerData.getEndingY());
+			}
+			else {
+				c.setCenterX(centerData.getX(i + diff - localStartFrameIndex));
+				c.setCenterY(centerData.getY(i + diff - localStartFrameIndex));
+			}
+			for(Point point : c.getData())
+				point.calculateAngle(uVector, c.getCenterX(), c.getCenterY());
+		}
+		
 	}
 	
 	public static DcmFrame getFrame(int index) {
