@@ -8,6 +8,8 @@
 			<openRTdoseFile>Load RTDOSE files</openRTdoseFile>
 			<openRTplanFile>Load RTPLAN file</openRTplanFile>
 			<exportSurfaceData>Export surface data</exportSurfaceData>
+			<exportContourCenterData>Export centers of contour</exportContourCenterData>
+			<importContourCenterData>Import centers of contour</importContourCenterData>
 			<exit>Exit</exit>
 		</fileMenu>
 		<editMenu>
@@ -46,6 +48,7 @@
 		<structurFile>RTSTRUCTUR file</structurFile>
 	</bottomPanel>
 	<dialogs>
+		<error>Error</error>
 		<colorChooserTitle>Choose line color</colorChooserTitle>
 		<languageConformationTitle>Change language</languageConformationTitle>
 		<languageConformationContent>To see the changes, interface must be reloaded. Do you wanna do it now?</languageConformationContent>
@@ -59,9 +62,12 @@
 		<resetDataContent>Are you sure?</resetDataContent>
 		<notEnoughContours>There is not enough contours in RTSTRUCTUR file to calculate distance between frames</notEnoughContours>
 		<cannotExportData>Cannot export data</cannotExportData>
+		<cannotImportData>Cannot import data</cannotImportData>
 		<matrixNotGeneratedContent>Surface data has not yet been generated. You can do it in program menu.</matrixNotGeneratedContent>
 		<missingTag>Missing tag in</missingTag>
 		<textFile>Text file</textFile>
+		<openFileError>Can't open selected file.</openFileError>
+		<InvalidFile>Invalid file.</InvalidFile>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Contour settings</contourSettingsWindowTitle>

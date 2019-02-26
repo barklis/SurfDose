@@ -4,8 +4,10 @@ import EventHandlers.CalculateDoseHandler;
 import EventHandlers.ChangeLanguageHandler;
 import EventHandlers.ContourSettingsHandler;
 import EventHandlers.ExitProgramHandler;
+import EventHandlers.ExportCentersOfContoursHandler;
 import EventHandlers.ExportSurfaceDataHandler;
 import EventHandlers.MapSettingsHandler;
+import EventHandlers.OpenCenterCoordsFile;
 import EventHandlers.OpenRTdoseFileHandler;
 import EventHandlers.OpenRTplanFileHandler;
 import EventHandlers.OpenRTstucturFileHandler;
@@ -48,10 +50,17 @@ public class MenuBarClass extends MenuBar {
 				openRTplanFileItem.setOnAction(new OpenRTplanFileHandler());
 			MenuItem exportSurfaceDataItem = new MenuItem(Preferences.getLabel("exportSurfaceData"));
 				exportSurfaceDataItem.setOnAction(new ExportSurfaceDataHandler());
+			MenuItem exportContourCentersItem = new MenuItem(Preferences.getLabel("exportContourCenterData"));
+				exportContourCentersItem.setOnAction(new ExportCentersOfContoursHandler());
+			MenuItem importContourCentersItem = new MenuItem(Preferences.getLabel("importContourCenterData"));
+				importContourCentersItem.setOnAction(new OpenCenterCoordsFile());
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
 				
-			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exportSurfaceDataItem, new SeparatorMenuItem(), exitItem);
+			fileMenu.getItems().addAll(
+				openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(),
+				exportSurfaceDataItem, exportContourCentersItem, importContourCentersItem, new SeparatorMenuItem(), exitItem
+			);
 		
 		editMenu = new Menu(Preferences.getLabel("programMenu"));
 			showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
@@ -89,8 +98,10 @@ public class MenuBarClass extends MenuBar {
 					englishLanguageItem.setOnAction(new ChangeLanguageHandler("English"));
 				languageMenu.getItems().addAll(polishLanguageItem, englishLanguageItem);
 				
-				optionsMenu.getItems().addAll(contourSettingsItem, mapSettingsItem, PlanDataSettingsItem, setCurrentContour,
-						setVectorDirectionItem, setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu);
+				optionsMenu.getItems().addAll(
+					contourSettingsItem, mapSettingsItem, PlanDataSettingsItem, setCurrentContour, setVectorDirectionItem,
+					setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu
+				);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
