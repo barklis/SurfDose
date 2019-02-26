@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.pixelmed.dicom.Attribute;
@@ -14,6 +15,7 @@ import com.pixelmed.dicom.SequenceAttribute;
 import Exceptions.ErrorHandler;
 import Exceptions.MissingTagException;
 import Exceptions.NotEnoughContoursException;
+import application.ContourCenterContainer;
 import application.Preferences;
 import javafx.application.Platform;
 
@@ -57,13 +59,11 @@ public class DcmData {
 		if(!doseLoaded || !contourLoaded)
 			return;
 		
-		dcmFrames.get(frameIndex).sumDose();
+		getFrame(frameIndex).sumDose();
 		
-		for(Contour contour : dcmFrames.get(frameIndex).getContours()) {
-			//contour.calculateCenter();
+		for(Contour contour : getFrame(frameIndex).getContours()) {
 			for(Point point : contour.getData()) {	
-				point.setValue(dcmFrames.get(frameIndex).getInterpolatedDose( point.getX(), point.getY() ));
-				//point.calculateAngle(uVector, contour.getCenterX(), contour.getCenterY());
+				point.setValue( getFrame(frameIndex).getInterpolatedDose(point.getX(), point.getY()) );
 				if(contour.getMaxValue() < point.getValue())
 					contour.setMaxValue(point.getValue());
 			}
@@ -218,8 +218,53 @@ public class DcmData {
 		return (u ^ (1<<15));
 	}
 	
+	public static void setContourCenterData(ContourCenterContainer centerData) {
+		int startFrameIndex =getFrameByZ(centerData.getStartZ()).getFrameNumber();
+		int dataLength = centerData.getDataLength();
+		int currentId = getCurrentContourId();
+		int localStartFrameIndex = DcmManager.getStartingFrame(currentId);
+		int localEndFrameIndex = DcmManager.getEndingFrame(currentId);
+		
+		int diff = localStartFrameIndex - startFrameIndex;
+		
+		for(int i = localStartFrameIndex; i <= localEndFrameIndex; ++i) {
+			Contour c = DcmData.getFrame(i).getContourById(currentId);
+			if(i <= startFrameIndex) {
+				c.setCenterX(centerData.getInitialX());
+				c.setCenterY(centerData.getInitialY());
+			}
+			else if(i >= startFrameIndex + dataLength-1) {
+				c.setCenterX(centerData.getEndingX());
+				c.setCenterY(centerData.getEndingY());
+			}
+			else {
+				c.setCenterX(centerData.getX(i + diff - localStartFrameIndex));
+				c.setCenterY(centerData.getY(i + diff - localStartFrameIndex));
+			}
+			for(Point point : c.getData())
+				point.calculateAngle(uVector, c.getCenterX(), c.getCenterY());
+		}
+		
+	}
+	
 	public static DcmFrame getFrame(int index) {
 		return dcmFrames.get(index);
+	}
+	
+	public static DcmFrame getFrameByZ(double zCoord) {
+		return Collections.min(dcmFrames, new Comparator<DcmFrame>() {
+			@Override
+			public int compare(DcmFrame o1, DcmFrame o2) {
+				double d1 = Math.abs(o1.getZ()-zCoord);
+				double d2 = Math.abs(o2.getZ()-zCoord);
+				
+				if(d1 < d2)
+					return -1;
+				else if(d2 > d1)
+					return 1;
+				return 0;
+			}
+		});
 	}
 	
 	public synchronized static boolean setContourData(File dcmFile) {

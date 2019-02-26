@@ -8,6 +8,8 @@
 			<openRTdoseFile>Załaduj pliki RTDOSE</openRTdoseFile>
 			<openRTplanFile>Załaduj plik RTPLAN</openRTplanFile>
 			<exportSurfaceData>Eksport danych na powierzchni</exportSurfaceData>
+			<exportContourCenterData>Eksport środków konturu</exportContourCenterData>
+			<importContourCenterData>Import środków konturu</importContourCenterData>
 			<exit>Wyjście</exit>
 		</fileMenu>
 		<editMenu>
@@ -46,6 +48,7 @@
 		<structurFile>Plik RTSTRUCTUR</structurFile>
 	</bottomPanel>
 	<dialogs>
+		<error>Błąd</error>
 		<colorChooserTitle>Wybierz kolor lini</colorChooserTitle>
 		<languageConformationTitle>Zmiana języka</languageConformationTitle>
 		<languageConformationContent>By zobaczyć zmiany interfejs musi się ponownie załadować. Zrobić to teraz?</languageConformationContent>
@@ -59,9 +62,12 @@
 		<resetDataContent>Czy na pewno?</resetDataContent>
 		<notEnoughContours>W pliku RTSTRUCTUR nie ma wystarczająco konturów by obliczyć odległość między skanami</notEnoughContours>
 		<cannotExportData>Nie można wyeksportować danych</cannotExportData>
+		<cannotImportData>Nie można zaimportować danych</cannotImportData>
 		<matrixNotGeneratedContent>Dane powierzchni nie zostały do tej pory wygenerowane. Możesz to zrobić w menu programu.</matrixNotGeneratedContent>
 		<missingTag>Brakujący tag w</missingTag>
 		<textFile>Plik tekstowy</textFile>
+		<openFileError>Nie można otworzyć wybranego pliku.</openFileError>
+		<InvalidFile>Nieprawidłowy plik.</InvalidFile>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Ustawienia konturów</contourSettingsWindowTitle>
