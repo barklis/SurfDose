@@ -1,0 +1,32 @@
+h1, h2, h3, h4, h5, h6, p{
+	margin: 5px;
+}
+
+#tresc ul{
+	margin-top: 2px;
+}
+
+#main_title{
+	text-align: center;
+}
+
+#spis_tresci{
+	font-size: 1.2em;
+}
+
+#tresc{
+	font-size: 1.0em;
+}
+
+.punkt{
+	margin-top: 30px;
+}
+
+.podpunkt{
+	margin-bottom: 30px;
+	padding-left: 50px;
+}
+
+#bottom_space{
+	line-height: 300px;
+}

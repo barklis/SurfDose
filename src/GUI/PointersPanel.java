@@ -58,7 +58,7 @@ public class PointersPanel extends Canvas {
 	public double[] getZPos() {
 		double startZ = DcmData.getDcmFrames().get(startingFrame).getZ();
 		double endZ = DcmData.getDcmFrames().get(endingFrame).getZ();
-		return new double[] {startZ, (endZ - startZ)*(rowCounter-0.5)/pixelsInCol + startZ, endZ};
+		return new double[] {startZ, (endZ - startZ)*((pixelsInCol+1-rowCounter)-0.5)/pixelsInCol + startZ, endZ};
 	}
 
 	public void eraseLines() {

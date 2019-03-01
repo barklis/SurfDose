@@ -6,6 +6,7 @@ import java.util.List;
 import DataModule.DcmData;
 import DataModule.DcmManager;
 import GUI.GUI;
+import application.Preferences;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,11 +22,15 @@ public class OpenRTdoseFileHandler implements EventHandler<ActionEvent> {
 			Thread loadData = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					for(File file : doseFiles)
+					for(File file : doseFiles) {
 						DcmData.setDoseData(file);
+					}
+					DcmData.setDoseCalculated(false);
+					
 					Platform.runLater(() -> {
 						GUI.instance().getBottomPanel().setDoseFilesLoadedLabel(String.valueOf(DcmData.getDoseFilesLoaded()));
 						GUI.instance().getBottomPanel().setMaxFrameNumberLabel(DcmData.getNumberOfFrames());
+						GUI.instance().getBottomPanel().setDoseCalculatedLabel(Preferences.getLabel("no"));
 						GUI.instance().getScalePanel().setMaxDoseAndReload(DcmData.getMaxSumDoseValue());
 						GUI.instance().getDrawingPanel().redraw();
 					});
