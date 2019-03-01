@@ -1,107 +1,235 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>DICOMAnalyzer</title>
-        <style type="text/css"><!--
-   body
-   {
-     font-family:  Verdana, Sans-serif, Arial, 'Trebuchet MS', 'Times New Roman';
-     font-size: small;
-   }
-   h2.title
-   {
-     font-family: Verdana, Sans-serif, Arial, 'Trebuchet MS', 'Times New Roman';
-     margin: 5px 0 0;
-     padding: 1px 5px 1px;
-     border: 1px solid #6b89d4;
-     -moz-border-radius: 0.3em;
-     background: #e6edff;
-   }
-   .titlepage
-   {
-     text-align: center;
-   }
-   .refsynopsisdiv, .refsect1, .refsect2, .refsect3
-   {
-     text-align: left;
-   }
-   .warning
-   {
-     padding: 5px;
-     border: 1px solid #ff0011;
-     -moz-border-radius: 0.3em;
-     background: #ffbbbb;
-   }
-   .warning .title { margin: 0px 0px 5px 0px; }
-   .warning p { margin: 1px; }
-   .note
-   {
-     padding: 1px 5px 1px;
-     border: 1px solid #84c43b;
-     -moz-border-radius: 0.3em;
-     background: #d7e9a7;
-   }
-   .note .title { margin: 0px 0px 5px 0px; }
-   .note p { margin: 1px; }
-   .cmdsynopsis
-   {
-     font-family: monospace;
-   }
-   .refsynopsisdiv        > .cmdsynopsis p, .refsect1        > .cmdsynopsis p,
-   .refsynopsisdiv .sect2 > .cmdsynopsis p, .refsect1 .sect2 > .cmdsynopsis p
-   {
-     margin-top: 0px;
-     margin-bottom: 0px;
-   }
-   .cmdsynopsis p
-   {
-     padding-left: 3.4em;
-     text-indent: -2.2em;
-   }
-   p.nextcommand
-   {
-     margin-top:    0px;
-     margin-bottom: 0px;
-   }
-   p.lastcommand
-   {
-     margin-top:    0px;
-   }
-   .refentry * h3
-   {
-     font-size: large;
-   }
-   .refentry * h4
-   {
-     font-size: larger;
-   }
-   .refentry * h5
-   {
-     font-size: larger;
-   }
-
-  --></style>
-    </head>
-    <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-    <div class="book" lang="pl">
-        <div class="titlepage"><div><div><h1 class="title"><a name="idm1"></a>DICOMAnalyzer</h1></div><div><h2 class="subtitle">Dokumentacja Użytkownika</h2></div><div><h3 class="corpauthor">Łukasz Bożek, Bartłomiej Kliś - Politechnika Warszawska 2018 r.</h3></div></div><hr></div>
-    </div>
-    <div class="toc">
-        <p><b>Spis Treści:</b></p>
-        <dl><dt><span class="chapter"><a href="ch1.html">1. Korzystanie z programu</a></span></dt>
-        <dd><dl><dt><span class="sect1"><a href="ch1.html#uruchamianie">1.1. Uruchamianie programu</a></span></dt>
-        <dt><span class="sect1"><a href="ch1.html#wczytywanie">1.2. Wczytywanie plików DICOM</a></span></dt>
-        <dt><span class="sect1"><a href="ch1.html#wyswietlanie">1.3. Wyświetlanie informacji z plików</a></span></dt>
-        <dt><span class="sect1"><a href="ch1.html#preferencje">1.4. Preferencje</a></span></dt></dl></dd>
-        <dt><span class="chapter"><a href="ch2.html">2. FAQ</a></span></dt>
-        <!-- <dd><dl><dt><span class="sect1"><a href="ch2.html">2.2. Wczytywanie</a></span></dt>
-        <dt><span class="sect1"><a href="ch2.html">2.3. Funkcje programu</a></span></dt></dl></dd> -->
-        <dt><span class="chapter"><a href="ch3.html">3. Informacje rozwojowe</a></span></dt>
-        <dd><dl><dt><span class="sect1"><a href="ch3.html#jezyki">3.1. Języki</a></span></dt>
-        <dt><span class="sect1"><a href="ch3.html#open">3.2. Open source</a></span></dt>
-        <dt><span class="sect1"><a href="ch3.html#wsparcie">3.3. Wsparcie</a></span></dt></dl></dd>
-    </div>
-    
-
-    </body>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<title>Manual</title>
+	</head>
+	<body>
+		<div id="main_title">
+			<h1>Dokumentacja programu</h1>
+		</div>
+		
+		<div id="spis_tresci">
+			<ul>
+				<li><a href="#p1.0">1.0 O programie</a></li>
+				
+				<li><a href="#p2.0">2.0 Interfejs</a></li>
+				<ul>
+					<li><a href="#p2.1">2.1 Pasek menu</a></li>
+						<ul>
+							<li><a href="#p2.1.0">2.1.0 Plik</a></li>
+							<li><a href="#p2.1.1">2.1.1 Program</a></li>
+							<li><a href="#p2.1.2">2.1.2 Opcje</a></li>
+							<li><a href="#p2.1.3">2.1.3 Pomoc</a></li>
+						</ul>
+					<li><a href="#p2.2">2.2 Dolny panel</a></li>
+						<ul>
+							<li><a href="#p2.2.0">2.2.0 Lewa część</a></li>
+							<li><a href="#p2.2.1">2.2.1 Środkowa część</a></li>
+							<li><a href="#p2.2.2">2.2.2 Prawa część</a></li>
+						</ul>
+					<li><a href="#p2.3">2.3 Skala dawki</a></li>
+				</ul>
+				
+				<li><a href="#p3.0">3.0 Widok przekroju</a></li>
+				<ul>
+					<li><a href="#p3.1">3.1 Opis</a></li>
+					<li><a href="#p3.2">3.2 Obliczanie dawki</a></li>
+					<li><a href="#p3.3">3.3 Nawigacja</a></li>
+					<li><a href="#p3.4">3.4 Kontury</a></li>
+					<li><a href="#p3.5">3.5 Osie wiązek</a></li>
+					<li><a href="#p3.6">3.6 Izocentrum</a></li>
+					<li><a href="#p3.7">3.7 Wektory rozcięcia</a></li>
+					<li><a href="#p3.8">3.8 Środek konturu</a></li>
+					<li><a href="#p3.9">3.9 Eksport i import środka konturu</a></li>
+				</ul>
+				
+				<li><a href="#p4.0">4.0 Widok histogramu</a></li>
+				<ul>
+					<li><a href="#p4.1">4.1 Opis</a></li>
+				</ul>
+				
+				<li><a href="#p5.0">5.0 Widok powierzchni</a></li>
+				<ul>
+					<li><a href="#p5.1">5.1 Opis</a></li>
+					<li><a href="#p5.2">5.2 Obliczanie dawki</a></li>
+					<li><a href="#p5.3">5.3 Rozdzielczość powierzchni</a></li>
+					<li><a href="#p5.4">5.4 Marker współrzędnej Z</a></li>
+					<li><a href="#p5.5">5.5 Eksport danych z powierzchni</a></li>
+				</ul>
+				
+				<!--
+				<li><a href="#p6.0">6.0 Y</a></li>
+				<ul>
+					<li><a href="#p6.1">6.1 X</a></li>
+					<li><a href="#p6.2">6.2 X</a></li>
+				</ul>
+				-->
+				
+			</ul>
+		</div>
+		
+		<div id="tresc">
+		
+			<div id="p1.0" class="punkt">
+				<h2>1.0 O programie</h2>
+				<p>Program ma za zadanie zwizualizować rozkład dawki na powierzchnach narządów. Został napisany w technologii JavaFX.</p>
+			</div>
+			
+			<div id="p2.0" class="punkt">
+				<h2>2.0 Interfejs</h2>
+				<div id="p2.1" class="podpunkt">
+					<h3>2.1 Pasek menu</h3>
+					<div id="p2.1.0" class="podpunkt">
+						<h4>2.1.0 Plik</h4>
+						<p><ul>
+							<li>Załaduj RTSTRUCTUR - otwiera okno eksploratora plików, skad należy wybrać pojedynczy plik RTSTRUCTUR</li>
+							<li>Załaduj RTDOSE - otwiera okno eksploratora plików, skad należy wybrać jeden lub wiele plików RTDOSE. Kolejne pliki można w każdej chwili doładować, lecz nalezy potem kolejny raz kliknąć "oblicz dawkę"</li>
+							<li>Załaduj RTPLAN - otwiera okno eksploratora plików, skad należy wybrać pojedynczy plik RTPLAN</li>
+							<li>Eksport danych na powierzchni - otwiera okno eksploratora plików, gdzie należy wybrać lokalizację, nazwę i rozszerzenie eksportowanego pliku (np .txt). Zobacz: <a href="#p5.5">punkt 5.5</a></li>
+							<li>Eksport/import środków konturu - otwiera eksplorator plików skąd należy wybrać plik do zaimportowania lub zdefiniować plik eksportowany. Zobacz: <a href="#p3.9">Punkt 3.9</a></li>
+						</ul></p>
+					</div>
+					<div id="p2.1.1" class="podpunkt">
+						<h4>2.1.1 Program</h4>
+						<p><ul>
+							<li>Załadowane dane - otwiera <a href="#p3.0">widok przekroju</a></li>
+							<li>Histogram - otwiera <a href="#p4.0">widok histogramu aktywnego konturu</a></li>
+							<li>Powierzchnia - otwiera <a href="#p5.0">widok powierzchni aktywnego konturu</a></li>
+							<li>Oblicz dawkę - program oblicza dawkę, którą można zobaczyć w widoku histogramu i powierzchni. Konieczne po każdym doładowaniu plików</li>
+						</ul></p>
+					</div>
+					<div id="p2.1.2" class="podpunkt">
+						<h4>2.1.2 Opcje</h4>
+						<p><ul>
+							<li>Ustawienia konturu - pozwala zmienić kolor i grubość konturów widocznych w widoku przekroju</li>
+							<li>Ustawienia powierzchni - pozwala wybrać rozdzielczosć widoku powierzchni, widoczność wskażnika osi Z i promień interpolacji. W przypadku promienia interpolacji nie definiujemy jego bezpośredniej wartości tylko mnożnik. Wartość promienia wynosi: [mnożnik] * [odległość miedzy skanami].</li>
+							<li>Ustawienia danych z RTPLAN - widoczność osi wiązek i izocentrum w widoku przekroju</li>
+							<li>Wybór konturu - pozwala wybrać aktywny kontur, czyli taki którego dotyczy widok powierzchni i histogramu</li>
+							<li>Kierunek wektora - określa kierunek wektora rozcięcia konturu i rozpętość kątową rozcięcia. Zobacz: <a href="#p3.7">Punkt 3.7</a></li>
+							<li>Rozdzielczość skali dawki - pozwala zmienić ilosć "bloczków" z których składa się skala dawki</li>
+							<li>Zresetuj załadowane dane - czyści wszystkie dane załadowane do tej pory z plików</li>
+							<li>Język - wybór języka programu. Powoduje ponowne załadowane okna programu nie naruszając załadowanych danych.</li>
+						</ul></p>
+					</div>
+					<div id="p2.1.3" class="podpunkt">
+						<h4>2.1.3 Pomoc</h4>
+						<p>Link do lokalnego pliku html z dokumentacją.</p>
+					</div>
+				</div>
+				<div id="p2.2" class="podpunkt">
+					<h3>2.2 Dolny panel</h3>
+					<div id="p2.2.0" class="podpunkt">
+						<h4>2.2.0 Lewa część</h4>
+						<p>Znajduje sie tu indykator tego czy dawka jest obliczona. Po doładowaniiu kolejnego pliku dawki, zmieni on wartość na "nie". Poniżej znajduje sie liczba załadowanych plików dawki. Pojawienie się znaku " + ..." oznacza ładowanie się pliku dawki.</p>
+					</div>
+					<div id="p2.2.1" class="podpunkt">
+						<h4>2.2.1 Środkowa część</h4>
+						<p>Znajduje się tu wskaźnik aktualnego numeru skanu i jego współrzędna Z. W widoku powierzchni podana jest tylko rozciągłosć narządu wzdłóż osi Z i współrzędna wskaźnika jeśli jest włączony.
+					</div>
+					<div id="p2.2.2" class="podpunkt">
+						<h4>2.2.2 Prawa część</h4>
+						<p>Znajdują się tu nazwy załadowanych plików RTSTRUCTUR i RTPLAN. Gdy nie jest on załadowany widnieje w tym miejscu znak "-".</p>
+					</div>
+				</div>
+				<div id="p2.3" class="podpunkt">
+					<h3>2.3 Skala dawki</h3>
+					<p>Znajduje się tu skala dawki wyrażonej w grejach. Jej rozdzielczosć mozna zmienić w opcjach.</p>
+				</div>
+			</div>
+			
+			<div id="p3.0" class="punkt">
+				<h2>3.0 Widok przekroju</h2>
+				<div id="p3.1" class="podpunkt">
+					<h3>3.1 Opis</h3>
+					<p>Widok ten przedstawia płaszczyznę pojednczego skanu. Odległość Z pomiędzy kolejnymi skanami jest zdefiniowana w pliku RTSTRUCTUR. Jeśli jest ona mniejsza niż rozmiar woksela dawki, może się zdarzyć że dwa skany będą leżeć w tym samym wokselu, a więc rozkład dawki będzie jednakowy dla obu skanów.</p>
+				</div>
+				<div id="p3.2" class="podpunkt">
+					<h3>3.2 Obliczanie dawki</h3>
+					<p>Dawka jest obliczana w kazdym punkcie każdego konturu. W zależności w której części, warstwy macierzy dawki, leży dany punkt, interpolacja odpywa się od różnej liczby sąsiednich wokseli:
+					<ul>
+					<li>Punkt leży pomiędzy 4 środkami wokseli - interpolacja liniowa od 4 środków wokseli.</li>
+					<li>Punkt leży na krawędzi macierzy dawki, tak że ma 2 sąsiednie środki wokseli - nterpolacja liniowa od 2 środków wokseli.</li>
+					<li>Punkt leży w rogu macierzy dawki, tak że sąsiaduje tylko z jednym środkiem woksela - brak interpolacji -> przepisanie wartości z danego woksela.</li>
+					</ul></p>
+				</div>
+				<div id="p3.3" class="podpunkt">
+					<h3>3.3 Nawigacja</h3>
+					<p>Skany przewija się kółkiem myszy</p>
+				</div>
+				<div id="p3.4" class="podpunkt">
+					<h3>3.4 Kontury</h3>
+					<p>W przekroju widocze są wszystkie kontury z pliku RTSTRUCTUR. Jesli narząd ma w danym skanie dwa kontury, to widoczny jest tylko jeden z nich. Aktywny kontur może mieć inny kolor i grubość.</p>
+				</div>
+				<div id="p3.5" class="podpunkt">
+					<h3>3.5 Osie wiązek</h3>
+					<p>Widoczne są jako półproste wychodzące z izocentrum. Ich kierunek jest zdefiniowany jako kąt w pliku RTPLAN</p>
+				</div>
+				<div id="p3.6" class="podpunkt">
+					<h3>3.6 Izocentrum</h3>
+					<p>Widoczne jako kropka ktorej promień i kolor mozna zmienić w opcjach</p>
+				</div>
+				<div id="p3.7" class="podpunkt">
+					<h3>3.7 Wektory rozcięcia</h3>
+					<p>Widoczne jako półproste wychodzące ze srodka aktywnego konturu. Wskazują one punkty rozcięcia aktywnego konturu. Kąt mierzymy zgodnie z ruchem wskazówek zegara. Pierwszy wektor wyznacza pierwszy punkt rozcięcia. Drugi wektor wyznacza punkt do którego ten kontur rozcinamy. Jego kierunek ustawia się jako rozpiętość kątową, tzn. jesli pierwszy wektor ma kierunek 90 stopni, a rozpiętość kątowa wynosi 40 stopni, to drugi wektor ma kierunek 150 stopni.</p>
+				</div>
+				<div id="p3.8" class="podpunkt">
+					<h3>3.8 Środek konturu</h3>
+					<p>Widoczny jako kropka wewnątrz aktywnego konturu. Jest obliczany jako średnia arytmetyczna położeń X i Y punktów z których składa się kontur.</p>
+				</div>
+				<div id="p3.9" class="podpunkt">
+					<h3>3.9 Eksport i import środka konturu</h3>
+					<p>Eksportowany jest aktywny kontur. Współrzędne w pliku podane są względem izocentrum. Jego struktura wygląda następująco:
+					<ul>
+						<li>Pierwsza linia: [minimalna współrzędna Z pierwszego wystąpienia konturu] [maksymalna współrzędna Z ostatniego wystąpienia konturu]</li>
+						<li>Kolejne linie: [X środka] [Y środka]</li>
+					</ul>
+					Jeśli importowany plik zawiera mniej danych niż kontur do którego jest on wgrywany, tzn. ma mniejszą rozciągłość pionową, to brakujące dane zostają przyblizone prostą wzdłuż osi Z, zaczynajacą się w zaimportowanym punkcie leżącym najbardziej z brzega (względem Z).
+					</p>
+				</div>
+			</div>
+			
+			<div id="p4.0" class="punkt">
+				<h2>4.0 Widok histogramu</h2>
+				<div id="p4.1" class="podpunkt">
+					<h3>4.1 Opis</h3>
+					<p>Wykres przedstawia rozkład dawki na aktywnym konturze. Na osi X jest położenie kątowe punktu względem kierunku wektora rozcięcia, a dziedzina ma wartość ustawionej rozpiętości kątowej. Na osi Y znajduje się dawka w danym punkcie podana w grejach.</p>
+				</div>
+			</div>
+			
+			<div id="p5.0" class="punkt">
+				<h2>5.0 Widok powierzchni</h2>
+				<div id="p5.1" class="podpunkt">
+					<h3>5.1 Opis</h3>
+					<p>Widok przedstawia powierzchię walca rozcięta zgodnie z kierunkiem wektora rozcięcia. Na osi X jest położenie kątowe względem wektora rozcięcia a jej wartosć maksymalna to rozpiętość kątowa. Na osi pionowej jest przedstawiina współrzędna Z. Jej oś jest skierowana w górę.</p>
+				</div>
+				<div id="p5.2" class="podpunkt">
+					<h3>5.2 Obliczanie dawki</h3>
+					<p>Walec wspomniany w punkcie 5.1 tak na prawdę nie jest walcem, ponieważ jego oś symetrii nie jest prostą, tylko przechodzi przez wszystkie punkty środków aktywnego konturu. Zatem jest to raczej wijąca się rura, lecz nie ciągła, a złożona z pierścieni o stałej wysokości. Liczba pierścieni to liczba pikseli w pionie, zatem wiersze pikseli są wspomianymi rozciętymi pierścieniami.</p>
+					<p>By wyobrazić sobie jak interpolowana jest dawka załóżmy że pierścienia mają taką samą średnicę i jest ona większa od maksymalnej średnicy narządu, tak że znaduje się on wewnątrz stosiku tych pierścieni. Wtedy bierzemy kazdy punkt tego narządu i odbijamy go na powierzchni pierścienia wzdłóż jego promienia(pierścienia). Współrzedna Z punktu i jego odbicia pozostaje taka sama. W ten sposób, po rozcięciu tych pierścieni otrzymujemy prostokąt z zazanczonymi w jego środku punktami. (Przypominam że każdy punkt ma przypisaną wartość obliczonej dawki - patrz: <a href="#p3.2">Punkt 3.2</a>). Następnie iterujemy po wszystkich pikselach z których składa się ten prostokąt. Wybieramy środek danego piksela i zakreślamy wirtualny okrąg, którego promień jest zdefiniowany jako promień interpolacji (<a href="#p2.1.2">punkt 2.1.2</a>). Dawka w danym pikselu jest obliczana jako średnia arytmetyczna dawek z punktów leżących wewnątrz tego okręgu. jeśli mnożnik promienia jest &lt;= 1, to interpolacja nie zachacza o punkty z sąsiedniego skanu. Jeśli &lt;= 2 to interpolacja zachacza tylko o sąsiednie skany, itd. ...</p>
+				</div>
+				<div id="p5.3" class="podpunkt">
+					<h3>5.3 Rozdzielczość powierzchni</h3>
+					<p>Oznacza ona liczbę pikseli w pionie i poziomie. Piksele są kwadratami o jadnakowym rozmiarze, zatem zmiana tej wartości prowadzi do zmiany proporcji obrazu.</p>
+				</div>
+				<div id="p5.4" class="podpunkt">
+					<h3>5.4 Marker współrzędnej Z</h3>
+					<p>Pozwala podejrzeć wpołrzędną Z danego wiersza pikseli. Jest widoczny jako czana pozioma linia, którą przesuwa się kółkiem myszy.</p>
+				</div>
+				<div id="p5.5" class="podpunkt">
+					<h3>5.5 Eksport danych z powierzchni</h3>
+					<p>W eksportowanym pliku znajdują się fizyczne dawki wyrażone w cGy. Struktura pliku:
+					<ul>
+						<li>[liczba rzędow pikseli] [liczba kolumn pikseli]</li>
+						<li>[kąt wektora rozcięcia] [rozpiętość kątowa]</li>
+						<li>[Dane w postaci macierzy tzn. jeden wiersz odpowiada jedemu wierszowi pikseli, a wartości dawki w każdym wierszu oddzielone są spacjami i reprezentują kolejne kolumny]</li>
+					</ul>
+					</p>
+				</div>
+			</div>
+			
+		</div> <!-- tresc -->
+		<br id="bottom_space" />
+	</body>
 </html>

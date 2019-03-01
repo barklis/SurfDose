@@ -4,8 +4,8 @@
 	<activeContourLineColor>#FF6666</activeContourLineColor>
 	<contourLineWidth>1.5</contourLineWidth>
 	<activeContourLineWidth>2.3</activeContourLineWidth>
-	<pixelsInCol>60</pixelsInCol>
-	<pixelsInRow>120</pixelsInRow>
+	<pixelsInCol>120</pixelsInCol>
+	<pixelsInRow>240</pixelsInRow>
 	<interpolationRadius>1.7</interpolationRadius>
 	<axesOfBeamsColor>#692DB2</axesOfBeamsColor>
 	<isocenterColor>#1A1A1A</isocenterColor>
@@ -13,5 +13,5 @@
 	<axesVisibility>true</axesVisibility>
 	<isocenterVisibility>true</isocenterVisibility>
 	<isocenterDotRadius>4</isocenterDotRadius>
-	<rowPointerEnabled>false</rowPointerEnabled>
+	<rowPointerEnabled>true</rowPointerEnabled>
 </root>
