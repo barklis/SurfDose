@@ -1,4 +1,4 @@
-# DICOM Analyzer
+# SurfDose
 Java application made for Centre of Oncology in Warsaw.
 Its goal is to analyze radiation absorbed by surfaces of internal organs.
 
