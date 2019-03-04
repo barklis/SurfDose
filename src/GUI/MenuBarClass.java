@@ -6,6 +6,8 @@ import EventHandlers.ContourSettingsHandler;
 import EventHandlers.ExitProgramHandler;
 import EventHandlers.ExportCentersOfContoursHandler;
 import EventHandlers.ExportSurfaceDataHandler;
+import EventHandlers.GitBartekHandler;
+import EventHandlers.GitLukaszHandler;
 import EventHandlers.MapSettingsHandler;
 import EventHandlers.OpenCenterCoordsFile;
 import EventHandlers.OpenRTdoseFileHandler;
@@ -104,9 +106,13 @@ public class MenuBarClass extends MenuBar {
 				);
 		
 		helpMenu = new Menu(Preferences.getLabel("help"));
-			MenuItem documantationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
-				documantationItem.setOnAction(new ShowDocumentationHandler());
-			helpMenu.getItems().add(documantationItem);
+			MenuItem documentationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
+				documentationItem.setOnAction(new ShowDocumentationHandler());
+			MenuItem gitBartekItem = new MenuItem(Preferences.getLabel("gitBartek"));
+				gitBartekItem.setOnAction(new GitBartekHandler());
+			MenuItem gitLukaszItem = new MenuItem(Preferences.getLabel("gitLukasz"));
+				gitLukaszItem.setOnAction(new GitLukaszHandler());
+			helpMenu.getItems().addAll(documentationItem, new SeparatorMenuItem(), gitBartekItem, gitLukaszItem);
 		
 		getMenus().addAll(fileMenu, editMenu, optionsMenu, helpMenu);
 	}

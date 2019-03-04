@@ -35,6 +35,8 @@
 		<helpMenu>
 			<help>Pomoc</help>
 			<showDocumentation>Pokaż dokumentację</showDocumentation>
+			<gitBartek>Git: barklis</gitBartek>
+			<gitLukasz>Git: xxlukasz11</gitLukasz>
 		</helpMenu>
 	</menuBar>
 	<bottomPanel>
@@ -68,6 +70,7 @@
 		<textFile>Plik tekstowy</textFile>
 		<openFileError>Nie można otworzyć wybranego pliku.</openFileError>
 		<InvalidFile>Nieprawidłowy plik.</InvalidFile>
+		<linkHasExpired>Link wygasł</linkHasExpired>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Ustawienia konturów</contourSettingsWindowTitle>

@@ -95,7 +95,7 @@ public class GUI{
 		});
 		
 		mainWindow.setScene(scene);
-		mainWindow.setTitle("DICOM Analyzer");
+		mainWindow.setTitle("Surfdose");
 		mainWindow.show();
 	}
 	
