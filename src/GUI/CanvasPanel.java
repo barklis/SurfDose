@@ -173,7 +173,7 @@ public void drawFrame() {
 	}
 	
 	public double getLocalY(double y) {
-		return (y-DcmData.getY0()+DcmData.getRowsPixelSpacing())*pixelSize/DcmData.getRowsPixelSpacing();
+		return (y-DcmData.getY0()+DcmData.getRowsPixelSpacing()/2)*pixelSize/DcmData.getRowsPixelSpacing();
 	}
 
 	public void setPixelSize() {
