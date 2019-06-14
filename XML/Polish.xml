@@ -7,9 +7,6 @@
 			<openRTstructurFile>Załaduj plik RTSTRUCTUR</openRTstructurFile>
 			<openRTdoseFile>Załaduj pliki RTDOSE</openRTdoseFile>
 			<openRTplanFile>Załaduj plik RTPLAN</openRTplanFile>
-			<exportSurfaceData>Eksport danych na powierzchni</exportSurfaceData>
-			<exportContourCenterData>Eksport środków konturu</exportContourCenterData>
-			<importContourCenterData>Import środków konturu</importContourCenterData>
 			<exit>Wyjście</exit>
 		</fileMenu>
 		<editMenu>
@@ -32,6 +29,14 @@
 			<PolishLanguage>Polski</PolishLanguage>
 			<EnglishLanguage>Angielski</EnglishLanguage>
 		</optionsMenu>
+		<exportImportMenu>
+			<exportImport>Eksport/Import</exportImport>
+			<exportSurfaceData>Eksport danych na powierzchni</exportSurfaceData>
+			<exportPixelWidth>Eksport szerokości pikseli</exportPixelWidth>
+			<exportChart>Eksport histogramu</exportChart>
+			<exportContourCenterData>Eksport środków konturu</exportContourCenterData>
+			<importContourCenterData>Import środków konturu</importContourCenterData>
+		</exportImportMenu>
 		<helpMenu>
 			<help>Pomoc</help>
 			<showDocumentation>Pokaż dokumentację</showDocumentation>
@@ -51,6 +56,7 @@
 	</bottomPanel>
 	<dialogs>
 		<error>Błąd</error>
+		<cannotCreateFile>Nie udało się utworzyć pliku</cannotCreateFile>
 		<colorChooserTitle>Wybierz kolor lini</colorChooserTitle>
 		<languageConformationTitle>Zmiana języka</languageConformationTitle>
 		<languageConformationContent>By zobaczyć zmiany interfejs musi się ponownie załadować. Zrobić to teraz?</languageConformationContent>

@@ -2,10 +2,7 @@ package DataModule;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import com.pixelmed.dicom.Attribute;
 import com.pixelmed.dicom.AttributeTag;
@@ -134,7 +131,7 @@ public class DcmData {
 		
 		short[] shortData = null;
 		double scalingFactor = 0;
-		
+
 		try {
 			AttributeListExcept list = new AttributeListExcept();
 			list.read(dcmFile);
@@ -147,7 +144,7 @@ public class DcmData {
 			if(frameOffset[0] != 0.0) {
 				double diff = frameOffset[0];
 				for(double i : frameOffset) {
-					i = i - diff;
+					i -= diff;
 				}
 			}
 			
@@ -201,7 +198,7 @@ public class DcmData {
 	public static boolean finishLoadingDose() {
 		if(integerData == null)
 			return false;
-		
+
 		for(int f = 0; f < numberOfFrames; f++)
 			dcmFrames.get(f).setDoseData(integerData, x0, y0, z0, colsPixelSpacing, rowsPixelSpacing, verticalVoxels, frameOffset);
 		

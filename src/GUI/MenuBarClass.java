@@ -1,27 +1,6 @@
 package GUI;
 
-import EventHandlers.CalculateDoseHandler;
-import EventHandlers.ChangeLanguageHandler;
-import EventHandlers.ContourSettingsHandler;
-import EventHandlers.ExitProgramHandler;
-import EventHandlers.ExportCentersOfContoursHandler;
-import EventHandlers.ExportSurfaceDataHandler;
-import EventHandlers.GitBartekHandler;
-import EventHandlers.GitLukaszHandler;
-import EventHandlers.MapSettingsHandler;
-import EventHandlers.OpenCenterCoordsFile;
-import EventHandlers.OpenRTdoseFileHandler;
-import EventHandlers.OpenRTplanFileHandler;
-import EventHandlers.OpenRTstucturFileHandler;
-import EventHandlers.PlanDataSettingsHandler;
-import EventHandlers.ResetDataHandler;
-import EventHandlers.SetCurrentContourHandler;
-import EventHandlers.SetScaleGridsHandler;
-import EventHandlers.ShowChartHandler;
-import EventHandlers.ShowDocumentationHandler;
-import EventHandlers.ShowLoadedDataHandler;
-import EventHandlers.ShowMapHandler;
-import EventHandlers.VectorDirectionHandler;
+import EventHandlers.*;
 import application.Preferences;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
@@ -35,6 +14,7 @@ public class MenuBarClass extends MenuBar {
 	private Menu fileMenu;
 	private Menu editMenu;
 	private Menu optionsMenu;
+	private Menu exportImportMenu;
 	private Menu helpMenu;
 	
 	private CheckMenuItem showFilesContentItem;
@@ -50,19 +30,10 @@ public class MenuBarClass extends MenuBar {
 				openRTdoseFileItem.setOnAction(new OpenRTdoseFileHandler());
 			MenuItem openRTplanFileItem = new MenuItem(Preferences.getLabel("openRTplanFile"));
 				openRTplanFileItem.setOnAction(new OpenRTplanFileHandler());
-			MenuItem exportSurfaceDataItem = new MenuItem(Preferences.getLabel("exportSurfaceData"));
-				exportSurfaceDataItem.setOnAction(new ExportSurfaceDataHandler());
-			MenuItem exportContourCentersItem = new MenuItem(Preferences.getLabel("exportContourCenterData"));
-				exportContourCentersItem.setOnAction(new ExportCentersOfContoursHandler());
-			MenuItem importContourCentersItem = new MenuItem(Preferences.getLabel("importContourCenterData"));
-				importContourCentersItem.setOnAction(new OpenCenterCoordsFile());
 			MenuItem exitItem = new MenuItem(Preferences.getLabel("exit"));
 				exitItem.setOnAction(new ExitProgramHandler());
 				
-			fileMenu.getItems().addAll(
-				openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(),
-				exportSurfaceDataItem, exportContourCentersItem, importContourCentersItem, new SeparatorMenuItem(), exitItem
-			);
+			fileMenu.getItems().addAll(openRTstructurFileItem, openRTdoseFileItem, openRTplanFileItem, new SeparatorMenuItem(), exitItem);
 		
 		editMenu = new Menu(Preferences.getLabel("programMenu"));
 			showFilesContentItem = new CheckMenuItem(Preferences.getLabel("showFilesContentItem"));
@@ -104,7 +75,24 @@ public class MenuBarClass extends MenuBar {
 					contourSettingsItem, mapSettingsItem, PlanDataSettingsItem, setCurrentContour, setVectorDirectionItem,
 					setScaleItem, new SeparatorMenuItem(), resetDataItem, new SeparatorMenuItem(), languageMenu
 				);
-		
+
+		exportImportMenu = new Menu(Preferences.getLabel("exportImport"));
+			MenuItem exportSurfaceDataItem = new MenuItem(Preferences.getLabel("exportSurfaceData"));
+				exportSurfaceDataItem.setOnAction(new ExportSurfaceDataHandler());
+			MenuItem exportPixelWidthItem = new MenuItem((Preferences.getLabel("exportPixelWidth")));
+				exportPixelWidthItem.setOnAction(new ExportPixelWidthHandler());
+			MenuItem exportChartItem = new MenuItem(Preferences.getLabel("exportChart"));
+				exportChartItem.setOnAction(new ExportChartHandler());
+			MenuItem exportContourCentersItem = new MenuItem(Preferences.getLabel("exportContourCenterData"));
+				exportContourCentersItem.setOnAction(new ExportCentersOfContoursHandler());
+			MenuItem importContourCentersItem = new MenuItem(Preferences.getLabel("importContourCenterData"));
+				importContourCentersItem.setOnAction(new OpenCenterCoordsFile());
+
+			exportImportMenu.getItems().addAll(
+					exportSurfaceDataItem, exportPixelWidthItem, exportChartItem,
+					exportContourCentersItem, new SeparatorMenuItem(), importContourCentersItem
+			);
+
 		helpMenu = new Menu(Preferences.getLabel("help"));
 			MenuItem documentationItem = new MenuItem(Preferences.getLabel("showDocumentation"));
 				documentationItem.setOnAction(new ShowDocumentationHandler());
@@ -114,7 +102,7 @@ public class MenuBarClass extends MenuBar {
 				gitLukaszItem.setOnAction(new GitLukaszHandler());
 			helpMenu.getItems().addAll(documentationItem, new SeparatorMenuItem(), gitBartekItem, gitLukaszItem);
 		
-		getMenus().addAll(fileMenu, editMenu, optionsMenu, helpMenu);
+		getMenus().addAll(fileMenu, editMenu, optionsMenu, exportImportMenu,helpMenu);
 	}
 	
 	public void reset() {

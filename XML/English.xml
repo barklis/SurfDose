@@ -7,9 +7,6 @@
 			<openRTstructurFile>Load RTSTRUCTUR file</openRTstructurFile>
 			<openRTdoseFile>Load RTDOSE files</openRTdoseFile>
 			<openRTplanFile>Load RTPLAN file</openRTplanFile>
-			<exportSurfaceData>Export surface data</exportSurfaceData>
-			<exportContourCenterData>Export centers of contour</exportContourCenterData>
-			<importContourCenterData>Import centers of contour</importContourCenterData>
 			<exit>Exit</exit>
 		</fileMenu>
 		<editMenu>
@@ -32,6 +29,14 @@
 			<PolishLanguage>Polish</PolishLanguage>
 			<EnglishLanguage>English</EnglishLanguage>
 		</optionsMenu>
+		<exportImportMenu>
+			<exportImport>Export/Import</exportImport>
+			<exportSurfaceData>Export surface data</exportSurfaceData>
+			<exportPixelWidth>Export pixel width</exportPixelWidth>
+			<exportChart>Export chart</exportChart>
+			<exportContourCenterData>Export centers of contour</exportContourCenterData>
+			<importContourCenterData>Import centers of contour</importContourCenterData>
+		</exportImportMenu>
 		<helpMenu>
 			<help>Help</help>
 			<showDocumentation>Show manual</showDocumentation>
@@ -51,6 +56,7 @@
 	</bottomPanel>
 	<dialogs>
 		<error>Error</error>
+		<cannotCreateFile>Cannot create a file</cannotCreateFile>
 		<colorChooserTitle>Choose line color</colorChooserTitle>
 		<languageConformationTitle>Change language</languageConformationTitle>
 		<languageConformationContent>To see the changes, interface must be reloaded. Do you wanna do it now?</languageConformationContent>
