@@ -3,6 +3,8 @@ package DataModule;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import com.pixelmed.dicom.AttributeList;
 
@@ -231,52 +233,43 @@ public class DcmManager {
 		*/
 	}
 
-	public static void exportCharts() {
+	public static void exportChart(int frameNumber) {
 		int currentId = DcmData.getCurrentContourId();
-		int startingFrame = DcmManager.getStartingFrame(currentId);
-		int endingFrame = DcmManager.getEndingFrame(currentId);
 
-		PrintWriter writer = createPrintWriter(Preferences.getLabel("textFile"), "txt", "charts");
+		PrintWriter writer = createPrintWriter(Preferences.getLabel("textFile"), "txt", "chart_"+frameNumber);
 		if(writer == null)
 			return;
 
-		for(int frameNumber = startingFrame; frameNumber <= endingFrame; ++frameNumber){
-			List<Point> data = DcmData.getFrame(frameNumber).getContourById(currentId).getData();
-			double z_coord = DcmData.getFrame(frameNumber).getZ();
+		List<Point> data = DcmData.getFrame(frameNumber).getContourById(currentId).getData();
+		double z_coord = DcmData.getFrame(frameNumber).getZ();
 
-			int nOfPoints = data.size();
-			if(nOfPoints != 0) {
-				writer.print("Z: ");
-				writer.println(z_coord);
+		int nOfPoints = data.size();
+		writer.print("Z: ");
+		writer.println(z_coord);
+		writer.println();
+		writer.println("Angle [°]\tDose [Gy]");
 
-				int startingIndex = ChartPanel.getStartingIndex(data);
-				for(int i = startingIndex; i < nOfPoints; ++i) {
-					if(data.get(i).getAngle() > DcmData.getAngularWidth())
-						break;
+		BiConsumer<Integer, PrintWriter> writeXY = (i, writer_local) -> {
+			if (data.get(i).getAngle() > DcmData.getAngularWidth())
+				return;
 
-					double x_data = data.get(i).getAngle()*180/Math.PI;
-					double y_data = data.get(i).getValue()/100;
-					writer.print(x_data);
-					writer.print(" ");
-					writer.print(y_data);
-					writer.print(" ");
-				}
-				for(int i = 0; i < startingIndex; ++i) {
-					if(data.get(i).getAngle() > DcmData.getAngularWidth())
-						break;
+			double x_data = data.get(i).getAngle() * 180 / Math.PI;
+			double y_data = data.get(i).getValue() / 100;
+			writer_local.print(x_data);
+			writer_local.print("\t");
+			writer_local.print(y_data);
+			writer_local.println();
+		};
 
-					double x_data = data.get(i).getAngle()*180/Math.PI;
-					double y_data = data.get(i).getValue()/100;
-					writer.print(x_data);
-					writer.print(" ");
-					writer.print(y_data);
-					writer.print(" ");
-				}
-
-				writer.println();
-			}
+		int startingIndex = ChartPanel.getStartingIndex(data);
+		for (int i = startingIndex; i < nOfPoints; ++i) {
+			writeXY.accept(i, writer);
+		}
+		for (int i = 0; i < startingIndex; ++i) {
+			writeXY.accept(i, writer);
 		}
 
+		writer.close();
 	}
 
 }
