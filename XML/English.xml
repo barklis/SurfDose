@@ -32,7 +32,6 @@
 		<exportImportMenu>
 			<exportImport>Export/Import</exportImport>
 			<exportSurfaceData>Export surface data</exportSurfaceData>
-			<exportPixelWidth>Export pixel width</exportPixelWidth>
 			<exportChart>Export chart</exportChart>
 			<exportContourCenterData>Export centers of contour</exportContourCenterData>
 			<importContourCenterData>Import centers of contour</importContourCenterData>

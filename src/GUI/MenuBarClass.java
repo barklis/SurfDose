@@ -79,8 +79,6 @@ public class MenuBarClass extends MenuBar {
 		exportImportMenu = new Menu(Preferences.getLabel("exportImport"));
 			MenuItem exportSurfaceDataItem = new MenuItem(Preferences.getLabel("exportSurfaceData"));
 				exportSurfaceDataItem.setOnAction(new ExportSurfaceDataHandler());
-			MenuItem exportPixelWidthItem = new MenuItem((Preferences.getLabel("exportPixelWidth")));
-				exportPixelWidthItem.setOnAction(new ExportPixelWidthHandler());
 			MenuItem exportChartItem = new MenuItem(Preferences.getLabel("exportChart"));
 				exportChartItem.setOnAction(new ExportChartHandler());
 			MenuItem exportContourCentersItem = new MenuItem(Preferences.getLabel("exportContourCenterData"));
@@ -89,7 +87,7 @@ public class MenuBarClass extends MenuBar {
 				importContourCentersItem.setOnAction(new OpenCenterCoordsFile());
 
 			exportImportMenu.getItems().addAll(
-					exportSurfaceDataItem, exportPixelWidthItem, exportChartItem,
+					exportSurfaceDataItem, exportChartItem,
 					exportContourCentersItem, new SeparatorMenuItem(), importContourCentersItem
 			);
 

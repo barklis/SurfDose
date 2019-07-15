@@ -32,7 +32,6 @@
 		<exportImportMenu>
 			<exportImport>Eksport/Import</exportImport>
 			<exportSurfaceData>Eksport danych na powierzchni</exportSurfaceData>
-			<exportPixelWidth>Eksport szerokości pikseli</exportPixelWidth>
 			<exportChart>Eksport histogramu</exportChart>
 			<exportContourCenterData>Eksport środków konturu</exportContourCenterData>
 			<importContourCenterData>Import środków konturu</importContourCenterData>
