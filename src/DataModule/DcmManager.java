@@ -1,15 +1,15 @@
 package DataModule;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import com.pixelmed.dicom.AttributeList;
 
 import GUI.GUI;
+import GUI.ChartPanel;
 import application.Preferences;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -48,36 +48,47 @@ public class DcmManager {
 	    }
 	    return null;
 	}
+
+	private static PrintWriter createPrintWriter(String fileTypeLabel, String extension, String initialFileName){
+		String dotExtension = "." + extension;
+		String pattern = "*" + dotExtension;
+		String bracedPattern = "(" + dotExtension + ")";
+
+		FileChooser chooser = new FileChooser();
+		chooser.setInitialDirectory(new File(lastPath));
+		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileTypeLabel + " " + bracedPattern, pattern));
+		chooser.setInitialFileName(initialFileName);
+		File outputFile = chooser.showSaveDialog(GUI.instance().getMainWindow());
+
+		if(outputFile == null) {
+			return null;
+		}
+
+		if (!outputFile.getName().contains(".")) {
+			outputFile.renameTo(new File(outputFile.getName() + dotExtension));
+		}
+
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			GUI.instance().showErrorDialog(Preferences.getLabel("error"), Preferences.getLabel("cannotCreateFile"));
+			return null;
+		}
+		return writer;
+	}
 	
 	public static Color getDoseColorScale(double doseValue, double maxValue){
-		
 		double hue = Color.BLUE.getHue() + (Color.RED.getHue() - Color.BLUE.getHue()) * doseValue / maxValue ;
 		return Color.hsb(hue, 1.0, 1.0);
 	}
 	
-	public static boolean saveDataToFile(Stage stage, double[][] matrix) {
-		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(lastPath));
-		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(Preferences.getLabel("textFile") + " (*.txt)", "*.txt"));
-		chooser.setInitialFileName("data");
-		File outputFile = chooser.showSaveDialog(stage);
-		
-	    if(outputFile == null) {
-	    	return false;
-	    }
-	    
-    	if (!outputFile.getName().endsWith(".txt")) {
-    		outputFile.renameTo(new File(outputFile.getName() + ".txt"));
-    	}
-    	
-    	PrintWriter writer = null;
-		try {
-			writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
+	public static void saveDataToFile(Stage stage, double[][] matrix) {
+		PrintWriter writer = createPrintWriter(Preferences.getLabel("textFile"), "txt", "surface_data");
+		if(writer == null){
+			return;
 		}
-		
+
 		// grid size - (row col)
 		writer.println(Preferences.getPixelsInRow() + " " + Preferences.getPixelsInCol());
 		double angle = getRelativeAngle(0, -1, DcmData.getuVector()[0], DcmData.getuVector()[1]);
@@ -91,7 +102,6 @@ public class DcmManager {
     	}
     	
     	writer.close();
-    	return true;
 	}
 	
 	public static double toDegrees(double radians) {
@@ -118,28 +128,12 @@ public class DcmManager {
 		return 0;
 	}
 	
-	public static boolean saveContourCenter() {
-		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(lastPath));
-		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(Preferences.getLabel("textFile") + " (*.txt)", "*.txt"));
-		chooser.setInitialFileName("contour_center");
-		File outputFile = chooser.showSaveDialog(GUI.instance().getMainWindow());
-		
-	    if(outputFile == null) {
-	    	return false;
-	    }
-	    
-    	if (!outputFile.getName().endsWith(".txt")) {
-    		outputFile.renameTo(new File(outputFile.getName() + ".txt"));
-    	}
-    	
-    	PrintWriter writer = null;
-		try {
-			writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
+	public static void saveContourCenter() {
+		PrintWriter writer = createPrintWriter(Preferences.getLabel("textFile"), "txt", "contour_center");
+		if(writer == null){
+			return;
 		}
+
 		int currentId = DcmData.getCurrentContourId();
 		int startingFrame = getStartingFrame(currentId);
 		int endingFrame = getEndingFrame(currentId);
@@ -158,7 +152,6 @@ public class DcmManager {
 			writer.println((c.getCenterX() - isoX) + " " + (c.getCenterY() - isoY));
 		}
 		writer.close();
-    	return true;
 	}
 	
 	public static boolean saveRecievedDoseData(Stage stage, List<DcmFrame> list) {
@@ -211,24 +204,14 @@ public class DcmManager {
 	    return false;
 	}
 	
-	public static boolean saveAttributeListToFile(Stage stage, AttributeList list) {
-		FileChooser chooser = new FileChooser();
-		chooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-		File outputFile = chooser.showSaveDialog(stage);
-	    if(outputFile != null) {
-	    	PrintWriter writer = null;
-			try {
-				writer = new PrintWriter(outputFile.getAbsolutePath(), "UTF-8");
-			} catch (FileNotFoundException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-				return false;
-			}
-	    	writer.println(list);
-	    	writer.close();
-	    	
-	    	return true;
-	    }
-	    return false;
+	public static void saveAttributeListToFile(AttributeList list) {
+		PrintWriter writer = createPrintWriter("text file", "txt", "attribute_list");
+		if(writer == null){
+			return;
+		}
+
+		writer.println(list);
+		writer.close();
 	}
 
 	public static double getRelativeAngle(double x1, double y1, double x2, double y2) {
@@ -237,5 +220,56 @@ public class DcmManager {
 			 return (angle + 2*Math.PI);
 		return angle;
 	}
-	
+
+	public static void exportPixelWidth() {
+		/* TODO
+		int currentId = DcmData.getCurrentContourId();
+		int startingFrame = DcmManager.getStartingFrame(currentId);
+		int endingFrame = DcmManager.getEndingFrame(currentId);
+
+		for(int i = startingFrame; i <= endingFrame; ++i){
+
+		}
+		*/
+	}
+
+	public static void exportChart(int frameNumber) {
+		int currentId = DcmData.getCurrentContourId();
+
+		PrintWriter writer = createPrintWriter(Preferences.getLabel("textFile"), "txt", "chart_"+frameNumber);
+		if(writer == null)
+			return;
+
+		List<Point> data = DcmData.getFrame(frameNumber).getContourById(currentId).getData();
+		double z_coord = DcmData.getFrame(frameNumber).getZ();
+
+		int nOfPoints = data.size();
+		writer.print("Z: ");
+		writer.println(z_coord);
+		writer.println();
+		writer.println("Angle [°]\tDose [Gy]");
+
+		BiConsumer<Integer, PrintWriter> writeXY = (i, writer_local) -> {
+			if (data.get(i).getAngle() > DcmData.getAngularWidth())
+				return;
+
+			double x_data = data.get(i).getAngle() * 180 / Math.PI;
+			double y_data = data.get(i).getValue() / 100;
+			writer_local.print(x_data);
+			writer_local.print("\t");
+			writer_local.print(y_data);
+			writer_local.println();
+		};
+
+		int startingIndex = ChartPanel.getStartingIndex(data);
+		for (int i = startingIndex; i < nOfPoints; ++i) {
+			writeXY.accept(i, writer);
+		}
+		for (int i = 0; i < startingIndex; ++i) {
+			writeXY.accept(i, writer);
+		}
+
+		writer.close();
+	}
+
 }
