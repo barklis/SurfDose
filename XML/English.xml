@@ -77,6 +77,8 @@
 		<openFileError>Can't open selected file.</openFileError>
 		<InvalidFile>Invalid file.</InvalidFile>
 		<linkHasExpired>Link has expired</linkHasExpired>
+		<cannotExportChartTitle>Cannot export chart</cannotExportChartTitle>
+		<cannotExportChartContent-wrongPanel>Chart can be exported only when 'Loaded data' or 'Chart' panel is selected.</cannotExportChartContent-wrongPanel>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Contour settings</contourSettingsWindowTitle>

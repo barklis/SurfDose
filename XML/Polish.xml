@@ -77,6 +77,8 @@
 		<openFileError>Nie można otworzyć wybranego pliku.</openFileError>
 		<InvalidFile>Nieprawidłowy plik.</InvalidFile>
 		<linkHasExpired>Link wygasł</linkHasExpired>
+		<cannotExportChartTitle>Nie można wyeksportować histogramu</cannotExportChartTitle>
+		<cannotExportChartContent-wrongPanel>Histogram może być wyeksportowany tylko w widoku załadowanych danych lub histogramu.</cannotExportChartContent-wrongPanel>
 	</dialogs>
 	<contourSettingsWindow>
 		<contourSettingsWindowTitle>Ustawienia konturów</contourSettingsWindowTitle>
