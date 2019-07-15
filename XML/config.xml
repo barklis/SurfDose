@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><root>
-	<language>Polish</language>
+	<language>English</language>
 	<contourLineColor>#CC00CC</contourLineColor>
 	<activeContourLineColor>#FF6666</activeContourLineColor>
 	<contourLineWidth>1.5</contourLineWidth>
 	<activeContourLineWidth>2.3</activeContourLineWidth>
-	<pixelsInCol>60</pixelsInCol>
-	<pixelsInRow>120</pixelsInRow>
-	<interpolationRadius>1.7</interpolationRadius>
+	<pixelsInCol>70</pixelsInCol>
+	<pixelsInRow>150</pixelsInRow>
+	<interpolationRadius>1.4</interpolationRadius>
 	<axesOfBeamsColor>#692DB2</axesOfBeamsColor>
 	<isocenterColor>#1A1A1A</isocenterColor>
 	<activeIsocenterColor>#666666</activeIsocenterColor>
 	<axesVisibility>true</axesVisibility>
-	<isocenterVisibility>true</isocenterVisibility>
-	<isocenterDotRadius>4</isocenterDotRadius>
+	<isocenterVisibility>false</isocenterVisibility>
+	<isocenterDotRadius>412</isocenterDotRadius>
 	<rowPointerEnabled>true</rowPointerEnabled>
 </root>

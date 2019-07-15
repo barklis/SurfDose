@@ -114,6 +114,15 @@ public class GUI{
 		alert.setHeaderText("");
 		alert.showAndWait();
 	}
+
+	public void showErrorDialog(String title, String content) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(title);
+		alert.setContentText(content);
+		alert.setHeaderText("");
+		alert.showAndWait();
+	}
+
 	
 	public Stage getMainWindow() {
 		return mainWindow;

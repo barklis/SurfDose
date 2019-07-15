@@ -17,9 +17,13 @@ public class ChartPanel{
 	public ChartPanel() {
 		charts = new ArrayList<AreaChart<Number,Number>>();
 	}
+
+	public List<AreaChart<Number, Number>> getCharts() {
+		return charts;
+	}
 	
 	public boolean isListInited() {
-		return charts.size() == 0 ? false : true;
+		return charts.size() != 0;
 	}
 	
 	public synchronized void initChartList() {
@@ -35,7 +39,7 @@ public class ChartPanel{
 	private AreaChart<Number, Number> createChart(int frameNumber) {
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
-		xAxis.setLabel(Preferences.getLabel("contourLength") + " [°]");
+		xAxis.setLabel(Preferences.getLabel("contourLength") + " [Â°]");
 		yAxis.setLabel(Preferences.getLabel("dose") + " [GY]");
 		
 		final AreaChart<Number, Number> lineChart = new AreaChart<Number, Number>(xAxis, yAxis);
@@ -63,7 +67,7 @@ public class ChartPanel{
 		return lineChart;
 	}
 	
-	public int getStartingIndex(List<Point> points) {
+	public static int getStartingIndex(List<Point> points) {
 		int index = 0;
 		double minAngle = 10.0;
 		for(int i = 0; i < points.size(); ++i) {

@@ -13,7 +13,7 @@ public class ContourCenterContainer {
 	private double endZ;
 	private List<double[]> coords;
 	
-	boolean decoded;
+	private boolean decoded;
 	
 	public ContourCenterContainer() {
 		startZ = 0;
